@@ -131,7 +131,7 @@ namespace Plug_Parser_Plugin
 			}
 			client = new ButtplugClient("Main Client", connector);
 
-			client.DeviceAdded += Client_DeviceAdded;
+			client.DeviceAdded += clientDeviceAdded;
 			
 			try
 			{
@@ -143,7 +143,7 @@ namespace Plug_Parser_Plugin
 			}
 		}
 
-		private void Client_DeviceAdded(object sender, DeviceAddedEventArgs args)
+		private void clientDeviceAdded(object sender, DeviceAddedEventArgs args)
 		{
 			Log_Manager.write($"Device ${args.Device.Name} connected");
 			receivedCommand = true;
@@ -241,7 +241,7 @@ namespace Plug_Parser_Plugin
 			{
 				return overwriteStrength / 100;
 			}
-			return powerCalculator.getCurrentPower();
+			return 0; // TODO
 		}
 
 		public double getCurrentStrength()
@@ -250,7 +250,7 @@ namespace Plug_Parser_Plugin
 			{
 				return overwriteStrength;
 			}
-			return getCurrentPower() * 100;
+			return 0; // TODO ;
 		}
 
 		public void adjustRate(double f)
@@ -258,14 +258,5 @@ namespace Plug_Parser_Plugin
 			powerCalculator.adjustPeriodFactor(f);
 		}
 
-		public void boost(double b)
-		{
-			powerCalculator.addBoost(b);
-		}
-
-		public void surge()
-		{
-			powerCalculator.surge();
-		}
 	}
 }

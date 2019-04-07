@@ -20,18 +20,19 @@ namespace Plug_Parser_Plugin
 		private delegate void SafeCallDelegate(Stopwatch s);
 
 		Director director;
-		private Button Rescan;
+		private Button buttonRescan;
 
-		private Button button1;
-		private RichTextBox log1;
-		private NumericUpDown vibeOverrideValue;
-		private TrackBar trackBar1;
-		private Button clearLogButton;
-		private System.Windows.Forms.DataVisualization.Charting.Chart vibeStrengthChart;
+		private Button buttonStopScanning;
+		private RichTextBox logEvents;
+		private NumericUpDown numericupdownOverrideValue;
+		private TrackBar sliderVibeOverride;
+		private Button buttonClearLog;
+		private System.Windows.Forms.DataVisualization.Charting.Chart chartVibeStrength;
 		private Label EVENT_LOG_LABEL;
 		private Label CHART_LABEL;
-		private CheckBox checkBox1;
+		private CheckBox checkboxOverride;
 		private Label label1;
+		private Button buttonStart;
 
 		#region Designer Created Code (Avoid editing)
 		/// <summary> 
@@ -58,26 +59,27 @@ namespace Plug_Parser_Plugin
 		/// Required method for Designer support - do not modify 
 		/// the contents of this method with the code editor.
 		/// </summary>
-		private void InitializeComponent()
+		private void initializeComponent()
 		{
-			System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-			System.Windows.Forms.DataVisualization.Charting.Legend legend4 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-			System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
+			System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+			System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+			System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
 			this.EVENT_LOG_LABEL = new System.Windows.Forms.Label();
 			this.textBox1 = new System.Windows.Forms.TextBox();
-			this.Rescan = new System.Windows.Forms.Button();
-			this.button1 = new System.Windows.Forms.Button();
-			this.log1 = new System.Windows.Forms.RichTextBox();
-			this.vibeOverrideValue = new System.Windows.Forms.NumericUpDown();
-			this.trackBar1 = new System.Windows.Forms.TrackBar();
-			this.clearLogButton = new System.Windows.Forms.Button();
-			this.vibeStrengthChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
+			this.buttonRescan = new System.Windows.Forms.Button();
+			this.buttonStopScanning = new System.Windows.Forms.Button();
+			this.logEvents = new System.Windows.Forms.RichTextBox();
+			this.numericupdownOverrideValue = new System.Windows.Forms.NumericUpDown();
+			this.sliderVibeOverride = new System.Windows.Forms.TrackBar();
+			this.buttonClearLog = new System.Windows.Forms.Button();
+			this.chartVibeStrength = new System.Windows.Forms.DataVisualization.Charting.Chart();
 			this.CHART_LABEL = new System.Windows.Forms.Label();
-			this.checkBox1 = new System.Windows.Forms.CheckBox();
+			this.checkboxOverride = new System.Windows.Forms.CheckBox();
 			this.label1 = new System.Windows.Forms.Label();
-			((System.ComponentModel.ISupportInitialize)(this.vibeOverrideValue)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.vibeStrengthChart)).BeginInit();
+			this.buttonStart = new System.Windows.Forms.Button();
+			((System.ComponentModel.ISupportInitialize)(this.numericupdownOverrideValue)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.sliderVibeOverride)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.chartVibeStrength)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// EVENT_LOG_LABEL
@@ -102,182 +104,193 @@ namespace Plug_Parser_Plugin
 			this.textBox1.Text = "Sample TextBox that has its value stored to the settings file automatically.";
 			this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
 			// 
-			// Rescan
+			// buttonRescan
 			// 
-			this.Rescan.AccessibleDescription = "Rescans for devices.";
-			this.Rescan.AccessibleName = "Rescan";
-			this.Rescan.Location = new System.Drawing.Point(517, 19);
-			this.Rescan.Name = "Rescan";
-			this.Rescan.Size = new System.Drawing.Size(75, 23);
-			this.Rescan.TabIndex = 2;
-			this.Rescan.Text = "Rescan";
-			this.Rescan.UseVisualStyleBackColor = true;
-			this.Rescan.Click += new System.EventHandler(this.button1_Click);
+			this.buttonRescan.AccessibleDescription = "Rescans for devices.";
+			this.buttonRescan.AccessibleName = "Rescan";
+			this.buttonRescan.Location = new System.Drawing.Point(517, 56);
+			this.buttonRescan.Name = "buttonRescan";
+			this.buttonRescan.Size = new System.Drawing.Size(114, 32);
+			this.buttonRescan.TabIndex = 2;
+			this.buttonRescan.Text = "Rescan";
+			this.buttonRescan.UseVisualStyleBackColor = true;
+			this.buttonRescan.Click += new System.EventHandler(this.buttonRescan_Click);
 			// 
-			// button1
+			// buttonStopScanning
 			// 
-			this.button1.Enabled = false;
-			this.button1.Location = new System.Drawing.Point(517, 48);
-			this.button1.Name = "button1";
-			this.button1.Size = new System.Drawing.Size(113, 35);
-			this.button1.TabIndex = 4;
-			this.button1.Text = "Stop Scanning";
-			this.button1.UseVisualStyleBackColor = true;
-			this.button1.Visible = false;
-			this.button1.Click += new System.EventHandler(this.button1_Click_1);
+			this.buttonStopScanning.Enabled = false;
+			this.buttonStopScanning.Location = new System.Drawing.Point(517, 92);
+			this.buttonStopScanning.Name = "buttonStopScanning";
+			this.buttonStopScanning.Size = new System.Drawing.Size(114, 32);
+			this.buttonStopScanning.TabIndex = 4;
+			this.buttonStopScanning.Text = "Stop Scanning";
+			this.buttonStopScanning.UseVisualStyleBackColor = true;
+			this.buttonStopScanning.Visible = false;
+			this.buttonStopScanning.Click += new System.EventHandler(this.buttonStopScanning_Click);
 			// 
-			// log1
+			// logEvents
 			// 
-			this.log1.BackColor = System.Drawing.SystemColors.ControlDarkDark;
-			this.log1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.log1.DetectUrls = false;
-			this.log1.ForeColor = System.Drawing.SystemColors.ControlLight;
-			this.log1.Location = new System.Drawing.Point(4, 20);
-			this.log1.Margin = new System.Windows.Forms.Padding(4);
-			this.log1.Name = "log1";
-			this.log1.ReadOnly = true;
-			this.log1.Size = new System.Drawing.Size(512, 252);
-			this.log1.TabIndex = 5;
-			this.log1.TabStop = false;
-			this.log1.Text = "...\n1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n11\n12\n13\n14\n16\n17\n18\n19";
-			this.log1.WordWrap = false;
-			this.log1.TextChanged += new System.EventHandler(this.log1_TextChanged);
+			this.logEvents.BackColor = System.Drawing.SystemColors.ControlDarkDark;
+			this.logEvents.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.logEvents.DetectUrls = false;
+			this.logEvents.ForeColor = System.Drawing.SystemColors.ControlLight;
+			this.logEvents.Location = new System.Drawing.Point(4, 20);
+			this.logEvents.Margin = new System.Windows.Forms.Padding(4);
+			this.logEvents.Name = "logEvents";
+			this.logEvents.ReadOnly = true;
+			this.logEvents.Size = new System.Drawing.Size(512, 252);
+			this.logEvents.TabIndex = 5;
+			this.logEvents.TabStop = false;
+			this.logEvents.Text = "...\n1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n11\n12\n13\n14\n16\n17\n18\n19";
+			this.logEvents.WordWrap = false;
+			this.logEvents.TextChanged += new System.EventHandler(this.logEvents_TextChanged);
 			// 
-			// vibeOverrideValue
+			// numericupdownOverrideValue
 			// 
-			this.vibeOverrideValue.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.vibeOverrideValue.Location = new System.Drawing.Point(585, 626);
-			this.vibeOverrideValue.Name = "vibeOverrideValue";
-			this.vibeOverrideValue.Size = new System.Drawing.Size(51, 20);
-			this.vibeOverrideValue.TabIndex = 8;
-			this.vibeOverrideValue.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-			this.vibeOverrideValue.ValueChanged += new System.EventHandler(this.vibeOverrideValue_ValueChanged);
+			this.numericupdownOverrideValue.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.numericupdownOverrideValue.Location = new System.Drawing.Point(585, 626);
+			this.numericupdownOverrideValue.Name = "numericupdownOverrideValue";
+			this.numericupdownOverrideValue.Size = new System.Drawing.Size(51, 20);
+			this.numericupdownOverrideValue.TabIndex = 8;
+			this.numericupdownOverrideValue.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			this.numericupdownOverrideValue.ValueChanged += new System.EventHandler(this.numericupdownOverrideValue_ValueChanged);
 			// 
-			// trackBar1
+			// sliderVibeOverride
 			// 
-			this.trackBar1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.trackBar1.AutoSize = false;
-			this.trackBar1.BackColor = System.Drawing.SystemColors.ControlDarkDark;
-			this.trackBar1.LargeChange = 10;
-			this.trackBar1.Location = new System.Drawing.Point(600, 297);
-			this.trackBar1.Maximum = 100;
-			this.trackBar1.Name = "trackBar1";
-			this.trackBar1.Orientation = System.Windows.Forms.Orientation.Vertical;
-			this.trackBar1.Size = new System.Drawing.Size(36, 323);
-			this.trackBar1.SmallChange = 5;
-			this.trackBar1.TabIndex = 11;
-			this.trackBar1.TickFrequency = 5;
-			this.trackBar1.TickStyle = System.Windows.Forms.TickStyle.TopLeft;
-			this.trackBar1.Scroll += new System.EventHandler(this.trackBar1_Scroll);
+			this.sliderVibeOverride.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.sliderVibeOverride.AutoSize = false;
+			this.sliderVibeOverride.BackColor = System.Drawing.SystemColors.ControlDarkDark;
+			this.sliderVibeOverride.LargeChange = 10;
+			this.sliderVibeOverride.Location = new System.Drawing.Point(600, 297);
+			this.sliderVibeOverride.Maximum = 100;
+			this.sliderVibeOverride.Name = "sliderVibeOverride";
+			this.sliderVibeOverride.Orientation = System.Windows.Forms.Orientation.Vertical;
+			this.sliderVibeOverride.Size = new System.Drawing.Size(36, 323);
+			this.sliderVibeOverride.SmallChange = 5;
+			this.sliderVibeOverride.TabIndex = 11;
+			this.sliderVibeOverride.TickFrequency = 5;
+			this.sliderVibeOverride.TickStyle = System.Windows.Forms.TickStyle.TopLeft;
+			this.sliderVibeOverride.Scroll += new System.EventHandler(this.sliderVibeOverride_Scroll);
 			// 
-			// clearLogButton
+			// buttonClearLog
 			// 
-			this.clearLogButton.BackColor = System.Drawing.Color.Transparent;
-			this.clearLogButton.FlatAppearance.BorderSize = 0;
-			this.clearLogButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.clearLogButton.Location = new System.Drawing.Point(79, 0);
-			this.clearLogButton.Name = "clearLogButton";
-			this.clearLogButton.Size = new System.Drawing.Size(60, 20);
-			this.clearLogButton.TabIndex = 12;
-			this.clearLogButton.Text = "clear";
-			this.clearLogButton.UseVisualStyleBackColor = false;
-			this.clearLogButton.Click += new System.EventHandler(this.button2_Click);
+			this.buttonClearLog.BackColor = System.Drawing.Color.Transparent;
+			this.buttonClearLog.FlatAppearance.BorderSize = 0;
+			this.buttonClearLog.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.buttonClearLog.Location = new System.Drawing.Point(79, 0);
+			this.buttonClearLog.Name = "buttonClearLog";
+			this.buttonClearLog.Size = new System.Drawing.Size(60, 20);
+			this.buttonClearLog.TabIndex = 12;
+			this.buttonClearLog.Text = "Clear";
+			this.buttonClearLog.UseVisualStyleBackColor = false;
+			this.buttonClearLog.Click += new System.EventHandler(this.buttonClearLog_Click);
 			// 
-			// vibeStrengthChart
+			// chartVibeStrength
 			// 
-			this.vibeStrengthChart.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+			this.chartVibeStrength.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.vibeStrengthChart.BackColor = System.Drawing.Color.Transparent;
-			chartArea4.AxisX.LabelStyle.Enabled = false;
-			chartArea4.AxisX.MajorGrid.Enabled = false;
-			chartArea4.AxisX.MajorTickMark.Enabled = false;
-			chartArea4.AxisX.ScrollBar.BackColor = System.Drawing.Color.Black;
-			chartArea4.AxisY.LabelStyle.Enabled = false;
-			chartArea4.AxisY.MajorGrid.Enabled = false;
-			chartArea4.AxisY.MajorTickMark.Enabled = false;
-			chartArea4.AxisY.Maximum = 100D;
-			chartArea4.AxisY.Minimum = 0D;
-			chartArea4.BackColor = System.Drawing.SystemColors.ControlDarkDark;
-			chartArea4.BorderDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Solid;
-			chartArea4.CursorX.AutoScroll = false;
-			chartArea4.Name = "areaMain";
-			chartArea4.Position.Auto = false;
-			chartArea4.Position.Height = 100F;
-			chartArea4.Position.Width = 100F;
-			this.vibeStrengthChart.ChartAreas.Add(chartArea4);
-			legend4.Enabled = false;
-			legend4.Name = "Legend1";
-			this.vibeStrengthChart.Legends.Add(legend4);
-			this.vibeStrengthChart.Location = new System.Drawing.Point(4, 309);
-			this.vibeStrengthChart.Margin = new System.Windows.Forms.Padding(0);
-			this.vibeStrengthChart.MinimumSize = new System.Drawing.Size(594, 252);
-			this.vibeStrengthChart.Name = "vibeStrengthChart";
-			series4.ChartArea = "areaMain";
-			series4.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
-			series4.Color = System.Drawing.SystemColors.ControlLightLight;
-			series4.LabelForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-			series4.Legend = "Legend1";
-			series4.Name = "seriesMain";
-			this.vibeStrengthChart.Series.Add(series4);
-			this.vibeStrengthChart.Size = new System.Drawing.Size(594, 300);
-			this.vibeStrengthChart.TabIndex = 13;
-			this.vibeStrengthChart.Click += new System.EventHandler(this.chart1_Click);
+			this.chartVibeStrength.BackColor = System.Drawing.Color.Transparent;
+			chartArea1.AxisX.LabelStyle.Enabled = false;
+			chartArea1.AxisX.MajorGrid.Enabled = false;
+			chartArea1.AxisX.MajorTickMark.Enabled = false;
+			chartArea1.AxisX.ScrollBar.BackColor = System.Drawing.Color.Black;
+			chartArea1.AxisY.LabelStyle.Enabled = false;
+			chartArea1.AxisY.MajorGrid.Enabled = false;
+			chartArea1.AxisY.MajorTickMark.Enabled = false;
+			chartArea1.AxisY.Maximum = 100D;
+			chartArea1.AxisY.Minimum = 0D;
+			chartArea1.BackColor = System.Drawing.SystemColors.ControlDarkDark;
+			chartArea1.BorderDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Solid;
+			chartArea1.CursorX.AutoScroll = false;
+			chartArea1.Name = "areaMain";
+			chartArea1.Position.Auto = false;
+			chartArea1.Position.Height = 100F;
+			chartArea1.Position.Width = 100F;
+			this.chartVibeStrength.ChartAreas.Add(chartArea1);
+			legend1.Enabled = false;
+			legend1.Name = "Legend1";
+			this.chartVibeStrength.Legends.Add(legend1);
+			this.chartVibeStrength.Location = new System.Drawing.Point(4, 309);
+			this.chartVibeStrength.Margin = new System.Windows.Forms.Padding(0);
+			this.chartVibeStrength.MinimumSize = new System.Drawing.Size(594, 252);
+			this.chartVibeStrength.Name = "chartVibeStrength";
+			series1.ChartArea = "areaMain";
+			series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+			series1.Color = System.Drawing.SystemColors.ControlLightLight;
+			series1.LabelForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+			series1.Legend = "Legend1";
+			series1.Name = "seriesMain";
+			this.chartVibeStrength.Series.Add(series1);
+			this.chartVibeStrength.Size = new System.Drawing.Size(594, 300);
+			this.chartVibeStrength.TabIndex = 13;
+			this.chartVibeStrength.Click += new System.EventHandler(this.chartVibeStrength_Click);
 			// 
 			// CHART_LABEL
 			// 
 			this.CHART_LABEL.AutoSize = true;
 			this.CHART_LABEL.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.CHART_LABEL.Location = new System.Drawing.Point(45, 285);
+			this.CHART_LABEL.Location = new System.Drawing.Point(3, 285);
 			this.CHART_LABEL.Name = "CHART_LABEL";
 			this.CHART_LABEL.Size = new System.Drawing.Size(90, 20);
 			this.CHART_LABEL.TabIndex = 14;
 			this.CHART_LABEL.Text = "Vibrations";
 			// 
-			// checkBox1
+			// checkboxOverride
 			// 
-			this.checkBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.checkBox1.AutoSize = true;
-			this.checkBox1.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
-			this.checkBox1.Location = new System.Drawing.Point(513, 629);
-			this.checkBox1.Name = "checkBox1";
-			this.checkBox1.Size = new System.Drawing.Size(66, 17);
-			this.checkBox1.TabIndex = 15;
-			this.checkBox1.Text = "Override";
-			this.checkBox1.UseVisualStyleBackColor = true;
-			this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
+			this.checkboxOverride.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.checkboxOverride.AutoSize = true;
+			this.checkboxOverride.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+			this.checkboxOverride.Location = new System.Drawing.Point(513, 629);
+			this.checkboxOverride.Name = "checkboxOverride";
+			this.checkboxOverride.Size = new System.Drawing.Size(66, 17);
+			this.checkboxOverride.TabIndex = 15;
+			this.checkboxOverride.Text = "Override";
+			this.checkboxOverride.UseVisualStyleBackColor = true;
+			this.checkboxOverride.CheckedChanged += new System.EventHandler(this.checkboxOverride_CheckedChanged);
 			// 
 			// label1
 			// 
 			this.label1.AutoSize = true;
 			this.label1.Location = new System.Drawing.Point(145, 3);
 			this.label1.Name = "label1";
-			this.label1.Size = new System.Drawing.Size(202, 13);
+			this.label1.Size = new System.Drawing.Size(195, 13);
 			this.label1.TabIndex = 16;
-			this.label1.Text = "NOTE: ONLY SUPPORTS ONE DEVICE";
+			this.label1.Text = "NOTE: ONLY CONNECT ONE DEVICE";
+			// 
+			// buttonStart
+			// 
+			this.buttonStart.Location = new System.Drawing.Point(517, 20);
+			this.buttonStart.Name = "buttonStart";
+			this.buttonStart.Size = new System.Drawing.Size(114, 32);
+			this.buttonStart.TabIndex = 17;
+			this.buttonStart.Text = "Start";
+			this.buttonStart.UseVisualStyleBackColor = true;
+			this.buttonStart.Click += new System.EventHandler(this.buttonStart_Click);
 			// 
 			// Plug_Parser
 			// 
 			this.AccessibleDescription = "";
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+			this.Controls.Add(this.buttonStart);
 			this.Controls.Add(this.label1);
-			this.Controls.Add(this.checkBox1);
+			this.Controls.Add(this.checkboxOverride);
 			this.Controls.Add(this.CHART_LABEL);
-			this.Controls.Add(this.vibeStrengthChart);
-			this.Controls.Add(this.clearLogButton);
-			this.Controls.Add(this.trackBar1);
+			this.Controls.Add(this.chartVibeStrength);
+			this.Controls.Add(this.buttonClearLog);
+			this.Controls.Add(this.sliderVibeOverride);
 			this.Controls.Add(this.EVENT_LOG_LABEL);
-			this.Controls.Add(this.vibeOverrideValue);
-			this.Controls.Add(this.log1);
-			this.Controls.Add(this.button1);
-			this.Controls.Add(this.Rescan);
+			this.Controls.Add(this.numericupdownOverrideValue);
+			this.Controls.Add(this.logEvents);
+			this.Controls.Add(this.buttonStopScanning);
+			this.Controls.Add(this.buttonRescan);
 			this.Controls.Add(this.textBox1);
 			this.MinimumSize = new System.Drawing.Size(640, 655);
 			this.Name = "Plug_Parser";
 			this.Size = new System.Drawing.Size(640, 655);
-			((System.ComponentModel.ISupportInitialize)(this.vibeOverrideValue)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.trackBar1)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.vibeStrengthChart)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.numericupdownOverrideValue)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.sliderVibeOverride)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.chartVibeStrength)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -293,7 +306,7 @@ namespace Plug_Parser_Plugin
 		{
 			try
 			{
-				InitializeComponent();
+				initializeComponent();
 			}
 			catch (FileNotFoundException e)
 			{
@@ -317,14 +330,14 @@ namespace Plug_Parser_Plugin
 			pluginScreenSpace.Controls.Add(this);   // Add this UserControl to the tab ACT provides
 			this.Dock = DockStyle.Fill; // Expand the UserControl to fill the tab's client space
 			xmlSettings = new SettingsSerializer(this); // Create a new settings serializer and pass it this instance
-			LoadSettings();
+			loadSettings();
 
 			// Create some sort of parsing event handler.  After the "+=" hit TAB twice and the code will be generated for you.
 			ActGlobals.oFormActMain.AfterCombatAction += new CombatActionDelegate(oFormActMain_AfterCombatAction);
 
 			lblStatus.Text = "Plugin Started";
 
-			Log_Manager.setLogTarget(log1);
+			Log_Manager.setLogTarget(logEvents);
 			EVENT_LOG_LABEL.SendToBack();
 
 			initDirector();
@@ -335,7 +348,7 @@ namespace Plug_Parser_Plugin
 			// Unsubscribe from any events you listen to when exiting!
 			ActGlobals.oFormActMain.AfterCombatAction -= oFormActMain_AfterCombatAction;
 
-			SaveSettings();
+			saveSettings();
 			lblStatus.Text = "Plugin Exited";
 		}
 		#endregion
@@ -357,15 +370,15 @@ namespace Plug_Parser_Plugin
 		}
 		public void updateChartHelper(Stopwatch s)
 		{
-			if (vibeStrengthChart.InvokeRequired && !ALLOWING_UNSAFE_UI_EDITS)
+			if (chartVibeStrength.InvokeRequired && !ALLOWING_UNSAFE_UI_EDITS)
 			{
 				var d = new SafeCallDelegate(updateChartHelper);
-				vibeStrengthChart.Invoke(d, new object[] { s });
+				chartVibeStrength.Invoke(d, new object[] { s });
 			}
 			else
 			{
-				var series = vibeStrengthChart.Series["seriesMain"];
-				var area = vibeStrengthChart.ChartAreas["areaMain"];
+				var series = chartVibeStrength.Series["seriesMain"];
+				var area = chartVibeStrength.ChartAreas["areaMain"];
 
 				if (series.Points.Count >= 288)
 				{
@@ -373,7 +386,7 @@ namespace Plug_Parser_Plugin
 				}
 
 				series.Points.AddXY(s.ElapsedMilliseconds, director.getCurrentStrength());
-				vibeStrengthChart.ResetAutoValues();
+				chartVibeStrength.ResetAutoValues();
 			}
 
 
@@ -415,7 +428,7 @@ namespace Plug_Parser_Plugin
 		}
 
 		#region Settings
-		void LoadSettings()
+		void loadSettings()
 		{
 			xmlSettings.AddControlSetting(textBox1.Name, textBox1);
 
@@ -444,13 +457,15 @@ namespace Plug_Parser_Plugin
 				xReader.Close();
 			}
 		}
-		void SaveSettings()
+		void saveSettings()
 		{
 			FileStream fs = new FileStream(settingsFile, FileMode.Create, FileAccess.Write, FileShare.ReadWrite);
-			XmlTextWriter xWriter = new XmlTextWriter(fs, Encoding.UTF8);
-			xWriter.Formatting = Formatting.Indented;
-			xWriter.Indentation = 1;
-			xWriter.IndentChar = '\t';
+			XmlTextWriter xWriter = new XmlTextWriter(fs, Encoding.UTF8)
+			{
+				Formatting = Formatting.Indented,
+				Indentation = 1,
+				IndentChar = '\t'
+			};
 			xWriter.WriteStartDocument(true);
 			xWriter.WriteStartElement("Config");    // <Config>
 			xWriter.WriteStartElement("SettingsSerializer");    // <Config><SettingsSerializer>
@@ -469,7 +484,7 @@ namespace Plug_Parser_Plugin
 
 		}
 
-		private void button1_Click(object sender, EventArgs e)
+		private void buttonRescan_Click(object sender, EventArgs e)
 		{
 			director.scanForPlugs();
 		}
@@ -484,26 +499,26 @@ namespace Plug_Parser_Plugin
 
 		}
 
-		private void button1_Click_1(object sender, EventArgs e)
+		private void buttonStopScanning_Click(object sender, EventArgs e)
 		{
 			director.pressedAnyKey();
 		}
 
-		private void log1_TextChanged(object sender, EventArgs e)
+		private void logEvents_TextChanged(object sender, EventArgs e)
 		{
 
 		}
 
-		private void vibeOverrideValue_ValueChanged(object sender, EventArgs e)
+		private void numericupdownOverrideValue_ValueChanged(object sender, EventArgs e)
 		{
-			director.queueVibeOverride(checkBox1.Checked, trackBar1.Value);
-			if (trackBar1.Value != (int)vibeOverrideValue.Value)
+			director.queueVibeOverride(checkboxOverride.Checked, sliderVibeOverride.Value);
+			if (sliderVibeOverride.Value != (int)numericupdownOverrideValue.Value)
 			{
 				if (!Plug_Parser.ALLOWING_UNSAFE_UI_EDITS)
 				{
 					return;
 				}
-				trackBar1.Value = (int)vibeOverrideValue.Value;
+				sliderVibeOverride.Value = (int)numericupdownOverrideValue.Value;
 			}
 		}
 
@@ -512,34 +527,38 @@ namespace Plug_Parser_Plugin
 
 		}
 
-		private void button2_Click(object sender, EventArgs e)
+		private void buttonClearLog_Click(object sender, EventArgs e)
 		{
 			Log_Manager.clear();
 		}
 
-		private void chart1_Click(object sender, EventArgs e)
+		private void chartVibeStrength_Click(object sender, EventArgs e)
 		{
 
 		}
 
-		private void trackBar1_Scroll(object sender, EventArgs e)
+		private void sliderVibeOverride_Scroll(object sender, EventArgs e)
 		{
-			director.queueVibeOverride(checkBox1.Checked, trackBar1.Value);
-			if ((int)vibeOverrideValue.Value != trackBar1.Value)
+			director.queueVibeOverride(checkboxOverride.Checked, sliderVibeOverride.Value);
+			if ((int)numericupdownOverrideValue.Value != sliderVibeOverride.Value)
 			{
 				if (!Plug_Parser.ALLOWING_UNSAFE_UI_EDITS)
 				{
 					return;
 				}
-				vibeOverrideValue.Value = trackBar1.Value;
+				numericupdownOverrideValue.Value = sliderVibeOverride.Value;
 			}
 		}
 
-		private void checkBox1_CheckedChanged(object sender, EventArgs e)
+		private void checkboxOverride_CheckedChanged(object sender, EventArgs e)
 		{
-			director.queueVibeOverride(checkBox1.Checked, trackBar1.Value);
+			director.queueVibeOverride(checkboxOverride.Checked, sliderVibeOverride.Value);
 		}
 
+		private void buttonStart_Click(object sender, EventArgs e)
+		{
+
+		}
 	}
 	#endregion
 }
