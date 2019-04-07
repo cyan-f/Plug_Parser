@@ -17,10 +17,8 @@ namespace Plug_Parser_Plugin
 		private bool receivedCommand;
 		private bool isUpdating;
 		private bool isRunning;
-
-		private Power_Calculator powerCalculator;
 		
-		// TODO convert to lists/arrays of objects
+		// TODO convert to lists/arrays of objects/structs/data
 		private ButtplugWebsocketConnector connector;
 		private ButtplugClient client;
 		private Vibe_Remote remote;
@@ -154,7 +152,7 @@ namespace Plug_Parser_Plugin
 		private void clientDeviceAdded(object sender, DeviceAddedEventArgs args)
 		{
 			Log_Manager.write($"Device ${args.Device.Name} connected");
-			remote.buzz(args.Device, 1, 200);
+			remote.buzz(50, 200);
 
 			// TEMP for
 			receivedCommand = true;
