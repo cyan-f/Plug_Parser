@@ -89,7 +89,6 @@ namespace Plug_Parser_Plugin
 				val = overrideStrength;
 
 				long timePassed = DateTimeOffset.Now.ToUnixTimeMilliseconds() - overrideStartTime;
-				Log_Manager.write("Passed: " + timePassed + ", Target: " + overrideDuration);
 				if (timePassed >= overrideDuration)
 				{
 					unsetOverride();
@@ -196,6 +195,11 @@ namespace Plug_Parser_Plugin
 		{
 			settings.period = per;
 			settings.frequency = per / 1000;
+		}
+
+		private void setPhase(double phase)
+		{
+			settings.phaseShift = phase;
 		}
 	}
 }
