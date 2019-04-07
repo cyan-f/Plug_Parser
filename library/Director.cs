@@ -58,6 +58,11 @@ namespace Plug_Parser_Plugin
 			manager.setOverriding(isOverriding, strength);
 		}
 
+		public void setChartQuality(long q)
+		{
+			manager.setChartQuality(q);
+		}
+
 		public double getCurrentStrength()
 		{
 			return manager.getCurrentStrength();

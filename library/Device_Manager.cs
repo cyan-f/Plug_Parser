@@ -11,12 +11,15 @@ namespace Plug_Parser_Plugin
 {
 	class Device_Manager
 	{
-		private const int DELAY_TIME = 10;
+		private const int DELAY_TIME = 25;
 		private const int TIME_BETWEEN_DECAY = 1000; // milliseconds
 
 		private bool receivedCommand;
 		private bool isUpdating;
 		private bool isRunning;
+
+		// 0 = max quality
+		private long chartQuality;
 		
 		// TODO convert to lists/arrays of objects/structs/data
 		private ButtplugWebsocketConnector connector;
@@ -28,6 +31,7 @@ namespace Plug_Parser_Plugin
 			receivedCommand = false;
 			isUpdating = false;
 			isRunning = true;
+			chartQuality = 0;
 
 			remote = new Vibe_Remote();
 
@@ -57,11 +61,20 @@ namespace Plug_Parser_Plugin
 				remote.unsetOverride();
 			}
 		}
+
+		public void setChartQuality(long q)
+		{
+			chartQuality = q;
+		}
 		#endregion
 
 		#region Getters
 		public double getCurrentStrength()
 		{
+			if (chartQuality > 0)
+			{
+				return remote.getPreviousStrength();
+			}
 			return remote.updateStrength();
 		}
 		#endregion

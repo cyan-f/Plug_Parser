@@ -75,6 +75,11 @@ namespace Plug_Parser_Plugin
 		}
 
 		// Getters
+		public double getPreviousStrength()
+		{
+			return previousStrength;
+		}
+
 		public double updateStrength()
 		{
 			double val = 0;
@@ -104,11 +109,40 @@ namespace Plug_Parser_Plugin
 		}
 
 		// Controls
+
+		// Flat buzz
 		public void buzz(double strength, long duration)
 		{
 			setOverride(strength, duration);
 		}
 
+		// Augments normal strength
+		public void spike(double strength, long duration)
+		{
+
+		}
+
+		public void accelerate(double factor)
+		{
+
+		}
+
+		public void deccelerate(double factor)
+		{
+
+		}
+
+		public void excite(double factor)
+		{
+
+		}
+
+		public void calm(double factor)
+		{
+
+		}
+
+		// Meta controls
 		public void setOverride(double strength)
 		{
 			setOverride(strength, long.MaxValue);

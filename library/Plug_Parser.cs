@@ -1,12 +1,11 @@
-﻿using System;
-using System.Windows.Forms;
-using System.Text;
-using Advanced_Combat_Tracker;
-using System.IO;
-using System.Xml;
+﻿using Advanced_Combat_Tracker;
+using System;
 using System.Diagnostics;
-using System.Threading;
+using System.IO;
+using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
+using System.Xml;
 
 /*
  * File uses example code from Advanced Combat Tracker website.
@@ -20,8 +19,8 @@ namespace Plug_Parser_Plugin
 		private delegate void SafeCallDelegate(Stopwatch s);
 
 		Director director;
-		private Button buttonRescan;
 
+		private Button buttonRescan;
 		private TextBox textBox1;
 		private Button buttonStopScanning;
 		private RichTextBox logEvents;
@@ -34,6 +33,7 @@ namespace Plug_Parser_Plugin
 		private CheckBox checkboxOverride;
 		private Label label1;
 		private Button buttonStart;
+		private CheckBox checkboxChartQuality;
 
 		#region Designer Created Code (Avoid editing)
 		/// <summary> 
@@ -62,9 +62,9 @@ namespace Plug_Parser_Plugin
 		/// </summary>
 		private void InitializeComponent()
 		{
-			System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-			System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-			System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+			System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+			System.Windows.Forms.DataVisualization.Charting.Legend legend4 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+			System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
 			this.EVENT_LOG_LABEL = new System.Windows.Forms.Label();
 			this.textBox1 = new System.Windows.Forms.TextBox();
 			this.buttonRescan = new System.Windows.Forms.Button();
@@ -78,6 +78,7 @@ namespace Plug_Parser_Plugin
 			this.checkboxOverride = new System.Windows.Forms.CheckBox();
 			this.label1 = new System.Windows.Forms.Label();
 			this.buttonStart = new System.Windows.Forms.Button();
+			this.checkboxChartQuality = new System.Windows.Forms.CheckBox();
 			((System.ComponentModel.ISupportInitialize)(this.numericupdownOverrideValue)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.sliderVibeOverride)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.chartVibeStrength)).BeginInit();
@@ -190,37 +191,37 @@ namespace Plug_Parser_Plugin
 			this.chartVibeStrength.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.chartVibeStrength.BackColor = System.Drawing.Color.Transparent;
-			chartArea1.AxisX.LabelStyle.Enabled = false;
-			chartArea1.AxisX.MajorGrid.Enabled = false;
-			chartArea1.AxisX.MajorTickMark.Enabled = false;
-			chartArea1.AxisX.ScrollBar.BackColor = System.Drawing.Color.Black;
-			chartArea1.AxisY.LabelStyle.Enabled = false;
-			chartArea1.AxisY.MajorGrid.Enabled = false;
-			chartArea1.AxisY.MajorTickMark.Enabled = false;
-			chartArea1.AxisY.Maximum = 100D;
-			chartArea1.AxisY.Minimum = 0D;
-			chartArea1.BackColor = System.Drawing.SystemColors.ControlDarkDark;
-			chartArea1.BorderDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Solid;
-			chartArea1.CursorX.AutoScroll = false;
-			chartArea1.Name = "areaMain";
-			chartArea1.Position.Auto = false;
-			chartArea1.Position.Height = 100F;
-			chartArea1.Position.Width = 100F;
-			this.chartVibeStrength.ChartAreas.Add(chartArea1);
-			legend1.Enabled = false;
-			legend1.Name = "Legend1";
-			this.chartVibeStrength.Legends.Add(legend1);
+			chartArea4.AxisX.LabelStyle.Enabled = false;
+			chartArea4.AxisX.MajorGrid.Enabled = false;
+			chartArea4.AxisX.MajorTickMark.Enabled = false;
+			chartArea4.AxisX.ScrollBar.BackColor = System.Drawing.Color.Black;
+			chartArea4.AxisY.LabelStyle.Enabled = false;
+			chartArea4.AxisY.MajorGrid.Enabled = false;
+			chartArea4.AxisY.MajorTickMark.Enabled = false;
+			chartArea4.AxisY.Maximum = 100D;
+			chartArea4.AxisY.Minimum = 0D;
+			chartArea4.BackColor = System.Drawing.SystemColors.ControlDarkDark;
+			chartArea4.BorderDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Solid;
+			chartArea4.CursorX.AutoScroll = false;
+			chartArea4.Name = "areaMain";
+			chartArea4.Position.Auto = false;
+			chartArea4.Position.Height = 100F;
+			chartArea4.Position.Width = 100F;
+			this.chartVibeStrength.ChartAreas.Add(chartArea4);
+			legend4.Enabled = false;
+			legend4.Name = "Legend1";
+			this.chartVibeStrength.Legends.Add(legend4);
 			this.chartVibeStrength.Location = new System.Drawing.Point(4, 309);
 			this.chartVibeStrength.Margin = new System.Windows.Forms.Padding(0);
 			this.chartVibeStrength.MinimumSize = new System.Drawing.Size(594, 252);
 			this.chartVibeStrength.Name = "chartVibeStrength";
-			series1.ChartArea = "areaMain";
-			series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
-			series1.Color = System.Drawing.SystemColors.ControlLightLight;
-			series1.LabelForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-			series1.Legend = "Legend1";
-			series1.Name = "seriesMain";
-			this.chartVibeStrength.Series.Add(series1);
+			series4.ChartArea = "areaMain";
+			series4.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+			series4.Color = System.Drawing.SystemColors.ControlLightLight;
+			series4.LabelForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+			series4.Legend = "Legend1";
+			series4.Name = "seriesMain";
+			this.chartVibeStrength.Series.Add(series4);
 			this.chartVibeStrength.Size = new System.Drawing.Size(594, 300);
 			this.chartVibeStrength.TabIndex = 13;
 			this.chartVibeStrength.Click += new System.EventHandler(this.chartVibeStrength_Click);
@@ -253,9 +254,9 @@ namespace Plug_Parser_Plugin
 			this.label1.AutoSize = true;
 			this.label1.Location = new System.Drawing.Point(145, 3);
 			this.label1.Name = "label1";
-			this.label1.Size = new System.Drawing.Size(195, 13);
+			this.label1.Size = new System.Drawing.Size(223, 13);
 			this.label1.TabIndex = 16;
-			this.label1.Text = "NOTE: ONLY CONNECT ONE DEVICE";
+			this.label1.Text = "NOTE: ONLY SOLO DEVICES SUPPORTED";
 			// 
 			// buttonStart
 			// 
@@ -267,11 +268,25 @@ namespace Plug_Parser_Plugin
 			this.buttonStart.UseVisualStyleBackColor = true;
 			this.buttonStart.Click += new System.EventHandler(this.buttonStart_Click);
 			// 
+			// checkboxChartQuality
+			// 
+			this.checkboxChartQuality.AutoSize = true;
+			this.checkboxChartQuality.Checked = true;
+			this.checkboxChartQuality.CheckState = System.Windows.Forms.CheckState.Checked;
+			this.checkboxChartQuality.Location = new System.Drawing.Point(100, 288);
+			this.checkboxChartQuality.Name = "checkboxChartQuality";
+			this.checkboxChartQuality.Size = new System.Drawing.Size(58, 17);
+			this.checkboxChartQuality.TabIndex = 18;
+			this.checkboxChartQuality.Text = "Quality";
+			this.checkboxChartQuality.UseVisualStyleBackColor = true;
+			this.checkboxChartQuality.CheckedChanged += new System.EventHandler(this.checkboxChartQuality_CheckedChanged);
+			// 
 			// Plug_Parser
 			// 
 			this.AccessibleDescription = "";
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+			this.Controls.Add(this.checkboxChartQuality);
 			this.Controls.Add(this.buttonStart);
 			this.Controls.Add(this.label1);
 			this.Controls.Add(this.checkboxOverride);
@@ -557,6 +572,18 @@ namespace Plug_Parser_Plugin
 		private void buttonStart_Click(object sender, EventArgs e)
 		{
 
+		}
+
+		private void checkboxChartQuality_CheckedChanged(object sender, EventArgs e)
+		{
+			if (checkboxChartQuality.Checked)
+			{
+				director.setChartQuality(0);
+			}
+			else
+			{
+				director.setChartQuality(1);
+			}
 		}
 	}
 	#endregion

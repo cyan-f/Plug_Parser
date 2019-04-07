@@ -31,11 +31,14 @@ namespace Plug_Parser_Plugin
 			}
 			else
 			{
-				if (eventLog.Lines.Length >= 20)
+				if ((eventLog.Lines.Length >= 20) || (eventLog.Text == ""))
 				{
-					eventLog.Text = "";
+					eventLog.Text = s;
 				}
-				eventLog.AppendText("\n" + s);
+				else
+				{
+					eventLog.AppendText("\n" + s);
+				}
 			}
 		}
 
