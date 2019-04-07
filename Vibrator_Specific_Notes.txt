@@ -1,0 +1,4 @@
+# Lovense Hush 
+
+Accepts input from 0.00 to 1.00, but only changes strength in steps of 0.05. 
+In practice, it only has 20 vibration levels (ie. 0.00-0.04; 0.05-0.09; 0.10-0.14; ...; 1.00).

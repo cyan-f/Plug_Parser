@@ -56,12 +56,7 @@ namespace Plug_Parser_Plugin
 		public void queueVibeOverride(bool isO, long strength)
 		{
 			double power = (double)strength;
-			manager.setOverwriting(isO, power);
-		}
-
-		public double getCurrentPower()
-		{
-			return manager.getCurrentPower();
+			manager.setOverriding(isO, power);
 		}
 
 		public double getCurrentStrength()

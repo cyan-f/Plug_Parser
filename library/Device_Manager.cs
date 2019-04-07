@@ -17,30 +17,27 @@ namespace Plug_Parser_Plugin
 		private bool receivedCommand;
 		private bool isUpdating;
 		private bool isRunning;
-		private bool isOverwriting;
-
-		private double overwriteStrength; // 0 - 100
 
 		private Power_Calculator powerCalculator;
 		
-
+		// TODO convert to lists/arrays of objects
 		private ButtplugWebsocketConnector connector;
 		private ButtplugClient client;
+		private Vibe_Remote remote;
 
 		public Device_Manager()
 		{
 			receivedCommand = false;
 			isUpdating = false;
 			isRunning = true;
-			isOverwriting = false;
 
-			overwriteStrength = 0;
-
-			powerCalculator = new Power_Calculator();
+			remote = new Vibe_Remote();
 
 			Log_Manager.write("Created Manager");
 		}
 
+		// Controls
+		#region Setters
 		public void setUpdating(bool u)
 		{
 			isUpdating = u;
@@ -51,11 +48,19 @@ namespace Plug_Parser_Plugin
 			isRunning = r;
 		}
 
-		public void setOverwriting(bool isO, double power)
+		public void setOverriding(bool isO, double power)
 		{
-			isOverwriting = isO;
-			overwriteStrength = power;
+			// TODO
 		}
+		#endregion
+
+		#region Getters
+		public double getCurrentStrength()
+		{
+			return 0; // TODO
+		}
+		#endregion
+
 
 		public void receiveCommand()
 		{
@@ -110,10 +115,13 @@ namespace Plug_Parser_Plugin
 					if ((newTime - time) > TIME_BETWEEN_DECAY)
 					{
 						time = newTime;
-						powerCalculator.decay();
+						// decay
 					}
 
-					await vibrate();
+					foreach (ButtplugClientDevice toy in client.Devices)
+					{
+						await remote.vibe(toy);
+					}
 				}
 				await Task.Delay(DELAY_TIME);
 			}
@@ -146,6 +154,9 @@ namespace Plug_Parser_Plugin
 		private void clientDeviceAdded(object sender, DeviceAddedEventArgs args)
 		{
 			Log_Manager.write($"Device ${args.Device.Name} connected");
+			remote.buzz(args.Device, 1, 200);
+
+			// TEMP for
 			receivedCommand = true;
 		}
 
@@ -182,80 +193,6 @@ namespace Plug_Parser_Plugin
 			{
 				Log_Manager.write("Client knows about no devices.");
 			}
-		}
-
-		// Buzzes device briefly for confirmation of connection.
-		private void connectedBuzz()
-		{
-			buzz(1, 200);
-		}
-
-		/*
-		 * Vibrates every toy connected to client.
-		 * 
-		 * power: vibration strength in range 0-1, where 1 is full power
-		 * duration: amount of time to vibrate at given strength in milliseconds
-		 *		If duration is set to 0, the duration is indefinite, until overwritten
-		 *		
-		 * Notes:
-		 *		Lovense Hush accepts input from 0.00 to 1.00, but only changes strength in steps of 0.05.
-		 *		So, it, in practice, only has 20 vibration levels.
-		 *		ie. 0.00-0.04; 0.05-0.09; 0.10-0.14; ... 
-		*/
-		public void buzz(double power, int duration)
-		{
-			Parallel.ForEach(client.Devices, (toy) =>
-			{
-				toy.SendVibrateCmd(power).Wait();
-				if (duration > 0)
-				{
-					Thread.Sleep(duration);
-					toy.SendVibrateCmd(0).Wait();
-				}
-			});
-		}
-
-
-		public async Task vibrate()
-		{
-			double power = 0;
-
-			if (isOverwriting)
-			{
-				power = overwriteStrength / 100;
-			}
-			else
-			{
-				power = getCurrentPower();
-			}
-
-			foreach (ButtplugClientDevice toy in client.Devices)
-			{
-				await toy.SendVibrateCmd(power);
-			}
-		}
-
-		public double getCurrentPower()
-		{
-			if (isOverwriting)
-			{
-				return overwriteStrength / 100;
-			}
-			return 0; // TODO
-		}
-
-		public double getCurrentStrength()
-		{
-			if (isOverwriting)
-			{
-				return overwriteStrength;
-			}
-			return 0; // TODO ;
-		}
-
-		public void adjustRate(double f)
-		{
-			powerCalculator.adjustPeriodFactor(f);
 		}
 
 	}
