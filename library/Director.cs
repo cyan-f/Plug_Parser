@@ -47,16 +47,15 @@ namespace Plug_Parser_Plugin
 
 			if ((attacker == "YOU") || (attacker == "Unknown"))
 			{
-				
+				// TODO parse this, idk
 
 				await Task.Delay(1000);
 			}
 		}
 
-		public void queueVibeOverride(bool isO, long strength)
+		public void queueVibeOverride(bool isOverriding, double strength)
 		{
-			double power = (double)strength;
-			manager.setOverriding(isO, power);
+			manager.setOverriding(isOverriding, strength);
 		}
 
 		public double getCurrentStrength()

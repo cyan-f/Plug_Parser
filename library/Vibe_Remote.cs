@@ -41,7 +41,15 @@ namespace Plug_Parser_Plugin
 		private remote_settings settings;
 
 		#region Default values
-
+		private const double MINIMUM_STRENGTH = 0;
+		private const double MAXIMUM_STRENGTH = 100;
+		private const double BUZZ_STRENGTH = 0;
+		private const double BASE_STRENGTH = 15;
+		private const double ERRATICNESS = 0;
+		private const double VARIANCE = 10;
+		private const double FREQUENCY = 1;
+		private const double PERIOD = 1000 * FREQUENCY;
+		private const double PHASE_SHIFT = 0;
 		#endregion
 
 		private bool isOverriding;
@@ -62,12 +70,37 @@ namespace Plug_Parser_Plugin
 			previousStrength = 0;
 
 			// Initialize default settings
+			settings = new remote_settings(MINIMUM_STRENGTH, MAXIMUM_STRENGTH,
+				BUZZ_STRENGTH, BASE_STRENGTH, ERRATICNESS, VARIANCE, FREQUENCY, PERIOD, PHASE_SHIFT);
 		}
 
 		// Getters
-		public double getStrength()
+		public double updateStrength()
 		{
-			return previousStrength;
+			double val = 0;
+
+			if (isOverriding)
+			{
+				val = overrideStrength;
+
+				long timePassed = DateTimeOffset.Now.ToUnixTimeMilliseconds() - overrideStartTime;
+				Log_Manager.write("Passed: " + timePassed + ", Target: " + overrideDuration);
+				if (timePassed >= overrideDuration)
+				{
+					unsetOverride();
+				}
+			}
+			else if (isInterpolated)
+			{
+				val = interpolate(Power_Calculator.getWaveValue(settings));
+			}
+			else
+			{
+				val = Power_Calculator.getWaveValue(settings);
+			}
+			
+			previousStrength = val;
+			return val;
 		}
 
 		// Controls
@@ -99,31 +132,13 @@ namespace Plug_Parser_Plugin
 		// Actions
 		public async Task vibe(ButtplugClientDevice toy)
 		{
-			await toy.SendVibrateCmd(getCurrentPower());
+			await toy.SendVibrateCmd(getPower());
 		}
 
 		// Private helpers
-		private double getCurrentPower()
+		private double getPower()
 		{
-			double val = 0;
-
-			if (isOverriding)
-			{
-				val = overrideStrength;
-
-				long currentTime = DateTimeOffset.Now.ToUnixTimeMilliseconds();
-				if ((currentTime - overrideStartTime) >= overrideDuration)
-				{
-					unsetOverride();
-				}
-			}
-			else if (isInterpolated)
-			{
-				val = interpolate(Power_Calculator.getWaveValue(settings)); // TODO
-			}
-
-			previousStrength = val;
-			return val;
+			return previousStrength / 100;
 		}
 
 		private double interpolate(double target)
@@ -134,7 +149,7 @@ namespace Plug_Parser_Plugin
 				return target;
 			}
 
-			return 0; // TODO
+			return target; // TODO
 		}
 	}
 }

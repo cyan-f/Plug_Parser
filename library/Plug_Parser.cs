@@ -22,6 +22,7 @@ namespace Plug_Parser_Plugin
 		Director director;
 		private Button buttonRescan;
 
+		private TextBox textBox1;
 		private Button buttonStopScanning;
 		private RichTextBox logEvents;
 		private NumericUpDown numericupdownOverrideValue;
@@ -59,7 +60,7 @@ namespace Plug_Parser_Plugin
 		/// Required method for Designer support - do not modify 
 		/// the contents of this method with the code editor.
 		/// </summary>
-		private void initializeComponent()
+		private void InitializeComponent()
 		{
 			System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
 			System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
@@ -102,6 +103,7 @@ namespace Plug_Parser_Plugin
 			this.textBox1.TabIndex = 1;
 			this.textBox1.TabStop = false;
 			this.textBox1.Text = "Sample TextBox that has its value stored to the settings file automatically.";
+			this.textBox1.Visible = false;
 			this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
 			// 
 			// buttonRescan
@@ -118,14 +120,12 @@ namespace Plug_Parser_Plugin
 			// 
 			// buttonStopScanning
 			// 
-			this.buttonStopScanning.Enabled = false;
 			this.buttonStopScanning.Location = new System.Drawing.Point(517, 92);
 			this.buttonStopScanning.Name = "buttonStopScanning";
 			this.buttonStopScanning.Size = new System.Drawing.Size(114, 32);
 			this.buttonStopScanning.TabIndex = 4;
 			this.buttonStopScanning.Text = "Stop Scanning";
 			this.buttonStopScanning.UseVisualStyleBackColor = true;
-			this.buttonStopScanning.Visible = false;
 			this.buttonStopScanning.Click += new System.EventHandler(this.buttonStopScanning_Click);
 			// 
 			// logEvents
@@ -298,15 +298,13 @@ namespace Plug_Parser_Plugin
 
 		#endregion
 
-		private TextBox textBox1;
-
 		#endregion
 
 		public Plug_Parser()
 		{
 			try
 			{
-				initializeComponent();
+				InitializeComponent();
 			}
 			catch (FileNotFoundException e)
 			{
@@ -317,7 +315,7 @@ namespace Plug_Parser_Plugin
 		}
 
 		Label lblStatus;    // The status label that appears in ACT's Plugin tab
-		string settingsFile = Path.Combine(ActGlobals.oFormActMain.AppDataFolder.FullName, "Config\\PluginSample.config.xml");
+		readonly string settingsFile = Path.Combine(ActGlobals.oFormActMain.AppDataFolder.FullName, "Config\\PluginSample.config.xml");
 		SettingsSerializer xmlSettings;
 
 		#region IActPluginV1 Members
@@ -337,6 +335,7 @@ namespace Plug_Parser_Plugin
 
 			lblStatus.Text = "Plugin Started";
 
+			// Custom
 			Log_Manager.setLogTarget(logEvents);
 			EVENT_LOG_LABEL.SendToBack();
 
@@ -350,6 +349,57 @@ namespace Plug_Parser_Plugin
 
 			saveSettings();
 			lblStatus.Text = "Plugin Exited";
+		}
+		#endregion
+
+		#region Settings
+		void loadSettings()
+		{
+			xmlSettings.AddControlSetting(textBox1.Name, textBox1);
+
+			if (File.Exists(settingsFile))
+			{
+				FileStream fs = new FileStream(settingsFile, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+				XmlTextReader xReader = new XmlTextReader(fs);
+
+				try
+				{
+					while (xReader.Read())
+					{
+						if (xReader.NodeType == XmlNodeType.Element)
+						{
+							if (xReader.LocalName == "SettingsSerializer")
+							{
+								xmlSettings.ImportFromXml(xReader);
+							}
+						}
+					}
+				}
+				catch (Exception ex)
+				{
+					lblStatus.Text = "Error loading settings: " + ex.Message;
+				}
+				xReader.Close();
+			}
+		}
+		void saveSettings()
+		{
+			FileStream fs = new FileStream(settingsFile, FileMode.Create, FileAccess.Write, FileShare.ReadWrite);
+			XmlTextWriter xWriter = new XmlTextWriter(fs, Encoding.UTF8)
+			{
+				Formatting = Formatting.Indented,
+				Indentation = 1,
+				IndentChar = '\t'
+			};
+			xWriter.WriteStartDocument(true);
+			xWriter.WriteStartElement("Config");    // <Config>
+			xWriter.WriteStartElement("SettingsSerializer");    // <Config><SettingsSerializer>
+			xmlSettings.ExportToXml(xWriter);   // Fill the SettingsSerializer XML
+			xWriter.WriteEndElement();  // </SettingsSerializer>
+			xWriter.WriteEndElement();  // </Config>
+			xWriter.WriteEndDocument(); // Tie up loose ends (shouldn't be any)
+			xWriter.Flush();    // Flush the file buffer to disk
+			xWriter.Close();
 		}
 		#endregion
 
@@ -427,57 +477,6 @@ namespace Plug_Parser_Plugin
 #pragma warning restore CS4014
 		}
 
-		#region Settings
-		void loadSettings()
-		{
-			xmlSettings.AddControlSetting(textBox1.Name, textBox1);
-
-			if (File.Exists(settingsFile))
-			{
-				FileStream fs = new FileStream(settingsFile, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
-				XmlTextReader xReader = new XmlTextReader(fs);
-
-				try
-				{
-					while (xReader.Read())
-					{
-						if (xReader.NodeType == XmlNodeType.Element)
-						{
-							if (xReader.LocalName == "SettingsSerializer")
-							{
-								xmlSettings.ImportFromXml(xReader);
-							}
-						}
-					}
-				}
-				catch (Exception ex)
-				{
-					lblStatus.Text = "Error loading settings: " + ex.Message;
-				}
-				xReader.Close();
-			}
-		}
-		void saveSettings()
-		{
-			FileStream fs = new FileStream(settingsFile, FileMode.Create, FileAccess.Write, FileShare.ReadWrite);
-			XmlTextWriter xWriter = new XmlTextWriter(fs, Encoding.UTF8)
-			{
-				Formatting = Formatting.Indented,
-				Indentation = 1,
-				IndentChar = '\t'
-			};
-			xWriter.WriteStartDocument(true);
-			xWriter.WriteStartElement("Config");    // <Config>
-			xWriter.WriteStartElement("SettingsSerializer");    // <Config><SettingsSerializer>
-			xmlSettings.ExportToXml(xWriter);   // Fill the SettingsSerializer XML
-			xWriter.WriteEndElement();  // </SettingsSerializer>
-			xWriter.WriteEndElement();  // </Config>
-			xWriter.WriteEndDocument(); // Tie up loose ends (shouldn't be any)
-			xWriter.Flush();    // Flush the file buffer to disk
-			xWriter.Close();
-		}
-		#endregion
-
 		#region UI Actions
 		private void textBox1_TextChanged(object sender, EventArgs e)
 		{
@@ -511,7 +510,7 @@ namespace Plug_Parser_Plugin
 
 		private void numericupdownOverrideValue_ValueChanged(object sender, EventArgs e)
 		{
-			director.queueVibeOverride(checkboxOverride.Checked, sliderVibeOverride.Value);
+			director.queueVibeOverride(checkboxOverride.Checked, (double) numericupdownOverrideValue.Value);
 			if (sliderVibeOverride.Value != (int)numericupdownOverrideValue.Value)
 			{
 				if (!Plug_Parser.ALLOWING_UNSAFE_UI_EDITS)

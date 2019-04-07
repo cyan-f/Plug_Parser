@@ -19,10 +19,10 @@ namespace Plug_Parser_Plugin
 		{
 			// Angle in radians.
 			double angle = (DateTime.Now.Millisecond + (DateTime.Now.Second * SECOND_IN_MILLIS)) 
-				% (terms.frequency + (terms.frequency * terms.phaseShift)) 
-				/ (terms.frequency) * RADIAN;
+				% (terms.period + (terms.period * terms.phaseShift)) 
+				/ (terms.period) * RADIAN;
 
-			double val = (Math.Sin(angle) * (terms.variance) + (terms.baseStrength));
+			double val = ((Math.Sin(angle) * (terms.variance)) + (terms.baseStrength));
 
 			return val;
 		}

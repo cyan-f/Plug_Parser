@@ -46,16 +46,23 @@ namespace Plug_Parser_Plugin
 			isRunning = r;
 		}
 
-		public void setOverriding(bool isO, double power)
+		public void setOverriding(bool isOverriding, double strength)
 		{
-			// TODO
+			if (isOverriding)
+			{
+				remote.setOverride(strength);
+			}
+			else
+			{
+				remote.unsetOverride();
+			}
 		}
 		#endregion
 
 		#region Getters
 		public double getCurrentStrength()
 		{
-			return 0; // TODO
+			return remote.updateStrength();
 		}
 		#endregion
 
@@ -115,6 +122,8 @@ namespace Plug_Parser_Plugin
 						time = newTime;
 						// decay
 					}
+
+					remote.updateStrength();
 
 					foreach (ButtplugClientDevice toy in client.Devices)
 					{
