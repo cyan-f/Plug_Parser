@@ -129,7 +129,7 @@ namespace Plug_Parser_Plugin
 		}
 
 
-		// Actions
+		// Tasks
 		public async Task vibe(ButtplugClientDevice toy)
 		{
 			await toy.SendVibrateCmd(getPower());
@@ -150,6 +150,18 @@ namespace Plug_Parser_Plugin
 			}
 
 			return target; // TODO
+		}
+
+		private void setFrequency(double freq)
+		{
+			settings.frequency = freq;
+			settings.period = 1000 * freq;
+		}
+
+		private void setPeriod(double per)
+		{
+			settings.period = per;
+			settings.frequency = per / 1000;
 		}
 	}
 }
