@@ -151,7 +151,7 @@ namespace Plug_Parser_Plugin
 			double newFrequency = settings.frequency * factor;
 			setFrequency(newFrequency);
 
-			Log_Manager.write("NF: " + newFrequency);
+			//Log_Manager.write("NF: " + newFrequency);
 		}
 
 		public void excite(double factor)
