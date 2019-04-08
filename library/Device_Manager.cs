@@ -11,7 +11,7 @@ namespace Plug_Parser_Plugin
 {
 	class Device_Manager
 	{
-		private const int DELAY_TIME = 25;
+		private const int DELAY_TIME = 50;
 		private const int TIME_BETWEEN_DECAY = 1000; // milliseconds
 
 		private bool receivedCommand;
@@ -39,6 +39,31 @@ namespace Plug_Parser_Plugin
 		}
 
 		// Controls
+		public void queueAction(string action)
+		{
+			switch (action)
+			{
+				case Actions.YOU_HIT:
+					//remote.buzz(40, 100);
+					remote.spike(2.0, 200);
+					break;
+
+				case Actions.YOU_HEALED:
+					break;
+
+				case Actions.YOU_KILLED:
+					//remote.accelerate(2.0);
+					remote.buzz(90, 250);
+					break;
+				case Actions.YOU_KILLED_ENOUGH:
+					remote.buzz(100, 500);
+					break;
+				default:
+					remote.buzz(70, 100);
+					break;
+			}
+		}
+
 		#region Setters
 		public void setUpdating(bool u)
 		{
@@ -123,19 +148,10 @@ namespace Plug_Parser_Plugin
 
 		private async Task update()
 		{
-			long time = DateTimeOffset.Now.ToUnixTimeMilliseconds();
-			long newTime;
 			while (isRunning)
 			{
 				if (isUpdating)
 				{
-					newTime = DateTimeOffset.Now.ToUnixTimeMilliseconds();
-					if ((newTime - time) > TIME_BETWEEN_DECAY)
-					{
-						time = newTime;
-						// decay
-					}
-
 					remote.updateStrength();
 
 					foreach (ButtplugClientDevice toy in client.Devices)

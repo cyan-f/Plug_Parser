@@ -1,4 +1,5 @@
 # Plug_Paser
+
 An attempt to control a Lovense Hush via FF14's Advanced Combat Tracker (ACT). 
 
 Currently in a "Proof-of-Concept" stage. 
@@ -7,6 +8,10 @@ The code is messy and uncommented, but is functional for testing to see if it wo
 There are many UX issues, and clear remnants of example code I copied. 
 I am aware of this, and do not intend to leave them in past proof-of-concept.
 Thank you for your patience and understanding.
+
+# WARNING
+A known bug is that FF14 may freeze while using this plugin.
+If this happens, restart ACT.
 
 # Installation
 

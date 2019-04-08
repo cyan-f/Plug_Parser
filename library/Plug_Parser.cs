@@ -198,6 +198,7 @@ namespace Plug_Parser_Plugin
 			this.chartVibeStrength.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.chartVibeStrength.BackColor = System.Drawing.Color.Transparent;
+			this.chartVibeStrength.BorderlineColor = System.Drawing.Color.Transparent;
 			chartArea1.AxisX.LabelStyle.Enabled = false;
 			chartArea1.AxisX.MajorGrid.Enabled = false;
 			chartArea1.AxisX.MajorTickMark.Enabled = false;
@@ -215,6 +216,7 @@ namespace Plug_Parser_Plugin
 			chartArea1.Position.Height = 100F;
 			chartArea1.Position.Width = 100F;
 			this.chartVibeStrength.ChartAreas.Add(chartArea1);
+			this.chartVibeStrength.Cursor = System.Windows.Forms.Cursors.Default;
 			legend1.Enabled = false;
 			legend1.Name = "Legend1";
 			this.chartVibeStrength.Legends.Add(legend1);
@@ -222,11 +224,18 @@ namespace Plug_Parser_Plugin
 			this.chartVibeStrength.Margin = new System.Windows.Forms.Padding(0);
 			this.chartVibeStrength.MinimumSize = new System.Drawing.Size(594, 252);
 			this.chartVibeStrength.Name = "chartVibeStrength";
+			series1.BackImageTransparentColor = System.Drawing.Color.DarkCyan;
+			series1.BackSecondaryColor = System.Drawing.Color.DarkCyan;
+			series1.BorderColor = System.Drawing.Color.DarkCyan;
+			series1.BorderWidth = 3;
 			series1.ChartArea = "areaMain";
 			series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
-			series1.Color = System.Drawing.SystemColors.ControlLightLight;
+			series1.Color = System.Drawing.Color.Cyan;
 			series1.LabelForeColor = System.Drawing.SystemColors.ActiveCaptionText;
 			series1.Legend = "Legend1";
+			series1.MarkerBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
+			series1.MarkerBorderWidth = 1100;
+			series1.MarkerSize = 10;
 			series1.Name = "seriesMain";
 			this.chartVibeStrength.Series.Add(series1);
 			this.chartVibeStrength.Size = new System.Drawing.Size(594, 300);

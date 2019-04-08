@@ -19,10 +19,14 @@ namespace Plug_Parser_Plugin
 		public double period;
 		public double phaseShift; // Adds (phaseShift * period) to [current time]
 
+		public double spikeAmount;
+		public double spikeTimeLeft;
+
 		public remote_settings(double minimumStrength, double maximumStrength, 
 			double buzzStrength, double baseStrength, 
 			double erraticness, double variance, 
-			double frequency, double period, double phaseShift)
+			double frequency, double period, double phaseShift,
+			double spikeAmount, double spikeTimeLeft)
 		{
 			this.minimumStrength = minimumStrength;
 			this.maximumStrength = maximumStrength;
@@ -33,6 +37,8 @@ namespace Plug_Parser_Plugin
 			this.period = period;
 			this.frequency = frequency;
 			this.phaseShift = phaseShift;
+			this.spikeAmount = spikeAmount;
+			this.spikeTimeLeft = spikeTimeLeft;
 		}
 	}
 
@@ -48,8 +54,10 @@ namespace Plug_Parser_Plugin
 		private const double ERRATICNESS = 0;
 		private const double VARIANCE = 10;
 		private const double FREQUENCY = 1;
-		private const double PERIOD = 1000 * FREQUENCY;
+		private const double PERIOD = 1000 * (1 / FREQUENCY);
 		private const double PHASE_SHIFT = 0;
+		private const double SPIKE_AMOUNT = 0;
+		private const double SPIKE_DURATION = 0;
 		#endregion
 
 		private bool isOverriding;
@@ -57,6 +65,10 @@ namespace Plug_Parser_Plugin
 		// For temporary "buzzes"
 		private double overrideDuration;
 		private long overrideStartTime;
+
+		private long lastTime;
+		private long thisTime;
+		private long deltaTime;
 
 		// Stores last sent vibration strength for interpolation
 		private double previousStrength;
@@ -67,11 +79,14 @@ namespace Plug_Parser_Plugin
 			isOverriding = false;
 			overrideStrength = 0;
 
+			lastTime = DateTimeOffset.Now.ToUnixTimeMilliseconds();
+
 			previousStrength = 0;
 
 			// Initialize default settings
 			settings = new remote_settings(MINIMUM_STRENGTH, MAXIMUM_STRENGTH,
-				BUZZ_STRENGTH, BASE_STRENGTH, ERRATICNESS, VARIANCE, FREQUENCY, PERIOD, PHASE_SHIFT);
+				BUZZ_STRENGTH, BASE_STRENGTH, ERRATICNESS, VARIANCE, FREQUENCY, PERIOD, PHASE_SHIFT,
+				SPIKE_AMOUNT, SPIKE_DURATION);
 		}
 
 		// Getters
@@ -82,27 +97,33 @@ namespace Plug_Parser_Plugin
 
 		public double updateStrength()
 		{
+			thisTime = DateTimeOffset.Now.ToUnixTimeMilliseconds();
+			deltaTime = thisTime - lastTime;
+			lastTime = thisTime;
+
 			double val = 0;
 
 			if (isOverriding)
 			{
 				val = overrideStrength;
-
-				long timePassed = DateTimeOffset.Now.ToUnixTimeMilliseconds() - overrideStartTime;
-				if (timePassed >= overrideDuration)
+				overrideDuration -= deltaTime;
+				
+				if (overrideDuration <= 0)
 				{
 					unsetOverride();
 				}
 			}
 			else if (isInterpolated)
 			{
-				val = interpolate(Power_Calculator.getWaveValue(settings));
+				val = interpolate(Power_Calculator.getStrength(settings));
 			}
 			else
 			{
-				val = Power_Calculator.getWaveValue(settings);
+				val = Power_Calculator.getStrength(settings);
 			}
-			
+
+			decay();
+
 			previousStrength = val;
 			return val;
 		}
@@ -112,23 +133,25 @@ namespace Plug_Parser_Plugin
 		// Flat buzz
 		public void buzz(double strength, long duration)
 		{
-			setOverride(strength, duration);
+			if (strength > overrideStrength)
+			{
+				setOverride(strength, duration);
+			}
 		}
 
 		// Augments normal strength
-		public void spike(double strength, long duration)
+		public void spike(double strength, double duration)
 		{
-
+			settings.spikeAmount = strength;
+			settings.spikeTimeLeft = duration;
 		}
 
 		public void accelerate(double factor)
 		{
+			double newFrequency = settings.frequency * factor;
+			setFrequency(newFrequency);
 
-		}
-
-		public void deccelerate(double factor)
-		{
-
+			Log_Manager.write("NF: " + newFrequency);
 		}
 
 		public void excite(double factor)
@@ -136,9 +159,10 @@ namespace Plug_Parser_Plugin
 
 		}
 
-		public void calm(double factor)
+		// Increases baseStrength by given amount.
+		public void bump(double amount)
 		{
-
+			settings.baseStrength += amount;
 		}
 
 		// Meta controls
@@ -176,30 +200,48 @@ namespace Plug_Parser_Plugin
 
 		private double interpolate(double target)
 		{
+			return target; // TODO
+
 			if (System.Math.Abs(target - previousStrength) < 0.05)
 			{
 				isInterpolated = false;
 				return target;
 			}
-
-			return target; // TODO
 		}
 
 		private void setFrequency(double freq)
 		{
 			settings.frequency = freq;
-			settings.period = 1000 * freq;
+			settings.period = 1000 * (1 / freq);
 		}
 
 		private void setPeriod(double per)
 		{
 			settings.period = per;
-			settings.frequency = per / 1000;
+			settings.frequency = (1 / per) / 1000;
 		}
 
 		private void setPhase(double phase)
 		{
 			settings.phaseShift = phase;
+		}
+
+		private void decay()
+		{
+			if (settings.spikeTimeLeft > 0)
+			{
+				settings.spikeTimeLeft -= deltaTime;
+			}
+
+			if (settings.frequency > 1)
+			{
+				accelerate(0.95 * (1 - (deltaTime / 1000)));
+			}
+
+			if (settings.baseStrength > 15)
+			{
+				bump(-(deltaTime / 2000));
+			}
 		}
 	}
 }

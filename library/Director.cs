@@ -5,6 +5,8 @@ namespace Plug_Parser_Plugin
 	class Director
 	{
 		private Device_Manager manager = null;
+
+		private double killCount;
 		
 		public Director()
 		{
@@ -43,14 +45,28 @@ namespace Plug_Parser_Plugin
 		public async Task addAction(string attacker, string victim, string attackType, string damagetype, string swingType,
 			string special, long damage, bool wasCrit)
 		{
-			Log_Manager.write(attacker + ", " + victim + ", " + attackType + ", " + damagetype + ", " + swingType + ", " + special);
+			//Log_Manager.write(attacker + ", " + victim + ", " + attackType + ", " + damagetype + ", " + swingType + ", " + special);
 
-			if ((attacker == "YOU") || (attacker == "Unknown"))
+			if (attacker == "YOU")
 			{
-				// TODO parse this, idk
+				manager.queueAction(Actions.YOU_HIT);
+				if (attackType == "Killing")
+				{
+					manager.queueAction(Actions.YOU_KILLED);
+					killCount++;
 
-				await Task.Delay(1000);
+					if (killCount >= 4)
+					{
+						manager.queueAction(Actions.YOU_KILLED_ENOUGH);
+						killCount = 0;
+					}
+				}
 			}
+			else if (attackType == "Killing")
+			{
+				manager.queueAction(Actions.YOU_KILLED);
+			}
+
 		}
 
 		public void queueVibeOverride(bool isOverriding, double strength)

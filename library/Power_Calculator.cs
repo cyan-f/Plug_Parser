@@ -13,9 +13,29 @@ namespace Plug_Parser_Plugin
 		private const double SIN_MIN_RADIAN = 1.5 * Math.PI;
 		private const double SECOND_IN_MILLIS = 1000;
 
-		// Wave properties
+		public static double getStrength(remote_settings terms)
+		{
+			double val = getWaveValue(terms);
 
-		public static double getWaveValue(remote_settings terms)
+			if (terms.spikeTimeLeft > 0)
+			{
+				val = applySpike(terms, val);
+			}
+
+			return val;
+		}
+
+		private static double applySpike(remote_settings terms, double val)
+		{
+			if (val >= terms.baseStrength)
+			{
+				val *= terms.spikeAmount;
+			}
+
+			return val;
+		}
+
+		private static double getWaveValue(remote_settings terms)
 		{
 			// Angle in radians.
 			double angle = (DateTime.Now.Millisecond + (DateTime.Now.Second * SECOND_IN_MILLIS)) 
