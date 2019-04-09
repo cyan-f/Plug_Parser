@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 
 namespace Plug_Parser_Plugin
 {
-	class Power_Calculator
+	static class Power_Calculator
 	{
 		// Mathematical constants
 		private const double RADIAN = 2 * Math.PI;
 		private const double SIN_MIN_RADIAN = 1.5 * Math.PI;
 		private const double SECOND_IN_MILLIS = 1000;
 
-		public static double getStrength(remote_settings terms)
+		public static double getStrength(Remote_Settings terms)
 		{
 			double val = getWaveValue(terms);
 
@@ -25,7 +25,7 @@ namespace Plug_Parser_Plugin
 			return val;
 		}
 
-		private static double applySpike(remote_settings terms, double val)
+		private static double applySpike(Remote_Settings terms, double val)
 		{
 			if (val >= terms.baseStrength)
 			{
@@ -35,7 +35,7 @@ namespace Plug_Parser_Plugin
 			return val;
 		}
 
-		private static double getWaveValue(remote_settings terms)
+		private static double getWaveValue(Remote_Settings terms)
 		{
 			// Angle in radians.
 			double angle = (DateTime.Now.Millisecond + (DateTime.Now.Second * SECOND_IN_MILLIS)) 
@@ -47,7 +47,7 @@ namespace Plug_Parser_Plugin
 			return val;
 		}
 
-		private double getWaveMinimum(remote_settings terms)
+		private static double getWaveMinimum(Remote_Settings terms)
 		{
 			double val = (Math.Sin(SIN_MIN_RADIAN) * terms.variance) + terms.baseStrength;
 

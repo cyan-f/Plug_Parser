@@ -74,8 +74,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Actions.cs" />
-    <Compile Include="Device_Manager.cs" />
+    <Compile Include="C_Actions.cs" />
+    <Compile Include="Connection_Manager.cs" />
+    <Compile Include="C_Messages.cs" />
+    <Compile Include="Settings.cs" />
+    <Compile Include="Client_Manager.cs" />
     <Compile Include="Director.cs" />
     <Compile Include="Plug_Parser.cs">
       <SubType>UserControl</SubType>
@@ -89,6 +92,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="Remote_Settings.cs" />
     <Compile Include="Vibe_Remote.cs" />
   </ItemGroup>
   <ItemGroup>

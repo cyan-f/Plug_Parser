@@ -4,61 +4,9 @@ using System.Threading.Tasks;
 
 namespace Plug_Parser_Plugin
 {
-	public struct remote_settings
-	{
-		public double minimumStrength;
-		public double maximumStrength;
-
-		public double buzzStrength;
-		public double baseStrength;
-
-		public double erraticness;
-		public double variance;
-		
-		public double frequency;
-		public double period;
-		public double phaseShift; // Adds (phaseShift * period) to [current time]
-
-		public double spikeAmount;
-		public double spikeTimeLeft;
-
-		public remote_settings(double minimumStrength, double maximumStrength, 
-			double buzzStrength, double baseStrength, 
-			double erraticness, double variance, 
-			double frequency, double period, double phaseShift,
-			double spikeAmount, double spikeTimeLeft)
-		{
-			this.minimumStrength = minimumStrength;
-			this.maximumStrength = maximumStrength;
-			this.buzzStrength = buzzStrength;
-			this.baseStrength = baseStrength;
-			this.erraticness = erraticness;
-			this.variance = variance;
-			this.period = period;
-			this.frequency = frequency;
-			this.phaseShift = phaseShift;
-			this.spikeAmount = spikeAmount;
-			this.spikeTimeLeft = spikeTimeLeft;
-		}
-	}
-
 	class Vibe_Remote
 	{
-		private remote_settings settings;
-
-		#region Default values
-		private const double MINIMUM_STRENGTH = 0;
-		private const double MAXIMUM_STRENGTH = 100;
-		private const double BUZZ_STRENGTH = 0;
-		private const double BASE_STRENGTH = 15;
-		private const double ERRATICNESS = 0;
-		private const double VARIANCE = 10;
-		private const double FREQUENCY = 1;
-		private const double PERIOD = 1000 * (1 / FREQUENCY);
-		private const double PHASE_SHIFT = 0;
-		private const double SPIKE_AMOUNT = 0;
-		private const double SPIKE_DURATION = 0;
-		#endregion
+		private Remote_Settings settings;
 
 		private bool isOverriding;
 		private double overrideStrength;
@@ -84,12 +32,10 @@ namespace Plug_Parser_Plugin
 			previousStrength = 0;
 
 			// Initialize default settings
-			settings = new remote_settings(MINIMUM_STRENGTH, MAXIMUM_STRENGTH,
-				BUZZ_STRENGTH, BASE_STRENGTH, ERRATICNESS, VARIANCE, FREQUENCY, PERIOD, PHASE_SHIFT,
-				SPIKE_AMOUNT, SPIKE_DURATION);
+			settings = new Remote_Settings();
 		}
 
-		// Getters
+		#region Getters
 		public double getPreviousStrength()
 		{
 			return previousStrength;
@@ -127,9 +73,9 @@ namespace Plug_Parser_Plugin
 			previousStrength = val;
 			return val;
 		}
+		#endregion
 
-		// Controls
-
+		#region Controls
 		// Flat buzz
 		public void buzz(double strength, long duration)
 		{
@@ -139,10 +85,21 @@ namespace Plug_Parser_Plugin
 			}
 		}
 
-		// Augments normal strength
-		public void spike(double strength, double duration)
+		// Stops vibration for duration (milliseconds)
+		public void pause(long duration)
 		{
-			settings.spikeAmount = strength;
+			//setOverride(0, duration);
+		}
+
+		/*
+		 * Multiplies strength by factor for duration.
+		 * 
+		 * factor - small decimal value, typically between 1.0~2.0
+		 * duration - time in milliseconds
+		 */
+		public void spike(double factor, double duration)
+		{
+			settings.spikeAmount = factor;
 			settings.spikeTimeLeft = duration;
 		}
 
@@ -164,8 +121,9 @@ namespace Plug_Parser_Plugin
 		{
 			settings.baseStrength += amount;
 		}
+		#endregion
 
-		// Meta controls
+		#region Meta Controls
 		public void setOverride(double strength)
 		{
 			setOverride(strength, long.MaxValue);
@@ -184,15 +142,34 @@ namespace Plug_Parser_Plugin
 			isOverriding = false;
 			overrideDuration = 0;
 		}
+		#endregion
 
-
-		// Tasks
+		#region Tasks
 		public async Task vibe(ButtplugClientDevice toy)
 		{
 			await toy.SendVibrateCmd(getPower());
 		}
 
-		// Private helpers
+		private void decay()
+		{
+			if (settings.spikeTimeLeft > 0)
+			{
+				settings.spikeTimeLeft -= deltaTime;
+			}
+
+			if (settings.frequency > 1)
+			{
+				accelerate(0.95 * (1 - (deltaTime / 1000)));
+			}
+
+			if (settings.baseStrength > 15)
+			{
+				bump(-(deltaTime / 2000));
+			}
+		}
+		#endregion
+
+		#region Helpers
 		private double getPower()
 		{
 			return previousStrength / 100;
@@ -225,23 +202,8 @@ namespace Plug_Parser_Plugin
 		{
 			settings.phaseShift = phase;
 		}
+		#endregion
 
-		private void decay()
-		{
-			if (settings.spikeTimeLeft > 0)
-			{
-				settings.spikeTimeLeft -= deltaTime;
-			}
-
-			if (settings.frequency > 1)
-			{
-				accelerate(0.95 * (1 - (deltaTime / 1000)));
-			}
-
-			if (settings.baseStrength > 15)
-			{
-				bump(-(deltaTime / 2000));
-			}
-		}
+		
 	}
 }

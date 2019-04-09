@@ -1,10 +1,13 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.IO;
+using System.Threading.Tasks;
 
 namespace Plug_Parser_Plugin
 {
 	class Director
 	{
-		private Device_Manager manager = null;
+		private Client_Manager manager = null;
+		// UI Manager
 
 		private double killCount;
 		
@@ -13,23 +16,60 @@ namespace Plug_Parser_Plugin
 
 		}
 
-		public void pressedAnyKey()
+		public void stopScanning()
 		{
-			manager.receiveCommand();
+			manager.stopScanning();
 		}
 
-		public void begin()
+		public async Task begin()
 		{
 			Log_Manager.write("Beginning...");
 			while(manager == null)
 			{
 				Log_Manager.write("No manager, creating...");
-				manager = new Device_Manager();
+				manager = new Client_Manager();
 				Log_Manager.write("Created.");
 			}
-#pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
-			manager.connect();
-#pragma warning restore CS4014
+
+			try
+			{
+				await manager.connect();
+			}
+			catch (FileNotFoundException e)
+			{
+				Log_Manager.write("ERROR: Cannot find " + e.FileName);
+				Log_Manager.write("Failed to connect to server.");
+				return;
+			}
+			catch (Exception e)
+			{
+				Log_Manager.write(e.Message);
+				Log_Manager.write("Failed to connect to server.");
+			}
+
+			manager.begin();
+		}
+
+		public async Task reconnect()
+		{
+
+			await manager.disconnect();
+
+			try
+			{
+				await manager.connect();
+			}
+			catch (FileNotFoundException e)
+			{
+				Log_Manager.write("ERROR: Cannot find " + e.FileName);
+				Log_Manager.write("Failed to connect to server.");
+				return;
+			}
+			catch (Exception e)
+			{
+				Log_Manager.write(e.Message);
+				Log_Manager.write("Failed to connect to server.");
+			}
 
 			manager.begin();
 		}
@@ -49,22 +89,22 @@ namespace Plug_Parser_Plugin
 
 			if (attacker == "YOU")
 			{
-				manager.queueAction(Actions.YOU_HIT);
+				manager.queueAction(C_Actions.YOU_HIT);
 				if (attackType == "Killing")
 				{
-					manager.queueAction(Actions.YOU_KILLED);
+					manager.queueAction(C_Actions.YOU_KILLED);
 					killCount++;
 
 					if (killCount >= 4)
 					{
-						manager.queueAction(Actions.YOU_KILLED_ENOUGH);
+						manager.queueAction(C_Actions.YOU_KILLED_ENOUGH);
 						killCount = 0;
 					}
 				}
 			}
 			else if (attackType == "Killing")
 			{
-				manager.queueAction(Actions.YOU_KILLED);
+				manager.queueAction(C_Actions.YOU_KILLED);
 			}
 
 		}

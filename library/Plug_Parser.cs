@@ -19,6 +19,7 @@ namespace Plug_Parser_Plugin
 		private delegate void SafeCallDelegate(Stopwatch s);
 		private long chartQuality; // 0 = max
 		private bool changedChartQuality = false;
+		private int chartUpdateDelay = 4;
 
 		// 0 = no update
 		// 1 = update trackbar
@@ -39,7 +40,7 @@ namespace Plug_Parser_Plugin
 		private Label CHART_LABEL;
 		private CheckBox checkboxOverride;
 		private Label label1;
-		private Button buttonStart;
+		private Button buttonReconnect;
 		private CheckBox checkboxChartQuality;
 
 		#region Designer Created Code (Avoid editing)
@@ -84,7 +85,7 @@ namespace Plug_Parser_Plugin
 			this.CHART_LABEL = new System.Windows.Forms.Label();
 			this.checkboxOverride = new System.Windows.Forms.CheckBox();
 			this.label1 = new System.Windows.Forms.Label();
-			this.buttonStart = new System.Windows.Forms.Button();
+			this.buttonReconnect = new System.Windows.Forms.Button();
 			this.checkboxChartQuality = new System.Windows.Forms.CheckBox();
 			((System.ComponentModel.ISupportInitialize)(this.numericupdownOverrideValue)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.sliderVibeOverride)).BeginInit();
@@ -274,15 +275,15 @@ namespace Plug_Parser_Plugin
 			this.label1.TabIndex = 16;
 			this.label1.Text = "NOTE: ONLY SOLO DEVICES SUPPORTED";
 			// 
-			// buttonStart
+			// buttonReconnect
 			// 
-			this.buttonStart.Location = new System.Drawing.Point(517, 20);
-			this.buttonStart.Name = "buttonStart";
-			this.buttonStart.Size = new System.Drawing.Size(114, 32);
-			this.buttonStart.TabIndex = 17;
-			this.buttonStart.Text = "Start";
-			this.buttonStart.UseVisualStyleBackColor = true;
-			this.buttonStart.Click += new System.EventHandler(this.buttonStart_Click);
+			this.buttonReconnect.Location = new System.Drawing.Point(517, 20);
+			this.buttonReconnect.Name = "buttonReconnect";
+			this.buttonReconnect.Size = new System.Drawing.Size(114, 32);
+			this.buttonReconnect.TabIndex = 17;
+			this.buttonReconnect.Text = "Reconnect";
+			this.buttonReconnect.UseVisualStyleBackColor = true;
+			this.buttonReconnect.Click += new System.EventHandler(this.buttonReconnect_Click);
 			// 
 			// checkboxChartQuality
 			// 
@@ -303,7 +304,7 @@ namespace Plug_Parser_Plugin
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.Controls.Add(this.checkboxChartQuality);
-			this.Controls.Add(this.buttonStart);
+			this.Controls.Add(this.buttonReconnect);
 			this.Controls.Add(this.label1);
 			this.Controls.Add(this.checkboxOverride);
 			this.Controls.Add(this.CHART_LABEL);
@@ -370,7 +371,9 @@ namespace Plug_Parser_Plugin
 			Log_Manager.setLogTarget(logEvents);
 			EVENT_LOG_LABEL.SendToBack();
 
+#pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
 			initDirector();
+#pragma warning restore CS4014
 		}
 
 		public void DeInitPlugin()
@@ -438,14 +441,15 @@ namespace Plug_Parser_Plugin
 		// TODO buffer point adding
 		public async Task updateChart()
 		{
+			// Hides messy-looking chart on startup.
 			await Task.Delay(1000);
 
-			Stopwatch s = new Stopwatch();
-			s.Start();
+			Stopwatch stopwatch = new Stopwatch();
+			stopwatch.Start();
 			while (true)
 			{
-				updateChartHelper(s);
-				await Task.Delay(4);
+				updateChartHelper(stopwatch);
+				await Task.Delay(chartUpdateDelay);
 			}
 
 		}
@@ -514,12 +518,12 @@ namespace Plug_Parser_Plugin
 
 		}
 
-		private void initDirector()
+		private async Task initDirector()
 		{
 			try
 			{
 				director = new Director();
-				director.begin();
+				await director.begin();
 			}
 			catch (FileNotFoundException e)
 			{
@@ -572,7 +576,7 @@ namespace Plug_Parser_Plugin
 
 		private void buttonStopScanning_Click(object sender, EventArgs e)
 		{
-			director.pressedAnyKey();
+			director.stopScanning();
 		}
 
 		private void logEvents_TextChanged(object sender, EventArgs e)
@@ -612,11 +616,6 @@ namespace Plug_Parser_Plugin
 			director.queueVibeOverride(checkboxOverride.Checked, sliderVibeOverride.Value);
 		}
 
-		private void buttonStart_Click(object sender, EventArgs e)
-		{
-
-		}
-
 		private void checkboxChartQuality_CheckedChanged(object sender, EventArgs e)
 		{
 			if (checkboxChartQuality.Checked)
@@ -631,6 +630,13 @@ namespace Plug_Parser_Plugin
 			}
 
 			changedChartQuality = true;
+		}
+
+		private void buttonReconnect_Click(object sender, EventArgs e)
+		{
+#pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
+			director.reconnect();
+#pragma warning restore CS4014
 		}
 	}
 	#endregion

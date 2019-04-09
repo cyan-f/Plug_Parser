@@ -9,24 +9,26 @@ using System.Threading.Tasks;
 
 namespace Plug_Parser_Plugin
 {
-	class Device_Manager
+	class Client_Manager
 	{
 		private const int DELAY_TIME = 50;
 		private const int TIME_BETWEEN_DECAY = 1000; // milliseconds
+		private const int MAX_DEVICES = 1;
 
-		private bool receivedCommand;
-		private bool isUpdating;
-		private bool isRunning;
+		private bool receivedCommand = false;
+		private bool isUpdating = false;
+		private bool isRunning = false;
+		private bool isScanning = false;
 
 		// 0 = max quality
-		private long chartQuality;
+		private long chartQuality = 0;
 		
 		// TODO convert to lists/arrays of objects/structs/data
 		private ButtplugWebsocketConnector connector;
 		private ButtplugClient client;
 		private Vibe_Remote remote;
 
-		public Device_Manager()
+		public Client_Manager()
 		{
 			receivedCommand = false;
 			isUpdating = false;
@@ -43,19 +45,19 @@ namespace Plug_Parser_Plugin
 		{
 			switch (action)
 			{
-				case Actions.YOU_HIT:
+				case C_Actions.YOU_HIT:
 					//remote.buzz(40, 100);
 					remote.spike(2.0, 200);
 					break;
 
-				case Actions.YOU_HEALED:
+				case C_Actions.YOU_HEALED:
 					break;
 
-				case Actions.YOU_KILLED:
+				case C_Actions.YOU_KILLED:
 					//remote.accelerate(2.0);
 					remote.buzz(90, 250);
 					break;
-				case Actions.YOU_KILLED_ENOUGH:
+				case C_Actions.YOU_KILLED_ENOUGH:
 					remote.buzz(100, 500);
 					break;
 				default:
@@ -105,20 +107,10 @@ namespace Plug_Parser_Plugin
 		#endregion
 
 
-		public void receiveCommand()
+		public void stopScanning()
 		{
-			receivedCommand = true;
-		}
-
-		private async Task waitForCommand()
-		{
-			//Log_Manager.write("Press \"Stop Scanning\" after your device has been found...");
-			Log_Manager.write("Scanning will stop after first device is connected...");
-			while (!receivedCommand)
-			{
-				await Task.Delay(1);
-			}
-			receivedCommand = false;
+			client.StopScanningAsync();
+			Log_Manager.write("Stopped scanning for new devices.");
 		}
 
 		public async Task connect()
@@ -131,14 +123,53 @@ namespace Plug_Parser_Plugin
 			catch (FileNotFoundException e)
 			{
 				Log_Manager.write("ERROR: Cannot find " + e.FileName);
+				Log_Manager.write("Failed to connect to server.");
+				return;
 			}
-			Log_Manager.write("Connected!");
+			catch (Exception e)
+			{
+				Log_Manager.write(e.Message);
+				Log_Manager.write("Failed to connect to server.");
+				return;
+			}
+			Log_Manager.write(C_Messages.CLIENT_CONNECTED);
 
 			await scanForPlugs();
 		}
 
+		public async Task scanForPlugs()
+		{
+			if (!isScanning)
+			{
+				if (client.Connected)
+				{
+					isScanning = true;
+					await Connection_Manager.connectDevicesToClient(client);
+					isScanning = false;
+				}
+				else
+				{
+					Log_Manager.write(C_Messages.DEVICE_SCAN_FAIL + C_Messages.CLIENT_NOT_CONNECTED);
+				}
+			}
+			else
+			{
+				Log_Manager.write("Already scanning for new devices.");
+			}
+		}
+
+		private void clientDeviceAdded(object sender, DeviceAddedEventArgs args)
+		{
+			Log_Manager.write($"Device ${args.Device.Name} connected");
+			remote.buzz(50, 240);
+		}
+
 		public void begin()
 		{
+			if (!client.Connected)
+			{
+				return;
+			}
 			isUpdating = true;
 
 #pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
@@ -175,60 +206,30 @@ namespace Plug_Parser_Plugin
 			}
 			client = new ButtplugClient("Main Client", connector);
 
+			await Connection_Manager.connectClientToServer(client);
 			client.DeviceAdded += clientDeviceAdded;
-			
+		}
+
+		public async Task disconnect()
+		{
+			isRunning = false;
+			isUpdating = false;
+
+			Log_Manager.write("Disconnecting...");
 			try
 			{
-				await client.ConnectAsync();
+				await client.DisconnectAsync();
 			}
-			catch (FileNotFoundException e)
+			catch (Exception e)
 			{
-				Log_Manager.write("ERROR: Cannot find " + e.FileName);
-			}
-		}
-
-		private void clientDeviceAdded(object sender, DeviceAddedEventArgs args)
-		{
-			Log_Manager.write($"Device ${args.Device.Name} connected");
-			remote.buzz(50, 200);
-
-			// TEMP for
-			receivedCommand = true;
-		}
-
-		public async Task scanForPlugs()
-		{
-			client.ScanningFinished += (aObj, aScanningFinishedArgs) =>
-				Log_Manager.write("Device scanning is finished!");
-
-			if (client.Devices.Length > 0)
-			{
-				Log_Manager.write("Client currently knows about these devices:");
-				foreach (var device in client.Devices)
-				{
-					Log_Manager.write($"- {device.Name}");
-				}
+				Log_Manager.write(e.Message);
+				Log_Manager.write(e.InnerException.Message);
+				Log_Manager.write(e.InnerException.InnerException.Message);
+				Log_Manager.write("Could not disconnect from server.");
 				return;
 			}
 
-			Log_Manager.write("Scanning for new plugs...");
-			await client.StartScanningAsync();
-			await waitForCommand();
-			Log_Manager.write("Finishing Scanning...");
-			await client.StopScanningAsync();
-
-			if (client.Devices.Length > 0)
-			{
-				Log_Manager.write("Client currently knows about these devices:");
-				foreach (var device in client.Devices)
-				{
-					Log_Manager.write($"- {device.Name}");
-				}
-			}
-			else
-			{
-				Log_Manager.write("Client knows about no devices.");
-			}
+			Log_Manager.write("Disconnected.");
 		}
 
 	}
