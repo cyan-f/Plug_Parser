@@ -16,8 +16,7 @@ If this happens, restart ACT.
 # Installation
 
  * [Optional] Download, install, and run the Buttplug.io server, make sure SSL/TLS is un-ticked, and set it running with everything as default.
- * Download the Buttplug.io C# 0.4.3.
-    + eg. Windows users will want `buttplug-csharp-win-x64-cli-Release-0.4.3.zip`
+ * Download Buttplug.io C# 0.4.3 from [here](https://www.nuget.org/packages/Buttplug/0.4.3.453-dev-d7cd385)
  * Copy the contents of the zip file to `C:\Program Files (x86)\Advanced Combat Tracker` or your equivalent install location.
     + At minimum:
         - `Buttplug.dll`
