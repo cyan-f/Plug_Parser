@@ -15,7 +15,7 @@ If this happens, restart ACT.
 
 # Installation
 
- * Download, install, and run the Buttplug.io server, make sure SSL/TLS is un-ticked, and set it running with everything as default.
+ * [Optional] Download, install, and run the Buttplug.io server, make sure SSL/TLS is un-ticked, and set it running with everything as default.
  * Download the appropriate Buttplug.io release from [here](https://github.com/buttplugio/buttplug-csharp/releases).
     + eg. Windows users will want `buttplug-csharp-win-x64-cli-Release-0.4.2.zip`
  * Copy the contents of the zip file to `C:\Program Files (x86)\Advanced Combat Tracker` or your equivalent install location.
