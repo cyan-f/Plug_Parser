@@ -1,4 +1,4 @@
-# Plug_Paser
+# Plug_Parser
 
 An attempt to control a Lovense Hush via FF14's Advanced Combat Tracker (ACT). 
 
@@ -15,10 +15,9 @@ If this happens, restart ACT.
 
 # Installation
 
- * Download, install, and run the Buttplug.io server, make sure SSL/TLS is un-ticked, and set it running with everything as default.
- * Download the appropriate Buttplug.io release from [here](https://github.com/buttplugio/buttplug-csharp/releases).
-    + eg. Windows users will want `buttplug-csharp-win-x64-cli-Release-0.4.2.zip`
- * Copy the contents of the zip file to `C:\Program Files (x86)\Advanced Combat Tracker`.
+ * [Optional] Download, install, and run the Buttplug.io server, make sure SSL/TLS is un-ticked, and set it running with everything as default.
+ * Download Buttplug.io C# 0.4.3 from [here](https://www.nuget.org/packages/Buttplug/0.4.3.453-dev-d7cd385)
+ * Copy the contents of the zip file to `C:\Program Files (x86)\Advanced Combat Tracker` or your equivalent install location.
     + At minimum:
         - `Buttplug.dll`
         - `deniszykov.WebSocketListener.dll`
@@ -27,7 +26,7 @@ If this happens, restart ACT.
         - `System.Threading.Tasks.Dataflow.dll`
     + If it turns out these aren't enough, copy the zip file's entire contents.
  * Download and latest release from this repository.
- * Add both `Buttplug.Client.Connectors.WebsocketConnector.dll` and `Hush_14_Plugin.dll` to `C:\Program Files (x86)\Advanced Combat Tracker`.
+ * Add all DLLs provided to the same ACT folder.
  * Launch ACT, and add `Hush_14_Plugin.dll` as a new plugin.
 
  
