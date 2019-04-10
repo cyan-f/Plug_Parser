@@ -19,7 +19,8 @@ namespace Plug_Parser_Plugin
 		private delegate void SafeCallDelegate(Stopwatch s);
 		private long chartQuality; // 0 = max
 		private bool changedChartQuality = false;
-		private int chartUpdateDelay = 4;
+		private int chartUpdateDelayHigh = 4;
+		private int chartUpdateDelayLow = 8;
 
 		// 0 = no update
 		// 1 = update trackbar
@@ -42,6 +43,7 @@ namespace Plug_Parser_Plugin
 		private Label label1;
 		private Button buttonReconnect;
 		private CheckBox checkboxChartQuality;
+		private CheckBox checkEmbeddedServer;
 
 		#region Designer Created Code (Avoid editing)
 		/// <summary> 
@@ -70,9 +72,9 @@ namespace Plug_Parser_Plugin
 		/// </summary>
 		private void InitializeComponent()
 		{
-			System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-			System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-			System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+			System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+			System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+			System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
 			this.EVENT_LOG_LABEL = new System.Windows.Forms.Label();
 			this.textBox1 = new System.Windows.Forms.TextBox();
 			this.buttonRescan = new System.Windows.Forms.Button();
@@ -87,6 +89,7 @@ namespace Plug_Parser_Plugin
 			this.label1 = new System.Windows.Forms.Label();
 			this.buttonReconnect = new System.Windows.Forms.Button();
 			this.checkboxChartQuality = new System.Windows.Forms.CheckBox();
+			this.checkEmbeddedServer = new System.Windows.Forms.CheckBox();
 			((System.ComponentModel.ISupportInitialize)(this.numericupdownOverrideValue)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.sliderVibeOverride)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.chartVibeStrength)).BeginInit();
@@ -119,7 +122,7 @@ namespace Plug_Parser_Plugin
 			// 
 			this.buttonRescan.AccessibleDescription = "Rescans for devices.";
 			this.buttonRescan.AccessibleName = "Rescan";
-			this.buttonRescan.Location = new System.Drawing.Point(517, 56);
+			this.buttonRescan.Location = new System.Drawing.Point(517, 80);
 			this.buttonRescan.Name = "buttonRescan";
 			this.buttonRescan.Size = new System.Drawing.Size(114, 32);
 			this.buttonRescan.TabIndex = 2;
@@ -129,7 +132,7 @@ namespace Plug_Parser_Plugin
 			// 
 			// buttonStopScanning
 			// 
-			this.buttonStopScanning.Location = new System.Drawing.Point(517, 92);
+			this.buttonStopScanning.Location = new System.Drawing.Point(517, 116);
 			this.buttonStopScanning.Name = "buttonStopScanning";
 			this.buttonStopScanning.Size = new System.Drawing.Size(114, 32);
 			this.buttonStopScanning.TabIndex = 4;
@@ -150,14 +153,14 @@ namespace Plug_Parser_Plugin
 			this.logEvents.Size = new System.Drawing.Size(512, 252);
 			this.logEvents.TabIndex = 5;
 			this.logEvents.TabStop = false;
-			this.logEvents.Text = "...\n1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n11\n12\n13\n14\n16\n17\n18\n19";
+			this.logEvents.Text = "Log start";
 			this.logEvents.WordWrap = false;
 			this.logEvents.TextChanged += new System.EventHandler(this.logEvents_TextChanged);
 			// 
 			// numericupdownOverrideValue
 			// 
 			this.numericupdownOverrideValue.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.numericupdownOverrideValue.Location = new System.Drawing.Point(585, 626);
+			this.numericupdownOverrideValue.Location = new System.Drawing.Point(665, 626);
 			this.numericupdownOverrideValue.Name = "numericupdownOverrideValue";
 			this.numericupdownOverrideValue.Size = new System.Drawing.Size(51, 20);
 			this.numericupdownOverrideValue.TabIndex = 8;
@@ -170,7 +173,7 @@ namespace Plug_Parser_Plugin
 			this.sliderVibeOverride.AutoSize = false;
 			this.sliderVibeOverride.BackColor = System.Drawing.SystemColors.ControlDarkDark;
 			this.sliderVibeOverride.LargeChange = 10;
-			this.sliderVibeOverride.Location = new System.Drawing.Point(600, 297);
+			this.sliderVibeOverride.Location = new System.Drawing.Point(680, 297);
 			this.sliderVibeOverride.Maximum = 100;
 			this.sliderVibeOverride.Name = "sliderVibeOverride";
 			this.sliderVibeOverride.Orientation = System.Windows.Forms.Orientation.Vertical;
@@ -200,46 +203,46 @@ namespace Plug_Parser_Plugin
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.chartVibeStrength.BackColor = System.Drawing.Color.Transparent;
 			this.chartVibeStrength.BorderlineColor = System.Drawing.Color.Transparent;
-			chartArea1.AxisX.LabelStyle.Enabled = false;
-			chartArea1.AxisX.MajorGrid.Enabled = false;
-			chartArea1.AxisX.MajorTickMark.Enabled = false;
-			chartArea1.AxisX.ScrollBar.BackColor = System.Drawing.Color.Black;
-			chartArea1.AxisY.LabelStyle.Enabled = false;
-			chartArea1.AxisY.MajorGrid.Enabled = false;
-			chartArea1.AxisY.MajorTickMark.Enabled = false;
-			chartArea1.AxisY.Maximum = 100D;
-			chartArea1.AxisY.Minimum = 0D;
-			chartArea1.BackColor = System.Drawing.SystemColors.ControlDarkDark;
-			chartArea1.BorderDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Solid;
-			chartArea1.CursorX.AutoScroll = false;
-			chartArea1.Name = "areaMain";
-			chartArea1.Position.Auto = false;
-			chartArea1.Position.Height = 100F;
-			chartArea1.Position.Width = 100F;
-			this.chartVibeStrength.ChartAreas.Add(chartArea1);
+			chartArea2.AxisX.LabelStyle.Enabled = false;
+			chartArea2.AxisX.MajorGrid.Enabled = false;
+			chartArea2.AxisX.MajorTickMark.Enabled = false;
+			chartArea2.AxisX.ScrollBar.BackColor = System.Drawing.Color.Black;
+			chartArea2.AxisY.LabelStyle.Enabled = false;
+			chartArea2.AxisY.MajorGrid.Enabled = false;
+			chartArea2.AxisY.MajorTickMark.Enabled = false;
+			chartArea2.AxisY.Maximum = 100D;
+			chartArea2.AxisY.Minimum = 0D;
+			chartArea2.BackColor = System.Drawing.SystemColors.ControlDarkDark;
+			chartArea2.BorderDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Solid;
+			chartArea2.CursorX.AutoScroll = false;
+			chartArea2.Name = "areaMain";
+			chartArea2.Position.Auto = false;
+			chartArea2.Position.Height = 100F;
+			chartArea2.Position.Width = 100F;
+			this.chartVibeStrength.ChartAreas.Add(chartArea2);
 			this.chartVibeStrength.Cursor = System.Windows.Forms.Cursors.Default;
-			legend1.Enabled = false;
-			legend1.Name = "Legend1";
-			this.chartVibeStrength.Legends.Add(legend1);
+			legend2.Enabled = false;
+			legend2.Name = "Legend1";
+			this.chartVibeStrength.Legends.Add(legend2);
 			this.chartVibeStrength.Location = new System.Drawing.Point(4, 309);
 			this.chartVibeStrength.Margin = new System.Windows.Forms.Padding(0);
 			this.chartVibeStrength.MinimumSize = new System.Drawing.Size(594, 252);
 			this.chartVibeStrength.Name = "chartVibeStrength";
-			series1.BackImageTransparentColor = System.Drawing.Color.DarkCyan;
-			series1.BackSecondaryColor = System.Drawing.Color.DarkCyan;
-			series1.BorderColor = System.Drawing.Color.DarkCyan;
-			series1.BorderWidth = 3;
-			series1.ChartArea = "areaMain";
-			series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
-			series1.Color = System.Drawing.Color.Cyan;
-			series1.LabelForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-			series1.Legend = "Legend1";
-			series1.MarkerBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
-			series1.MarkerBorderWidth = 1100;
-			series1.MarkerSize = 10;
-			series1.Name = "seriesMain";
-			this.chartVibeStrength.Series.Add(series1);
-			this.chartVibeStrength.Size = new System.Drawing.Size(594, 300);
+			series2.BackImageTransparentColor = System.Drawing.Color.DarkCyan;
+			series2.BackSecondaryColor = System.Drawing.Color.DarkCyan;
+			series2.BorderColor = System.Drawing.Color.DarkCyan;
+			series2.BorderWidth = 3;
+			series2.ChartArea = "areaMain";
+			series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+			series2.Color = System.Drawing.Color.Cyan;
+			series2.LabelForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+			series2.Legend = "Legend1";
+			series2.MarkerBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
+			series2.MarkerBorderWidth = 1100;
+			series2.MarkerSize = 10;
+			series2.Name = "seriesMain";
+			this.chartVibeStrength.Series.Add(series2);
+			this.chartVibeStrength.Size = new System.Drawing.Size(674, 300);
 			this.chartVibeStrength.TabIndex = 13;
 			this.chartVibeStrength.Click += new System.EventHandler(this.chartVibeStrength_Click);
 			// 
@@ -258,7 +261,7 @@ namespace Plug_Parser_Plugin
 			this.checkboxOverride.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.checkboxOverride.AutoSize = true;
 			this.checkboxOverride.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
-			this.checkboxOverride.Location = new System.Drawing.Point(513, 629);
+			this.checkboxOverride.Location = new System.Drawing.Point(593, 629);
 			this.checkboxOverride.Name = "checkboxOverride";
 			this.checkboxOverride.Size = new System.Drawing.Size(66, 17);
 			this.checkboxOverride.TabIndex = 15;
@@ -298,11 +301,25 @@ namespace Plug_Parser_Plugin
 			this.checkboxChartQuality.UseVisualStyleBackColor = true;
 			this.checkboxChartQuality.CheckedChanged += new System.EventHandler(this.checkboxChartQuality_CheckedChanged);
 			// 
+			// checkEmbeddedServer
+			// 
+			this.checkEmbeddedServer.AutoSize = true;
+			this.checkEmbeddedServer.Checked = true;
+			this.checkEmbeddedServer.CheckState = System.Windows.Forms.CheckState.Checked;
+			this.checkEmbeddedServer.Location = new System.Drawing.Point(517, 57);
+			this.checkEmbeddedServer.Name = "checkEmbeddedServer";
+			this.checkEmbeddedServer.Size = new System.Drawing.Size(133, 17);
+			this.checkEmbeddedServer.TabIndex = 19;
+			this.checkEmbeddedServer.Text = "Use Embedded Server";
+			this.checkEmbeddedServer.UseVisualStyleBackColor = true;
+			this.checkEmbeddedServer.CheckedChanged += new System.EventHandler(this.checkEmbeddedServer_CheckedChanged);
+			// 
 			// Plug_Parser
 			// 
 			this.AccessibleDescription = "";
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+			this.Controls.Add(this.checkEmbeddedServer);
 			this.Controls.Add(this.checkboxChartQuality);
 			this.Controls.Add(this.buttonReconnect);
 			this.Controls.Add(this.label1);
@@ -317,9 +334,9 @@ namespace Plug_Parser_Plugin
 			this.Controls.Add(this.buttonStopScanning);
 			this.Controls.Add(this.buttonRescan);
 			this.Controls.Add(this.textBox1);
-			this.MinimumSize = new System.Drawing.Size(640, 655);
+			this.MinimumSize = new System.Drawing.Size(720, 655);
 			this.Name = "Plug_Parser";
-			this.Size = new System.Drawing.Size(640, 655);
+			this.Size = new System.Drawing.Size(720, 655);
 			((System.ComponentModel.ISupportInitialize)(this.numericupdownOverrideValue)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.sliderVibeOverride)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.chartVibeStrength)).EndInit();
@@ -449,7 +466,14 @@ namespace Plug_Parser_Plugin
 			while (true)
 			{
 				updateChartHelper(stopwatch);
-				await Task.Delay(chartUpdateDelay);
+				switch (chartQuality) {
+					case 0:
+						await Task.Delay(chartUpdateDelayHigh);
+						break;
+					default:
+						await Task.Delay(chartUpdateDelayLow);
+						break;
+				}
 			}
 
 		}
@@ -637,6 +661,11 @@ namespace Plug_Parser_Plugin
 #pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
 			director.reconnect();
 #pragma warning restore CS4014
+		}
+
+		private void checkEmbeddedServer_CheckedChanged(object sender, EventArgs e)
+		{
+			director.setServerType(checkEmbeddedServer.Checked);
 		}
 	}
 	#endregion

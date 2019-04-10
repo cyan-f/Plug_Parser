@@ -18,9 +18,17 @@ namespace Plug_Parser_Plugin
 		private long thisTime;
 		private long deltaTime;
 
+		private long lastSpikeDecayTime;
+
+		private double decayRate = 0.05;
+		private bool decaySpikeToggle = true;
+		private bool decayWasPositive = false;
+
 		// Stores last sent vibration strength for interpolation
-		private double previousStrength;
-		private bool isInterpolated;
+		//	and low-quality chart updates.
+		private double previousStrength = 0;
+
+		private bool isInterpolated = false;
 
 		public Vibe_Remote()
 		{
@@ -34,8 +42,7 @@ namespace Plug_Parser_Plugin
 			// Initialize default settings
 			settings = new Remote_Settings();
 		}
-
-		#region Getters
+		
 		public double getPreviousStrength()
 		{
 			return previousStrength;
@@ -73,7 +80,6 @@ namespace Plug_Parser_Plugin
 			previousStrength = val;
 			return val;
 		}
-		#endregion
 
 		#region Controls
 		// Flat buzz
@@ -108,7 +114,7 @@ namespace Plug_Parser_Plugin
 			double newFrequency = settings.frequency * factor;
 			setFrequency(newFrequency);
 
-			//Log_Manager.write("NF: " + newFrequency);
+			Log_Manager.write("NF: " + newFrequency);
 		}
 
 		public void excite(double factor)
@@ -152,14 +158,37 @@ namespace Plug_Parser_Plugin
 
 		private void decay()
 		{
-			if (settings.spikeTimeLeft > 0)
+			if (settings.spikeTimeLeft > (double) 0)
 			{
 				settings.spikeTimeLeft -= deltaTime;
 			}
 
 			if (settings.frequency > 1)
 			{
-				accelerate(0.95 * (1 - (deltaTime / 1000)));
+				double sineValue = Power_Calculator.getSineValue(settings);
+				if ((sineValue > 0) && !decayWasPositive)
+				{
+					decaySpikeToggle = true;
+					decayWasPositive = true;
+				}
+				else if ((sineValue < 0) && decayWasPositive)
+				{
+					decaySpikeToggle = true;
+					decayWasPositive = false;
+				}
+
+				if (decaySpikeToggle)
+				{
+					long spikeDecayDeltaTime = thisTime - lastSpikeDecayTime;
+					double decelerationAmount = 1 - (decayRate * ((double) spikeDecayDeltaTime / 1000));
+					accelerate(decelerationAmount);
+					decaySpikeToggle = false;
+					lastSpikeDecayTime = thisTime;
+				}
+			}
+			else
+			{
+				lastSpikeDecayTime = thisTime;
 			}
 
 			if (settings.baseStrength > 15)

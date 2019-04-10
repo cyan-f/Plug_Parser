@@ -14,8 +14,7 @@ namespace Plug_Parser_Plugin
 		private const int DELAY_TIME = 50;
 		private const int TIME_BETWEEN_DECAY = 1000; // milliseconds
 		private const int MAX_DEVICES = 1;
-
-		private bool receivedCommand = false;
+		
 		private bool isUpdating = false;
 		private bool isRunning = false;
 		private bool isScanning = false;
@@ -24,13 +23,16 @@ namespace Plug_Parser_Plugin
 		private long chartQuality = 0;
 		
 		// TODO convert to lists/arrays of objects/structs/data
-		private ButtplugWebsocketConnector connector;
+		private ButtplugWebsocketConnector webConnector;
+		private ButtplugEmbeddedConnector embeddedConnector;
 		private ButtplugClient client;
 		private Vibe_Remote remote;
 
+		// TODO set this in ctor.
+		private bool usingEmbeddedServer = true;
+
 		public Client_Manager()
 		{
-			receivedCommand = false;
 			isUpdating = false;
 			isRunning = true;
 			chartQuality = 0;
@@ -54,7 +56,7 @@ namespace Plug_Parser_Plugin
 					break;
 
 				case C_Actions.YOU_KILLED:
-					//remote.accelerate(2.0);
+					remote.accelerate(2.0);
 					remote.buzz(90, 250);
 					break;
 				case C_Actions.YOU_KILLED_ENOUGH:
@@ -98,10 +100,6 @@ namespace Plug_Parser_Plugin
 		#region Getters
 		public double getCurrentStrength()
 		{
-			if (chartQuality > 0)
-			{
-				return remote.getPreviousStrength();
-			}
 			return remote.updateStrength();
 		}
 		#endregion
@@ -196,18 +194,54 @@ namespace Plug_Parser_Plugin
 
 		private async Task connectServer()
 		{
+			if (usingEmbeddedServer)
+			{
+				await connectEmbeddedServer();
+			}
+			else
+			{
+				await connectRemoteServer();
+			}
+		}
+
+		private async Task connectEmbeddedServer()
+		{
+			embeddedConnector = new ButtplugEmbeddedConnector("Buttplugin Server");
+
+			client = new ButtplugClient("Buttplugin Client", embeddedConnector);
+
+			await Connection_Manager.connectClientToServer(client);
+			client.DeviceAdded += clientDeviceAdded;
+		}
+
+		private async Task connectRemoteServer()
+		{
 			try
 			{
-				connector = new ButtplugWebsocketConnector(new Uri("ws://localhost:12345/buttplug"));
+				webConnector = new ButtplugWebsocketConnector(new Uri("ws://localhost:12345/buttplug"));
 			}
 			catch (FileNotFoundException e)
 			{
 				Log_Manager.write("ERROR: Cannot find " + e.FileName);
 			}
-			client = new ButtplugClient("Main Client", connector);
+			client = new ButtplugClient("Main Client", webConnector);
 
 			await Connection_Manager.connectClientToServer(client);
 			client.DeviceAdded += clientDeviceAdded;
+		}
+
+
+		public void setServerType(bool isEmbedded)
+		{
+			usingEmbeddedServer = isEmbedded;
+			if (usingEmbeddedServer)
+			{
+				Log_Manager.write("Set to use embedded server. Reconnect to apply changes.");
+			}
+			else
+			{
+				Log_Manager.write("Set to use remote server. Reconnect to apply changes.");
+			}
 		}
 
 		public async Task disconnect()

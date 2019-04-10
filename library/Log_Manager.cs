@@ -7,6 +7,8 @@ namespace Plug_Parser_Plugin
 {
 	class Log_Manager
 	{
+		private const bool RESTRICTING_LINE_COUNT = false;
+
 		private delegate void SafeCallDelegate(string text);
 		private delegate void SafeClearDelegate();
 
@@ -31,7 +33,8 @@ namespace Plug_Parser_Plugin
 			}
 			else
 			{
-				if ((eventLog.Lines.Length >= 20) || (eventLog.Text == ""))
+
+				if (((eventLog.Lines.Length >= 20) || (eventLog.Text == "")) && RESTRICTING_LINE_COUNT)
 				{
 					eventLog.Text = s;
 				}

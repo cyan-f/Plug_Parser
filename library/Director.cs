@@ -74,6 +74,11 @@ namespace Plug_Parser_Plugin
 			manager.begin();
 		}
 
+		public void setServerType(bool isEmbedded)
+		{
+			manager.setServerType(isEmbedded);
+		}
+
 		public void scanForPlugs()
 		{
 #pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
@@ -85,21 +90,27 @@ namespace Plug_Parser_Plugin
 		public async Task addAction(string attacker, string victim, string attackType, string damagetype, string swingType,
 			string special, long damage, bool wasCrit)
 		{
-			//Log_Manager.write(attacker + ", " + victim + ", " + attackType + ", " + damagetype + ", " + swingType + ", " + special);
+			Log_Manager.write("Attacker: " + attacker + ", Victim: " + victim + ", Attack Type:" + attackType + 
+				", Damage Type: " + damagetype + ", Swing Type: " + swingType + ", Special: " + special);
 
 			if (attacker == "YOU")
 			{
-				manager.queueAction(C_Actions.YOU_HIT);
 				if (attackType == "Killing")
 				{
-					manager.queueAction(C_Actions.YOU_KILLED);
 					killCount++;
-
 					if (killCount >= 4)
 					{
 						manager.queueAction(C_Actions.YOU_KILLED_ENOUGH);
 						killCount = 0;
 					}
+					else
+					{
+						manager.queueAction(C_Actions.YOU_KILLED);
+					}
+				}
+				else
+				{
+					manager.queueAction(C_Actions.YOU_HIT);
 				}
 			}
 			else if (attackType == "Killing")

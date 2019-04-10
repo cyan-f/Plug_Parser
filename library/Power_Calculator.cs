@@ -35,14 +35,25 @@ namespace Plug_Parser_Plugin
 			return val;
 		}
 
-		private static double getWaveValue(Remote_Settings terms)
+		public static double getWaveValue(Remote_Settings terms)
 		{
 			// Angle in radians.
-			double angle = (DateTime.Now.Millisecond + (DateTime.Now.Second * SECOND_IN_MILLIS)) 
+			double angle = (DateTimeOffset.Now.ToUnixTimeMilliseconds()) 
 				% (terms.period + (terms.period * terms.phaseShift)) 
 				/ (terms.period) * RADIAN;
 
 			double val = ((Math.Sin(angle) * (terms.variance)) + (terms.baseStrength));
+
+			return val;
+		}
+
+		public static double getSineValue(Remote_Settings terms)
+		{
+			double angle = (DateTimeOffset.Now.ToUnixTimeMilliseconds())
+				% (terms.period + (terms.period * terms.phaseShift))
+				/ (terms.period) * RADIAN;
+
+			double val = Math.Sin(angle);
 
 			return val;
 		}
