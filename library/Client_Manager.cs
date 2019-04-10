@@ -1,5 +1,7 @@
 ﻿using Buttplug.Client;
+using Buttplug.Core.Logging;
 using Buttplug.Client.Connectors.WebsocketConnector;
+using Buttplug.Server.Managers.UWPBluetoothManager;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -207,6 +209,8 @@ namespace Plug_Parser_Plugin
 		private async Task connectEmbeddedServer()
 		{
 			embeddedConnector = new ButtplugEmbeddedConnector("Buttplugin Server");
+			embeddedConnector.Server.AddDeviceSubtypeManager((IButtplugLogManager aMgr)
+				=> { return new UWPBluetoothManager(aMgr); });
 
 			client = new ButtplugClient("Buttplugin Client", embeddedConnector);
 
