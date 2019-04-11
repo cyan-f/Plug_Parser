@@ -2,38 +2,42 @@
 using System.IO;
 using System.Threading.Tasks;
 
+using Advanced_Combat_Tracker;
+
 namespace Plug_Parser_Plugin
 {
 	class Director
 	{
-		private Client_Manager manager = null;
+		private Client_Manager manClient = null;
+		private Trigger_Manager manTrigger = null;
 		// UI Manager
 
-		private double killCount;
+		private double killCount = 0;
+		private bool loggingCombatEvents = false;
 		
 		public Director()
 		{
-
+			manTrigger = new Trigger_Manager();
 		}
 
 		public void stopScanning()
 		{
-			manager.stopScanning();
+			manClient.stopScanning();
 		}
 
 		public async Task begin()
 		{
 			Log_Manager.write("Beginning...");
-			while(manager == null)
+			while(manClient == null)
 			{
 				Log_Manager.write("No manager, creating...");
-				manager = new Client_Manager();
+				manClient = new Client_Manager();
 				Log_Manager.write("Created.");
 			}
 
 			try
 			{
-				await manager.connect();
+				await manClient.connect();
 			}
 			catch (FileNotFoundException e)
 			{
@@ -47,17 +51,17 @@ namespace Plug_Parser_Plugin
 				Log_Manager.write("Failed to connect to server.");
 			}
 
-			manager.begin();
+			manClient.begin();
 		}
 
 		public async Task reconnect()
 		{
 
-			await manager.disconnect();
+			await manClient.disconnect();
 
 			try
 			{
-				await manager.connect();
+				await manClient.connect();
 			}
 			catch (FileNotFoundException e)
 			{
@@ -71,18 +75,18 @@ namespace Plug_Parser_Plugin
 				Log_Manager.write("Failed to connect to server.");
 			}
 
-			manager.begin();
+			manClient.begin();
 		}
 
 		public void setServerType(bool isEmbedded)
 		{
-			manager.setServerType(isEmbedded);
+			manClient.setServerType(isEmbedded);
 		}
 
 		public void scanForPlugs()
 		{
 #pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
-			manager.scanForPlugs();
+			manClient.scanForPlugs();
 #pragma warning restore CS4014
 		}
 
@@ -90,8 +94,11 @@ namespace Plug_Parser_Plugin
 		public async Task addAction(string attacker, string victim, string attackType, string damagetype, string swingType,
 			string special, long damage, bool wasCrit)
 		{
-			Log_Manager.write("Attacker: " + attacker + ", Victim: " + victim + ", Attack Type:" + attackType + 
-				", Damage Type: " + damagetype + ", Swing Type: " + swingType + ", Special: " + special);
+			if (loggingCombatEvents)
+			{
+				Log_Manager.write("Attacker: " + attacker + ", Victim: " + victim + ", Attack Type:" + attackType +
+					", Damage Type: " + damagetype + ", Swing Type: " + swingType + ", Special: " + special);
+			}
 
 			if (attacker == "YOU")
 			{
@@ -100,39 +107,49 @@ namespace Plug_Parser_Plugin
 					killCount++;
 					if (killCount >= 4)
 					{
-						manager.queueAction(C_Actions.YOU_KILLED_ENOUGH);
+						manClient.queueAction(C_Actions.YOU_KILLED_ENOUGH);
 						killCount = 0;
 					}
 					else
 					{
-						manager.queueAction(C_Actions.YOU_KILLED);
+						manClient.queueAction(C_Actions.YOU_KILLED);
 					}
 				}
 				else
 				{
-					manager.queueAction(C_Actions.YOU_HIT);
+					manClient.queueAction(C_Actions.YOU_HIT);
 				}
 			}
 			else if (attackType == "Killing")
 			{
-				manager.queueAction(C_Actions.YOU_KILLED);
+				manClient.queueAction(C_Actions.YOU_KILLED);
 			}
 
 		}
 
 		public void queueVibeOverride(bool isOverriding, double strength)
 		{
-			manager.setOverriding(isOverriding, strength);
+			manClient.setOverriding(isOverriding, strength);
 		}
 
 		public void setChartQuality(long q)
 		{
-			manager.setChartQuality(q);
+			manClient.setChartQuality(q);
 		}
 
 		public double getCurrentStrength()
 		{
-			return manager.getCurrentStrength();
+			return manClient.getCurrentStrength();
+		}
+
+		public void setLoggingCombatEvents(bool b)
+		{
+			loggingCombatEvents = b;
+		}
+
+		public void checkTrigger()
+		{
+			manTrigger.check();
 		}
 	}
 }

@@ -44,6 +44,8 @@ namespace Plug_Parser_Plugin
 		private Button buttonReconnect;
 		private CheckBox checkboxChartQuality;
 		private CheckBox checkEmbeddedServer;
+		private CheckBox checkLogCombatEvents;
+		private Button buttonCheckTrigger;
 
 		#region Designer Created Code (Avoid editing)
 		/// <summary> 
@@ -72,9 +74,9 @@ namespace Plug_Parser_Plugin
 		/// </summary>
 		private void InitializeComponent()
 		{
-			System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-			System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-			System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+			System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+			System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+			System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
 			this.EVENT_LOG_LABEL = new System.Windows.Forms.Label();
 			this.textBox1 = new System.Windows.Forms.TextBox();
 			this.buttonRescan = new System.Windows.Forms.Button();
@@ -90,6 +92,8 @@ namespace Plug_Parser_Plugin
 			this.buttonReconnect = new System.Windows.Forms.Button();
 			this.checkboxChartQuality = new System.Windows.Forms.CheckBox();
 			this.checkEmbeddedServer = new System.Windows.Forms.CheckBox();
+			this.checkLogCombatEvents = new System.Windows.Forms.CheckBox();
+			this.buttonCheckTrigger = new System.Windows.Forms.Button();
 			((System.ComponentModel.ISupportInitialize)(this.numericupdownOverrideValue)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.sliderVibeOverride)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.chartVibeStrength)).BeginInit();
@@ -203,45 +207,45 @@ namespace Plug_Parser_Plugin
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.chartVibeStrength.BackColor = System.Drawing.Color.Transparent;
 			this.chartVibeStrength.BorderlineColor = System.Drawing.Color.Transparent;
-			chartArea2.AxisX.LabelStyle.Enabled = false;
-			chartArea2.AxisX.MajorGrid.Enabled = false;
-			chartArea2.AxisX.MajorTickMark.Enabled = false;
-			chartArea2.AxisX.ScrollBar.BackColor = System.Drawing.Color.Black;
-			chartArea2.AxisY.LabelStyle.Enabled = false;
-			chartArea2.AxisY.MajorGrid.Enabled = false;
-			chartArea2.AxisY.MajorTickMark.Enabled = false;
-			chartArea2.AxisY.Maximum = 100D;
-			chartArea2.AxisY.Minimum = 0D;
-			chartArea2.BackColor = System.Drawing.SystemColors.ControlDarkDark;
-			chartArea2.BorderDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Solid;
-			chartArea2.CursorX.AutoScroll = false;
-			chartArea2.Name = "areaMain";
-			chartArea2.Position.Auto = false;
-			chartArea2.Position.Height = 100F;
-			chartArea2.Position.Width = 100F;
-			this.chartVibeStrength.ChartAreas.Add(chartArea2);
+			chartArea1.AxisX.LabelStyle.Enabled = false;
+			chartArea1.AxisX.MajorGrid.Enabled = false;
+			chartArea1.AxisX.MajorTickMark.Enabled = false;
+			chartArea1.AxisX.ScrollBar.BackColor = System.Drawing.Color.Black;
+			chartArea1.AxisY.LabelStyle.Enabled = false;
+			chartArea1.AxisY.MajorGrid.Enabled = false;
+			chartArea1.AxisY.MajorTickMark.Enabled = false;
+			chartArea1.AxisY.Maximum = 100D;
+			chartArea1.AxisY.Minimum = 0D;
+			chartArea1.BackColor = System.Drawing.SystemColors.ControlDarkDark;
+			chartArea1.BorderDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Solid;
+			chartArea1.CursorX.AutoScroll = false;
+			chartArea1.Name = "areaMain";
+			chartArea1.Position.Auto = false;
+			chartArea1.Position.Height = 100F;
+			chartArea1.Position.Width = 100F;
+			this.chartVibeStrength.ChartAreas.Add(chartArea1);
 			this.chartVibeStrength.Cursor = System.Windows.Forms.Cursors.Default;
-			legend2.Enabled = false;
-			legend2.Name = "Legend1";
-			this.chartVibeStrength.Legends.Add(legend2);
+			legend1.Enabled = false;
+			legend1.Name = "Legend1";
+			this.chartVibeStrength.Legends.Add(legend1);
 			this.chartVibeStrength.Location = new System.Drawing.Point(4, 309);
 			this.chartVibeStrength.Margin = new System.Windows.Forms.Padding(0);
 			this.chartVibeStrength.MinimumSize = new System.Drawing.Size(594, 252);
 			this.chartVibeStrength.Name = "chartVibeStrength";
-			series2.BackImageTransparentColor = System.Drawing.Color.DarkCyan;
-			series2.BackSecondaryColor = System.Drawing.Color.DarkCyan;
-			series2.BorderColor = System.Drawing.Color.DarkCyan;
-			series2.BorderWidth = 3;
-			series2.ChartArea = "areaMain";
-			series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
-			series2.Color = System.Drawing.Color.Cyan;
-			series2.LabelForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-			series2.Legend = "Legend1";
-			series2.MarkerBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
-			series2.MarkerBorderWidth = 1100;
-			series2.MarkerSize = 10;
-			series2.Name = "seriesMain";
-			this.chartVibeStrength.Series.Add(series2);
+			series1.BackImageTransparentColor = System.Drawing.Color.DarkCyan;
+			series1.BackSecondaryColor = System.Drawing.Color.DarkCyan;
+			series1.BorderColor = System.Drawing.Color.DarkCyan;
+			series1.BorderWidth = 3;
+			series1.ChartArea = "areaMain";
+			series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+			series1.Color = System.Drawing.Color.Cyan;
+			series1.LabelForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+			series1.Legend = "Legend1";
+			series1.MarkerBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
+			series1.MarkerBorderWidth = 1100;
+			series1.MarkerSize = 10;
+			series1.Name = "seriesMain";
+			this.chartVibeStrength.Series.Add(series1);
 			this.chartVibeStrength.Size = new System.Drawing.Size(674, 300);
 			this.chartVibeStrength.TabIndex = 13;
 			this.chartVibeStrength.Click += new System.EventHandler(this.chartVibeStrength_Click);
@@ -314,11 +318,34 @@ namespace Plug_Parser_Plugin
 			this.checkEmbeddedServer.UseVisualStyleBackColor = true;
 			this.checkEmbeddedServer.CheckedChanged += new System.EventHandler(this.checkEmbeddedServer_CheckedChanged);
 			// 
+			// checkLogCombatEvents
+			// 
+			this.checkLogCombatEvents.AutoSize = true;
+			this.checkLogCombatEvents.Location = new System.Drawing.Point(517, 255);
+			this.checkLogCombatEvents.Name = "checkLogCombatEvents";
+			this.checkLogCombatEvents.Size = new System.Drawing.Size(119, 17);
+			this.checkLogCombatEvents.TabIndex = 20;
+			this.checkLogCombatEvents.Text = "Log Combat Events";
+			this.checkLogCombatEvents.UseVisualStyleBackColor = true;
+			this.checkLogCombatEvents.CheckedChanged += new System.EventHandler(this.checkLogCombatEvents_CheckedChanged);
+			// 
+			// buttonCheckTrigger
+			// 
+			this.buttonCheckTrigger.Location = new System.Drawing.Point(517, 154);
+			this.buttonCheckTrigger.Name = "buttonCheckTrigger";
+			this.buttonCheckTrigger.Size = new System.Drawing.Size(114, 32);
+			this.buttonCheckTrigger.TabIndex = 21;
+			this.buttonCheckTrigger.Text = "Check Trigger";
+			this.buttonCheckTrigger.UseVisualStyleBackColor = true;
+			this.buttonCheckTrigger.Click += new System.EventHandler(this.buttonCheckTrigger_Click);
+			// 
 			// Plug_Parser
 			// 
 			this.AccessibleDescription = "";
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+			this.Controls.Add(this.buttonCheckTrigger);
+			this.Controls.Add(this.checkLogCombatEvents);
 			this.Controls.Add(this.checkEmbeddedServer);
 			this.Controls.Add(this.checkboxChartQuality);
 			this.Controls.Add(this.buttonReconnect);
@@ -666,6 +693,16 @@ namespace Plug_Parser_Plugin
 		private void checkEmbeddedServer_CheckedChanged(object sender, EventArgs e)
 		{
 			director.setServerType(checkEmbeddedServer.Checked);
+		}
+
+		private void checkLogCombatEvents_CheckedChanged(object sender, EventArgs e)
+		{
+			director.setLoggingCombatEvents(checkLogCombatEvents.Checked);
+		}
+
+		private void buttonCheckTrigger_Click(object sender, EventArgs e)
+		{
+			director.checkTrigger();
 		}
 	}
 	#endregion

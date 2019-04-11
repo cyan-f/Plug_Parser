@@ -58,7 +58,7 @@ namespace Plug_Parser_Plugin
 					break;
 
 				case C_Actions.YOU_KILLED:
-					remote.accelerate(2.0);
+					//remote.accelerate(2.0);
 					remote.buzz(90, 250);
 					break;
 				case C_Actions.YOU_KILLED_ENOUGH:
