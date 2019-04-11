@@ -30,7 +30,6 @@ namespace Plug_Parser_Plugin
 		Director director;
 
 		private Button buttonRescan;
-		private TextBox textBox1;
 		private Button buttonStopScanning;
 		private RichTextBox logEvents;
 		private NumericUpDown numericupdownOverrideValue;
@@ -49,10 +48,11 @@ namespace Plug_Parser_Plugin
 		private TextBox textNewTrigger;
 		private Button buttonAddTrigger;
 		private TabControl tabControls;
-		private TabPage tabTriggerControls;
-		private TabPage tabPage2;
+		private TabPage tabTriggerSettings;
+		private TabPage tabVibeSettings;
 		private Label labelRegex;
-		private CheckedListBox checkedListBox1;
+		private CheckedListBox checkedListBoxTriggerReactions;
+		private TabPage tabPlayerInfo;
 
 		#region Designer Created Code (Avoid editing)
 		/// <summary> 
@@ -85,7 +85,6 @@ namespace Plug_Parser_Plugin
 			System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
 			System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
 			this.EVENT_LOG_LABEL = new System.Windows.Forms.Label();
-			this.textBox1 = new System.Windows.Forms.TextBox();
 			this.buttonRescan = new System.Windows.Forms.Button();
 			this.buttonStopScanning = new System.Windows.Forms.Button();
 			this.logEvents = new System.Windows.Forms.RichTextBox();
@@ -104,15 +103,16 @@ namespace Plug_Parser_Plugin
 			this.textNewTrigger = new System.Windows.Forms.TextBox();
 			this.buttonAddTrigger = new System.Windows.Forms.Button();
 			this.tabControls = new System.Windows.Forms.TabControl();
-			this.tabTriggerControls = new System.Windows.Forms.TabPage();
-			this.tabPage2 = new System.Windows.Forms.TabPage();
-			this.checkedListBox1 = new System.Windows.Forms.CheckedListBox();
+			this.tabTriggerSettings = new System.Windows.Forms.TabPage();
+			this.tabVibeSettings = new System.Windows.Forms.TabPage();
+			this.checkedListBoxTriggerReactions = new System.Windows.Forms.CheckedListBox();
 			this.labelRegex = new System.Windows.Forms.Label();
+			this.tabPlayerInfo = new System.Windows.Forms.TabPage();
 			((System.ComponentModel.ISupportInitialize)(this.numericupdownOverrideValue)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.sliderVibeOverride)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.chartVibeStrength)).BeginInit();
 			this.tabControls.SuspendLayout();
-			this.tabTriggerControls.SuspendLayout();
+			this.tabTriggerSettings.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// EVENT_LOG_LABEL
@@ -126,17 +126,6 @@ namespace Plug_Parser_Plugin
 			this.EVENT_LOG_LABEL.TabIndex = 9;
 			this.EVENT_LOG_LABEL.Text = "Event Log";
 			this.EVENT_LOG_LABEL.Click += new System.EventHandler(this.label1_Click);
-			// 
-			// textBox1
-			// 
-			this.textBox1.Location = new System.Drawing.Point(4, 629);
-			this.textBox1.Name = "textBox1";
-			this.textBox1.Size = new System.Drawing.Size(431, 20);
-			this.textBox1.TabIndex = 1;
-			this.textBox1.TabStop = false;
-			this.textBox1.Text = "Sample TextBox that has its value stored to the settings file automatically.";
-			this.textBox1.Visible = false;
-			this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
 			// 
 			// buttonRescan
 			// 
@@ -180,7 +169,7 @@ namespace Plug_Parser_Plugin
 			// numericupdownOverrideValue
 			// 
 			this.numericupdownOverrideValue.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.numericupdownOverrideValue.Location = new System.Drawing.Point(979, 626);
+			this.numericupdownOverrideValue.Location = new System.Drawing.Point(935, 285);
 			this.numericupdownOverrideValue.Name = "numericupdownOverrideValue";
 			this.numericupdownOverrideValue.Size = new System.Drawing.Size(51, 20);
 			this.numericupdownOverrideValue.TabIndex = 8;
@@ -281,11 +270,11 @@ namespace Plug_Parser_Plugin
 			this.checkboxOverride.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.checkboxOverride.AutoSize = true;
 			this.checkboxOverride.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
-			this.checkboxOverride.Location = new System.Drawing.Point(907, 629);
+			this.checkboxOverride.Location = new System.Drawing.Point(821, 286);
 			this.checkboxOverride.Name = "checkboxOverride";
-			this.checkboxOverride.Size = new System.Drawing.Size(66, 17);
+			this.checkboxOverride.Size = new System.Drawing.Size(108, 17);
 			this.checkboxOverride.TabIndex = 15;
-			this.checkboxOverride.Text = "Override";
+			this.checkboxOverride.Text = "Override Enabled";
 			this.checkboxOverride.UseVisualStyleBackColor = true;
 			this.checkboxOverride.CheckedChanged += new System.EventHandler(this.checkboxOverride_CheckedChanged);
 			// 
@@ -294,9 +283,10 @@ namespace Plug_Parser_Plugin
 			this.label1.AutoSize = true;
 			this.label1.Location = new System.Drawing.Point(145, 3);
 			this.label1.Name = "label1";
-			this.label1.Size = new System.Drawing.Size(223, 13);
+			this.label1.Size = new System.Drawing.Size(412, 13);
 			this.label1.TabIndex = 16;
-			this.label1.Text = "NOTE: ONLY SOLO DEVICES SUPPORTED";
+			this.label1.Text = "NOTE: Only solo, vibrating-only devices have been tested and are officially suppo" +
+    "rted.";
 			// 
 			// buttonReconnect
 			// 
@@ -315,9 +305,9 @@ namespace Plug_Parser_Plugin
 			this.checkboxChartQuality.CheckState = System.Windows.Forms.CheckState.Checked;
 			this.checkboxChartQuality.Location = new System.Drawing.Point(100, 288);
 			this.checkboxChartQuality.Name = "checkboxChartQuality";
-			this.checkboxChartQuality.Size = new System.Drawing.Size(58, 17);
+			this.checkboxChartQuality.Size = new System.Drawing.Size(76, 17);
 			this.checkboxChartQuality.TabIndex = 18;
-			this.checkboxChartQuality.Text = "Quality";
+			this.checkboxChartQuality.Text = "Smoothing";
 			this.checkboxChartQuality.UseVisualStyleBackColor = true;
 			this.checkboxChartQuality.CheckedChanged += new System.EventHandler(this.checkboxChartQuality_CheckedChanged);
 			// 
@@ -376,8 +366,9 @@ namespace Plug_Parser_Plugin
 			// 
 			this.tabControls.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.tabControls.Controls.Add(this.tabTriggerControls);
-			this.tabControls.Controls.Add(this.tabPage2);
+			this.tabControls.Controls.Add(this.tabTriggerSettings);
+			this.tabControls.Controls.Add(this.tabVibeSettings);
+			this.tabControls.Controls.Add(this.tabPlayerInfo);
 			this.tabControls.Location = new System.Drawing.Point(656, 20);
 			this.tabControls.MinimumSize = new System.Drawing.Size(360, 252);
 			this.tabControls.Name = "tabControls";
@@ -385,42 +376,56 @@ namespace Plug_Parser_Plugin
 			this.tabControls.Size = new System.Drawing.Size(374, 252);
 			this.tabControls.TabIndex = 24;
 			// 
-			// tabTriggerControls
+			// tabTriggerSettings
 			// 
-			this.tabTriggerControls.BackColor = System.Drawing.SystemColors.ControlDarkDark;
-			this.tabTriggerControls.Controls.Add(this.labelRegex);
-			this.tabTriggerControls.Controls.Add(this.checkedListBox1);
-			this.tabTriggerControls.Controls.Add(this.buttonCheckTrigger);
-			this.tabTriggerControls.Controls.Add(this.textNewTrigger);
-			this.tabTriggerControls.Controls.Add(this.buttonAddTrigger);
-			this.tabTriggerControls.Location = new System.Drawing.Point(4, 22);
-			this.tabTriggerControls.Name = "tabTriggerControls";
-			this.tabTriggerControls.Padding = new System.Windows.Forms.Padding(3);
-			this.tabTriggerControls.Size = new System.Drawing.Size(366, 226);
-			this.tabTriggerControls.TabIndex = 0;
-			this.tabTriggerControls.Text = "Custom Triggers";
+			this.tabTriggerSettings.BackColor = System.Drawing.SystemColors.ControlDarkDark;
+			this.tabTriggerSettings.Controls.Add(this.labelRegex);
+			this.tabTriggerSettings.Controls.Add(this.checkedListBoxTriggerReactions);
+			this.tabTriggerSettings.Controls.Add(this.buttonCheckTrigger);
+			this.tabTriggerSettings.Controls.Add(this.textNewTrigger);
+			this.tabTriggerSettings.Controls.Add(this.buttonAddTrigger);
+			this.tabTriggerSettings.Location = new System.Drawing.Point(4, 22);
+			this.tabTriggerSettings.Name = "tabTriggerSettings";
+			this.tabTriggerSettings.Padding = new System.Windows.Forms.Padding(3);
+			this.tabTriggerSettings.Size = new System.Drawing.Size(366, 226);
+			this.tabTriggerSettings.TabIndex = 0;
+			this.tabTriggerSettings.Text = "Custom Triggers";
 			// 
-			// tabPage2
+			// tabVibeSettings
 			// 
-			this.tabPage2.BackColor = System.Drawing.SystemColors.ControlDarkDark;
-			this.tabPage2.Location = new System.Drawing.Point(4, 22);
-			this.tabPage2.Name = "tabPage2";
-			this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPage2.Size = new System.Drawing.Size(322, 226);
-			this.tabPage2.TabIndex = 1;
-			this.tabPage2.Text = "Vibe Settings";
+			this.tabVibeSettings.BackColor = System.Drawing.SystemColors.ControlDarkDark;
+			this.tabVibeSettings.Location = new System.Drawing.Point(4, 22);
+			this.tabVibeSettings.Name = "tabVibeSettings";
+			this.tabVibeSettings.Padding = new System.Windows.Forms.Padding(3);
+			this.tabVibeSettings.Size = new System.Drawing.Size(366, 226);
+			this.tabVibeSettings.TabIndex = 1;
+			this.tabVibeSettings.Text = "Vibe Settings";
 			// 
-			// checkedListBox1
+			// checkedListBoxTriggerReactions
 			// 
-			this.checkedListBox1.FormattingEnabled = true;
-			this.checkedListBox1.Items.AddRange(new object[] {
-            "list",
-            "responses",
-            "here"});
-			this.checkedListBox1.Location = new System.Drawing.Point(6, 34);
-			this.checkedListBox1.Name = "checkedListBox1";
-			this.checkedListBox1.Size = new System.Drawing.Size(161, 109);
-			this.checkedListBox1.TabIndex = 24;
+			this.checkedListBoxTriggerReactions.BackColor = System.Drawing.SystemColors.ActiveBorder;
+			this.checkedListBoxTriggerReactions.ColumnWidth = 80;
+			this.checkedListBoxTriggerReactions.FormattingEnabled = true;
+			this.checkedListBoxTriggerReactions.Items.AddRange(new object[] {
+            "Reaction",
+            "Items",
+            "For",
+            "Demo.",
+            "Purposes",
+            "Only",
+            ".",
+            "If",
+            "You\'re",
+            "Seeing",
+            "This",
+            "Cyan",
+            "Fucked",
+            "Up"});
+			this.checkedListBoxTriggerReactions.Location = new System.Drawing.Point(6, 34);
+			this.checkedListBoxTriggerReactions.MultiColumn = true;
+			this.checkedListBoxTriggerReactions.Name = "checkedListBoxTriggerReactions";
+			this.checkedListBoxTriggerReactions.Size = new System.Drawing.Size(180, 109);
+			this.checkedListBoxTriggerReactions.TabIndex = 24;
 			// 
 			// labelRegex
 			// 
@@ -433,6 +438,15 @@ namespace Plug_Parser_Plugin
 			this.labelRegex.Size = new System.Drawing.Size(46, 15);
 			this.labelRegex.TabIndex = 25;
 			this.labelRegex.Text = "Regex:";
+			// 
+			// tabPlayerInfo
+			// 
+			this.tabPlayerInfo.BackColor = System.Drawing.SystemColors.ControlDarkDark;
+			this.tabPlayerInfo.Location = new System.Drawing.Point(4, 22);
+			this.tabPlayerInfo.Name = "tabPlayerInfo";
+			this.tabPlayerInfo.Size = new System.Drawing.Size(366, 226);
+			this.tabPlayerInfo.TabIndex = 2;
+			this.tabPlayerInfo.Text = "Player Info.";
 			// 
 			// Plug_Parser
 			// 
@@ -455,16 +469,15 @@ namespace Plug_Parser_Plugin
 			this.Controls.Add(this.logEvents);
 			this.Controls.Add(this.buttonStopScanning);
 			this.Controls.Add(this.buttonRescan);
-			this.Controls.Add(this.textBox1);
-			this.MinimumSize = new System.Drawing.Size(720, 655);
+			this.MinimumSize = new System.Drawing.Size(720, 626);
 			this.Name = "Plug_Parser";
-			this.Size = new System.Drawing.Size(1034, 655);
+			this.Size = new System.Drawing.Size(1034, 626);
 			((System.ComponentModel.ISupportInitialize)(this.numericupdownOverrideValue)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.sliderVibeOverride)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.chartVibeStrength)).EndInit();
 			this.tabControls.ResumeLayout(false);
-			this.tabTriggerControls.ResumeLayout(false);
-			this.tabTriggerControls.PerformLayout();
+			this.tabTriggerSettings.ResumeLayout(false);
+			this.tabTriggerSettings.PerformLayout();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -531,7 +544,7 @@ namespace Plug_Parser_Plugin
 		#region Settings
 		void loadSettings()
 		{
-			xmlSettings.AddControlSetting(textBox1.Name, textBox1);
+			//xmlSettings.AddControlSetting(textBox1.Name, textBox1);
 
 			if (File.Exists(settingsFile))
 			{

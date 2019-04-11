@@ -12,13 +12,13 @@ namespace Plug_Parser_Plugin
 	{
 		private const string CATEGORY = "PP";
 
-		SortedList<string, CustomTrigger> listTriggers;
+		SortedList<string, CustomTrigger> ppTriggers;
 
 		public Trigger_Manager()
 		{
-			listTriggers = new SortedList<string, CustomTrigger>();
+			ppTriggers = new SortedList<string, CustomTrigger>();
 
-			listTriggers.Add("Triangulate", new CustomTrigger("Triangulate", (int)CustomTriggerSoundTypeEnum.None, "", false, "", true)
+			ppTriggers.Add("Triangulate", new CustomTrigger("Triangulate", (int)CustomTriggerSoundTypeEnum.None, "", false, "", true)
 			{
 				Active = true,
 				Tabbed = true,
@@ -30,10 +30,10 @@ namespace Plug_Parser_Plugin
 
 		private void addSimpleTrigger(string regex, bool isTabbed = true)
 		{
-			bool alreadyExists = listTriggers.ContainsKey(regex);
+			bool alreadyExists = ppTriggers.ContainsKey(regex);
 			if (!alreadyExists)
 			{
-				listTriggers.Add(regex, new CustomTrigger(regex, (int)CustomTriggerSoundTypeEnum.None, "", false, "", true)
+				ppTriggers.Add(regex, new CustomTrigger(regex, (int)CustomTriggerSoundTypeEnum.None, "", false, "", true)
 				{
 					Active = true,
 					Tabbed = isTabbed,
@@ -48,7 +48,7 @@ namespace Plug_Parser_Plugin
 
 		private void updateActiveTriggers()
 		{
-			foreach(KeyValuePair<string, CustomTrigger> pair in listTriggers)
+			foreach(KeyValuePair<string, CustomTrigger> pair in ppTriggers)
 			{
 				CustomTrigger trigger = pair.Value;
 
@@ -69,7 +69,7 @@ namespace Plug_Parser_Plugin
 		{
 			updateActiveTriggers();
 
-			foreach (KeyValuePair<string, CustomTrigger> pair in listTriggers)
+			foreach (KeyValuePair<string, CustomTrigger> pair in ppTriggers)
 			{
 				// TODO Figure out how to grab the matched lines of text from the log.
 				CustomTrigger trigger = pair.Value;
