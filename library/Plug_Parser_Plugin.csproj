@@ -83,6 +83,8 @@
     <Compile Include="C_Actions.cs" />
     <Compile Include="Connection_Manager.cs" />
     <Compile Include="C_Messages.cs" />
+    <Compile Include="Device_Properties.cs" />
+    <Compile Include="PP_Trigger.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="Client_Manager.cs" />
     <Compile Include="Director.cs" />
@@ -100,6 +102,8 @@
     </Compile>
     <Compile Include="Remote_Settings.cs" />
     <Compile Include="Trigger_Manager.cs" />
+    <Compile Include="UI_Manager.cs" />
+    <Compile Include="Update_Manager.cs" />
     <Compile Include="Vibe_Remote.cs" />
   </ItemGroup>
   <ItemGroup>

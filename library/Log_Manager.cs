@@ -26,7 +26,7 @@ namespace Plug_Parser_Plugin
 				return;
 			}
 
-			if (eventLog.InvokeRequired && !Plug_Parser.ALLOWING_UNSAFE_UI_EDITS)
+			if (eventLog.InvokeRequired && !usercontrolPlugParser.ALLOWING_UNSAFE_UI_EDITS)
 			{
 				var d = new SafeCallDelegate(write);
 				eventLog.Invoke(d, new object[] { s });
@@ -52,7 +52,7 @@ namespace Plug_Parser_Plugin
 				return;
 			}
 
-			if (eventLog.InvokeRequired && !Plug_Parser.ALLOWING_UNSAFE_UI_EDITS)
+			if (eventLog.InvokeRequired && !usercontrolPlugParser.ALLOWING_UNSAFE_UI_EDITS)
 			{
 				var d = new SafeClearDelegate(clear);
 				eventLog.Invoke(d);

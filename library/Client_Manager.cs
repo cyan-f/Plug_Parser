@@ -30,16 +30,19 @@ namespace Plug_Parser_Plugin
 		private ButtplugClient client;
 		private Vibe_Remote remote;
 
+		private UI_Manager manUI;
+
 		// TODO set this in ctor.
 		private bool usingEmbeddedServer = true;
 
-		public Client_Manager()
+		public Client_Manager(UI_Manager mUI)
 		{
 			isUpdating = false;
 			isRunning = true;
 			chartQuality = 0;
 
 			remote = new Vibe_Remote();
+			manUI = mUI;
 
 			Log_Manager.write("Created Manager");
 		}
@@ -183,12 +186,14 @@ namespace Plug_Parser_Plugin
 			{
 				if (isUpdating)
 				{
-					remote.updateStrength();
+					double newStrength = remote.updateStrength();
 
 					foreach (ButtplugClientDevice toy in client.Devices)
 					{
 						await remote.vibe(toy);
 					}
+
+					manUI.enqueuePoint(DateTimeOffset.Now.ToUnixTimeMilliseconds(), newStrength);
 				}
 				await Task.Delay(DELAY_TIME);
 			}

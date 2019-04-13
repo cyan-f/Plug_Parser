@@ -13,10 +13,9 @@ using System.Xml;
 
 namespace Plug_Parser_Plugin
 {
-	public class Plug_Parser : UserControl, IActPluginV1
+	public class usercontrolPlugParser : UserControl, IActPluginV1
 	{
 		public const bool ALLOWING_UNSAFE_UI_EDITS = false;
-		private delegate void SafeCallDelegate(Stopwatch s);
 		private long chartQuality; // 0 = max
 		private bool changedChartQuality = false;
 		private int chartUpdateDelayHigh = 4;
@@ -33,7 +32,7 @@ namespace Plug_Parser_Plugin
 		private Button buttonStopScanning;
 		private RichTextBox logEvents;
 		private NumericUpDown numericupdownOverrideValue;
-		private TrackBar sliderVibeOverride;
+		private TrackBar sliderOverrideValue;
 		private Button buttonClearLog;
 		private System.Windows.Forms.DataVisualization.Charting.Chart chartVibeStrength;
 		private Label EVENT_LOG_LABEL;
@@ -89,7 +88,7 @@ namespace Plug_Parser_Plugin
 			this.buttonStopScanning = new System.Windows.Forms.Button();
 			this.logEvents = new System.Windows.Forms.RichTextBox();
 			this.numericupdownOverrideValue = new System.Windows.Forms.NumericUpDown();
-			this.sliderVibeOverride = new System.Windows.Forms.TrackBar();
+			this.sliderOverrideValue = new System.Windows.Forms.TrackBar();
 			this.buttonClearLog = new System.Windows.Forms.Button();
 			this.chartVibeStrength = new System.Windows.Forms.DataVisualization.Charting.Chart();
 			this.CHART_LABEL = new System.Windows.Forms.Label();
@@ -104,12 +103,12 @@ namespace Plug_Parser_Plugin
 			this.buttonAddTrigger = new System.Windows.Forms.Button();
 			this.tabControls = new System.Windows.Forms.TabControl();
 			this.tabTriggerSettings = new System.Windows.Forms.TabPage();
-			this.tabVibeSettings = new System.Windows.Forms.TabPage();
-			this.checkedListBoxTriggerReactions = new System.Windows.Forms.CheckedListBox();
 			this.labelRegex = new System.Windows.Forms.Label();
+			this.checkedListBoxTriggerReactions = new System.Windows.Forms.CheckedListBox();
+			this.tabVibeSettings = new System.Windows.Forms.TabPage();
 			this.tabPlayerInfo = new System.Windows.Forms.TabPage();
 			((System.ComponentModel.ISupportInitialize)(this.numericupdownOverrideValue)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.sliderVibeOverride)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.sliderOverrideValue)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.chartVibeStrength)).BeginInit();
 			this.tabControls.SuspendLayout();
 			this.tabTriggerSettings.SuspendLayout();
@@ -176,22 +175,22 @@ namespace Plug_Parser_Plugin
 			this.numericupdownOverrideValue.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
 			this.numericupdownOverrideValue.ValueChanged += new System.EventHandler(this.numericupdownOverrideValue_ValueChanged);
 			// 
-			// sliderVibeOverride
+			// sliderOverrideValue
 			// 
-			this.sliderVibeOverride.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.sliderVibeOverride.AutoSize = false;
-			this.sliderVibeOverride.BackColor = System.Drawing.SystemColors.ControlDarkDark;
-			this.sliderVibeOverride.LargeChange = 10;
-			this.sliderVibeOverride.Location = new System.Drawing.Point(992, 297);
-			this.sliderVibeOverride.Maximum = 100;
-			this.sliderVibeOverride.Name = "sliderVibeOverride";
-			this.sliderVibeOverride.Orientation = System.Windows.Forms.Orientation.Vertical;
-			this.sliderVibeOverride.Size = new System.Drawing.Size(36, 323);
-			this.sliderVibeOverride.SmallChange = 5;
-			this.sliderVibeOverride.TabIndex = 11;
-			this.sliderVibeOverride.TickFrequency = 5;
-			this.sliderVibeOverride.TickStyle = System.Windows.Forms.TickStyle.TopLeft;
-			this.sliderVibeOverride.Scroll += new System.EventHandler(this.sliderVibeOverride_Scroll);
+			this.sliderOverrideValue.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.sliderOverrideValue.AutoSize = false;
+			this.sliderOverrideValue.BackColor = System.Drawing.SystemColors.ControlDarkDark;
+			this.sliderOverrideValue.LargeChange = 10;
+			this.sliderOverrideValue.Location = new System.Drawing.Point(992, 297);
+			this.sliderOverrideValue.Maximum = 100;
+			this.sliderOverrideValue.Name = "sliderOverrideValue";
+			this.sliderOverrideValue.Orientation = System.Windows.Forms.Orientation.Vertical;
+			this.sliderOverrideValue.Size = new System.Drawing.Size(36, 323);
+			this.sliderOverrideValue.SmallChange = 5;
+			this.sliderOverrideValue.TabIndex = 11;
+			this.sliderOverrideValue.TickFrequency = 5;
+			this.sliderOverrideValue.TickStyle = System.Windows.Forms.TickStyle.TopLeft;
+			this.sliderOverrideValue.Scroll += new System.EventHandler(this.sliderVibeOverride_Scroll);
 			// 
 			// buttonClearLog
 			// 
@@ -391,15 +390,17 @@ namespace Plug_Parser_Plugin
 			this.tabTriggerSettings.TabIndex = 0;
 			this.tabTriggerSettings.Text = "Custom Triggers";
 			// 
-			// tabVibeSettings
+			// labelRegex
 			// 
-			this.tabVibeSettings.BackColor = System.Drawing.SystemColors.ControlDarkDark;
-			this.tabVibeSettings.Location = new System.Drawing.Point(4, 22);
-			this.tabVibeSettings.Name = "tabVibeSettings";
-			this.tabVibeSettings.Padding = new System.Windows.Forms.Padding(3);
-			this.tabVibeSettings.Size = new System.Drawing.Size(366, 226);
-			this.tabVibeSettings.TabIndex = 1;
-			this.tabVibeSettings.Text = "Vibe Settings";
+			this.labelRegex.AutoSize = true;
+			this.labelRegex.BackColor = System.Drawing.Color.Transparent;
+			this.labelRegex.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.labelRegex.ForeColor = System.Drawing.SystemColors.Control;
+			this.labelRegex.Location = new System.Drawing.Point(6, 9);
+			this.labelRegex.Name = "labelRegex";
+			this.labelRegex.Size = new System.Drawing.Size(46, 15);
+			this.labelRegex.TabIndex = 25;
+			this.labelRegex.Text = "Regex:";
 			// 
 			// checkedListBoxTriggerReactions
 			// 
@@ -427,17 +428,15 @@ namespace Plug_Parser_Plugin
 			this.checkedListBoxTriggerReactions.Size = new System.Drawing.Size(180, 109);
 			this.checkedListBoxTriggerReactions.TabIndex = 24;
 			// 
-			// labelRegex
+			// tabVibeSettings
 			// 
-			this.labelRegex.AutoSize = true;
-			this.labelRegex.BackColor = System.Drawing.Color.Transparent;
-			this.labelRegex.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.labelRegex.ForeColor = System.Drawing.SystemColors.Control;
-			this.labelRegex.Location = new System.Drawing.Point(6, 9);
-			this.labelRegex.Name = "labelRegex";
-			this.labelRegex.Size = new System.Drawing.Size(46, 15);
-			this.labelRegex.TabIndex = 25;
-			this.labelRegex.Text = "Regex:";
+			this.tabVibeSettings.BackColor = System.Drawing.SystemColors.ControlDarkDark;
+			this.tabVibeSettings.Location = new System.Drawing.Point(4, 22);
+			this.tabVibeSettings.Name = "tabVibeSettings";
+			this.tabVibeSettings.Padding = new System.Windows.Forms.Padding(3);
+			this.tabVibeSettings.Size = new System.Drawing.Size(366, 226);
+			this.tabVibeSettings.TabIndex = 1;
+			this.tabVibeSettings.Text = "Vibe Settings";
 			// 
 			// tabPlayerInfo
 			// 
@@ -448,7 +447,7 @@ namespace Plug_Parser_Plugin
 			this.tabPlayerInfo.TabIndex = 2;
 			this.tabPlayerInfo.Text = "Player Info.";
 			// 
-			// Plug_Parser
+			// usercontrolPlugParser
 			// 
 			this.AccessibleDescription = "";
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -463,17 +462,17 @@ namespace Plug_Parser_Plugin
 			this.Controls.Add(this.CHART_LABEL);
 			this.Controls.Add(this.chartVibeStrength);
 			this.Controls.Add(this.buttonClearLog);
-			this.Controls.Add(this.sliderVibeOverride);
+			this.Controls.Add(this.sliderOverrideValue);
 			this.Controls.Add(this.EVENT_LOG_LABEL);
 			this.Controls.Add(this.numericupdownOverrideValue);
 			this.Controls.Add(this.logEvents);
 			this.Controls.Add(this.buttonStopScanning);
 			this.Controls.Add(this.buttonRescan);
 			this.MinimumSize = new System.Drawing.Size(720, 626);
-			this.Name = "Plug_Parser";
+			this.Name = "usercontrolPlugParser";
 			this.Size = new System.Drawing.Size(1034, 626);
 			((System.ComponentModel.ISupportInitialize)(this.numericupdownOverrideValue)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.sliderVibeOverride)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.sliderOverrideValue)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.chartVibeStrength)).EndInit();
 			this.tabControls.ResumeLayout(false);
 			this.tabTriggerSettings.ResumeLayout(false);
@@ -487,7 +486,7 @@ namespace Plug_Parser_Plugin
 
 		#endregion
 
-		public Plug_Parser()
+		public usercontrolPlugParser()
 		{
 			try
 			{
@@ -498,6 +497,7 @@ namespace Plug_Parser_Plugin
 				Log_Manager.write("ERROR: Cannot find " + e.FileName);
 			}
 
+			// Throw exception if UI updates are made outside of the UI thread.
 			Control.CheckForIllegalCrossThreadCalls = true;
 		}
 
@@ -521,13 +521,9 @@ namespace Plug_Parser_Plugin
 			ActGlobals.oFormActMain.AfterCombatAction += new CombatActionDelegate(oFormActMain_AfterCombatAction);
 
 			lblStatus.Text = "Plugin Started";
-
-			// Custom
-			Log_Manager.setLogTarget(logEvents);
-			EVENT_LOG_LABEL.SendToBack();
-
+			
 #pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
-			initDirector();
+			initPP();
 #pragma warning restore CS4014
 		}
 
@@ -592,109 +588,20 @@ namespace Plug_Parser_Plugin
 		}
 		#endregion
 
-		// Infinite background loop.
-		// TODO buffer point adding
-		public async Task updateChart()
+		private async Task initPP()
 		{
-			// Hides messy-looking chart on startup.
-			await Task.Delay(1000);
+			Log_Manager.setLogTarget(logEvents);
+			EVENT_LOG_LABEL.SendToBack();
 
-			Stopwatch stopwatch = new Stopwatch();
-			stopwatch.Start();
-			while (true)
-			{
-				updateChartHelper(stopwatch);
-				switch (chartQuality) {
-					case 0:
-						await Task.Delay(chartUpdateDelayHigh);
-						break;
-					default:
-						await Task.Delay(chartUpdateDelayLow);
-						break;
-				}
-			}
-
-		}
-		public void updateChartHelper(Stopwatch s)
-		{
-			// Switch to UI thread.
-			if (chartVibeStrength.InvokeRequired && !ALLOWING_UNSAFE_UI_EDITS)
-			{
-				var d = new SafeCallDelegate(updateChartHelper);
-				chartVibeStrength.Invoke(d, new object[] { s });
-			}
-
-			else
-			{
-				// Update override control UI
-				switch (updateOverrideUI)
-				{
-					case 1:
-						sliderVibeOverride.Value = (int)numericupdownOverrideValue.Value;
-						updateOverrideUI = 0;
-						break;
-					case 2:
-						numericupdownOverrideValue.Value = sliderVibeOverride.Value;
-						updateOverrideUI = 0;
-						break;
-					default:
-						break;
-				}
-
-
-				// Update Chart
-				var series = chartVibeStrength.Series["seriesMain"];
-				var area = chartVibeStrength.ChartAreas["areaMain"];
-
-				if (series.Points.Count >= 288)
-				{
-					series.Points.RemoveAt(0);
-				}
-
-				double strength = director.getCurrentStrength();
-
-				// Smooth graph if quality, stepped line if not.
-				if (chartQuality > 0)
-				{
-					if (changedChartQuality)
-					{
-						chartVibeStrength.Series[0].ChartType = 
-							System.Windows.Forms.DataVisualization.Charting.SeriesChartType.StepLine;
-						changedChartQuality = false;
-					}
-
-					strength = Math.Round(strength / 5) * 5; // Based on Lovense Hush limits
-				}
-				if (changedChartQuality)
-				{
-					chartVibeStrength.Series[0].ChartType =
-							System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
-					changedChartQuality = false;
-				}
-
-				// Add points
-				series.Points.AddXY(s.ElapsedMilliseconds, strength);
-				chartVibeStrength.ResetAutoValues();
-			}
-
-
-		}
-
-		private async Task initDirector()
-		{
 			try
 			{
-				director = new Director();
+				director = new Director(chartVibeStrength, numericupdownOverrideValue, sliderOverrideValue);
 				await director.begin();
 			}
 			catch (FileNotFoundException e)
 			{
 				Log_Manager.write("ERROR: Cannot find " + e.FileName);
 			}
-
-#pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
-			updateChart();
-#pragma warning restore CS4014
 		}
 
 		// Only parses data for easier use in Director
@@ -769,13 +676,13 @@ namespace Plug_Parser_Plugin
 
 		private void sliderVibeOverride_Scroll(object sender, EventArgs e)
 		{
-			director.queueVibeOverride(checkboxOverride.Checked, sliderVibeOverride.Value);
+			director.queueVibeOverride(checkboxOverride.Checked, sliderOverrideValue.Value);
 			updateOverrideUI = 2;
 		}
 
 		private void checkboxOverride_CheckedChanged(object sender, EventArgs e)
 		{
-			director.queueVibeOverride(checkboxOverride.Checked, sliderVibeOverride.Value);
+			director.queueVibeOverride(checkboxOverride.Checked, sliderOverrideValue.Value);
 		}
 
 		private void checkboxChartQuality_CheckedChanged(object sender, EventArgs e)
