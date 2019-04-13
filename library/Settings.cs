@@ -42,7 +42,6 @@ namespace Plug_Parser_Plugin
 				public const double PHASE_SHIFT = 0;
 				public const double SPIKE_AMOUNT = 0;
 				public const double SPIKE_DURATION = 0;
-
 			}
 		}
 	}

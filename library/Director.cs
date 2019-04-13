@@ -1,7 +1,8 @@
 ﻿using System;
 using System.IO;
 using System.Threading.Tasks;
-
+using System.Windows.Forms;
+using System.Windows.Forms.DataVisualization.Charting;
 using Advanced_Combat_Tracker;
 
 namespace Plug_Parser_Plugin
@@ -10,14 +11,18 @@ namespace Plug_Parser_Plugin
 	{
 		private Client_Manager manClient = null;
 		private Trigger_Manager manTrigger = null;
-		// UI Manager
+		private UI_Manager manUI = null;
+		private Update_Manager manUpdate = null;
 
 		private double killCount = 0;
 		private bool loggingCombatEvents = false;
 		
-		public Director()
+		public Director(Chart chart, NumericUpDown nudOverride, TrackBar barOverride)
 		{
 			manTrigger = new Trigger_Manager();
+			manUI = new UI_Manager(chart, nudOverride, barOverride);
+
+			manUpdate = new Update_Manager(manUI);
 		}
 
 		public void stopScanning()
@@ -31,7 +36,7 @@ namespace Plug_Parser_Plugin
 			while(manClient == null)
 			{
 				Log_Manager.write("No manager, creating...");
-				manClient = new Client_Manager();
+				manClient = new Client_Manager(manUI);
 				Log_Manager.write("Created.");
 			}
 
@@ -52,6 +57,7 @@ namespace Plug_Parser_Plugin
 			}
 
 			manClient.begin();
+			manUpdate.startUpdating();
 		}
 
 		public async Task reconnect()
