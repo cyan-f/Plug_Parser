@@ -15,12 +15,12 @@ namespace Plug_Parser_Plugin
 		private long overrideStartTime;
 
 		private long lastTime;
+		private long lastDecayTime;
 		private long thisTime;
 		private long deltaTime;
 
 		private long lastSpikeDecayTime;
 
-		private double decayRate = 0.05;
 		private bool decaySpikeToggle = true;
 		private bool decayWasPositive = false;
 
@@ -75,57 +75,29 @@ namespace Plug_Parser_Plugin
 				val = Power_Calculator.getStrength(settings);
 			}
 
-			decay();
+			if ((thisTime - lastDecayTime) >= 1000)
+			{
+				decay();
+			}
 
 			previousStrength = val;
 			return val;
 		}
 
 		#region Controls
-		// Flat buzz
-		public void buzz(double strength, long duration)
+		public void buzz(double strength)
 		{
-			if (strength > overrideStrength)
-			{
-				setOverride(strength, duration);
-			}
+			
 		}
 
-		// Stops vibration for duration (milliseconds)
-		public void pause(long duration)
+		public void safeWord()
 		{
-			//setOverride(0, duration);
+			setOverride(0);
 		}
 
-		/*
-		 * Multiplies strength by factor for duration.
-		 * 
-		 * factor - small decimal value, typically between 1.0~2.0
-		 * duration - time in milliseconds
-		 */
-		public void spike(double factor, double duration)
+		public void greenLight()
 		{
-			settings.spikeAmount = factor;
-			settings.spikeTimeLeft = duration;
-		}
-
-		public void accelerate(double factor)
-		{
-			double newFrequency = settings.frequency * factor;
-			setFrequency(newFrequency);
-
-			Log_Manager.write("NF: " + newFrequency);
-		}
-
-		public void excite(double factor)
-		{
-
-		}
-
-		// Increases baseStrength by given amount.
-		public void bump(double amount)
-		{
-			settings.baseStrength += amount;
+			unsetOverride();
 		}
 		#endregion
 
@@ -158,43 +130,9 @@ namespace Plug_Parser_Plugin
 
 		private void decay()
 		{
-			if (settings.spikeTimeLeft > (double) 0)
-			{
-				settings.spikeTimeLeft -= deltaTime;
-			}
 
-			if (settings.frequency > 1)
-			{
-				double sineValue = Power_Calculator.getSineValue(settings);
-				if ((sineValue > 0) && !decayWasPositive)
-				{
-					decaySpikeToggle = true;
-					decayWasPositive = true;
-				}
-				else if ((sineValue < 0) && decayWasPositive)
-				{
-					decaySpikeToggle = true;
-					decayWasPositive = false;
-				}
 
-				if (decaySpikeToggle)
-				{
-					long spikeDecayDeltaTime = thisTime - lastSpikeDecayTime;
-					double decelerationAmount = 1 - (decayRate * ((double) spikeDecayDeltaTime / 1000));
-					accelerate(decelerationAmount);
-					decaySpikeToggle = false;
-					lastSpikeDecayTime = thisTime;
-				}
-			}
-			else
-			{
-				lastSpikeDecayTime = thisTime;
-			}
-
-			if (settings.baseStrength > 15)
-			{
-				bump(-(deltaTime / 2000));
-			}
+			lastDecayTime = DateTimeOffset.Now.ToUnixTimeMilliseconds();
 		}
 		#endregion
 

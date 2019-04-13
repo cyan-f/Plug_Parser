@@ -10,7 +10,7 @@ namespace Plug_Parser_Plugin
 {
 	class Trigger_Manager
 	{
-		private const string CATEGORY = "PP";
+		private const string CATEGORY = "PP_Triggers";
 
 		SortedList<string, CustomTrigger> ppTriggers;
 

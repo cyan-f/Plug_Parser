@@ -50,22 +50,20 @@ namespace Plug_Parser_Plugin
 			switch (action)
 			{
 				case C_Actions.YOU_HIT:
-					//remote.buzz(40, 100);
-					remote.spike(2.0, 200);
+					remote.buzz(40);
 					break;
 
 				case C_Actions.YOU_HEALED:
 					break;
 
 				case C_Actions.YOU_KILLED:
-					//remote.accelerate(2.0);
-					remote.buzz(90, 250);
+					remote.buzz(90);
 					break;
 				case C_Actions.YOU_KILLED_ENOUGH:
-					remote.buzz(100, 500);
+					remote.buzz(100);
 					break;
 				default:
-					remote.buzz(70, 100);
+					remote.buzz(70);
 					break;
 			}
 		}
@@ -161,7 +159,7 @@ namespace Plug_Parser_Plugin
 		private void clientDeviceAdded(object sender, DeviceAddedEventArgs args)
 		{
 			Log_Manager.write($"Device ${args.Device.Name} connected");
-			remote.buzz(50, 240);
+			remote.buzz(50);
 		}
 
 		public void begin()

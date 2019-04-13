@@ -19,8 +19,8 @@ namespace Plug_Parser_Plugin
 		private delegate void SafeCallDelegate(Stopwatch s);
 		private long chartQuality; // 0 = max
 		private bool changedChartQuality = false;
-		private int chartUpdateDelayHigh = 4;
-		private int chartUpdateDelayLow = 8;
+		private int chartUpdatesPerSecond = 144;
+		private int chartUpdateDelay = 1000 / 144;
 
 		// 0 = no update
 		// 1 = update trackbar
@@ -53,6 +53,8 @@ namespace Plug_Parser_Plugin
 		private Label labelRegex;
 		private CheckedListBox checkedListBoxTriggerReactions;
 		private TabPage tabPlayerInfo;
+		private NumericUpDown numericupdownUpdatesPerSecond;
+		private Label labelUpdatesPerSecond;
 
 		#region Designer Created Code (Avoid editing)
 		/// <summary> 
@@ -81,9 +83,9 @@ namespace Plug_Parser_Plugin
 		/// </summary>
 		private void InitializeComponent()
 		{
-			System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-			System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-			System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+			System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+			System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+			System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
 			this.EVENT_LOG_LABEL = new System.Windows.Forms.Label();
 			this.buttonRescan = new System.Windows.Forms.Button();
 			this.buttonStopScanning = new System.Windows.Forms.Button();
@@ -104,15 +106,18 @@ namespace Plug_Parser_Plugin
 			this.buttonAddTrigger = new System.Windows.Forms.Button();
 			this.tabControls = new System.Windows.Forms.TabControl();
 			this.tabTriggerSettings = new System.Windows.Forms.TabPage();
-			this.tabVibeSettings = new System.Windows.Forms.TabPage();
-			this.checkedListBoxTriggerReactions = new System.Windows.Forms.CheckedListBox();
 			this.labelRegex = new System.Windows.Forms.Label();
+			this.checkedListBoxTriggerReactions = new System.Windows.Forms.CheckedListBox();
+			this.tabVibeSettings = new System.Windows.Forms.TabPage();
 			this.tabPlayerInfo = new System.Windows.Forms.TabPage();
+			this.numericupdownUpdatesPerSecond = new System.Windows.Forms.NumericUpDown();
+			this.labelUpdatesPerSecond = new System.Windows.Forms.Label();
 			((System.ComponentModel.ISupportInitialize)(this.numericupdownOverrideValue)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.sliderVibeOverride)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.chartVibeStrength)).BeginInit();
 			this.tabControls.SuspendLayout();
 			this.tabTriggerSettings.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.numericupdownUpdatesPerSecond)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// EVENT_LOG_LABEL
@@ -212,45 +217,45 @@ namespace Plug_Parser_Plugin
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.chartVibeStrength.BackColor = System.Drawing.Color.Transparent;
 			this.chartVibeStrength.BorderlineColor = System.Drawing.Color.Transparent;
-			chartArea1.AxisX.LabelStyle.Enabled = false;
-			chartArea1.AxisX.MajorGrid.Enabled = false;
-			chartArea1.AxisX.MajorTickMark.Enabled = false;
-			chartArea1.AxisX.ScrollBar.BackColor = System.Drawing.Color.Black;
-			chartArea1.AxisY.LabelStyle.Enabled = false;
-			chartArea1.AxisY.MajorGrid.Enabled = false;
-			chartArea1.AxisY.MajorTickMark.Enabled = false;
-			chartArea1.AxisY.Maximum = 100D;
-			chartArea1.AxisY.Minimum = 0D;
-			chartArea1.BackColor = System.Drawing.SystemColors.ControlDarkDark;
-			chartArea1.BorderDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Solid;
-			chartArea1.CursorX.AutoScroll = false;
-			chartArea1.Name = "areaMain";
-			chartArea1.Position.Auto = false;
-			chartArea1.Position.Height = 100F;
-			chartArea1.Position.Width = 100F;
-			this.chartVibeStrength.ChartAreas.Add(chartArea1);
+			chartArea3.AxisX.LabelStyle.Enabled = false;
+			chartArea3.AxisX.MajorGrid.Enabled = false;
+			chartArea3.AxisX.MajorTickMark.Enabled = false;
+			chartArea3.AxisX.ScrollBar.BackColor = System.Drawing.Color.Black;
+			chartArea3.AxisY.LabelStyle.Enabled = false;
+			chartArea3.AxisY.MajorGrid.Enabled = false;
+			chartArea3.AxisY.MajorTickMark.Enabled = false;
+			chartArea3.AxisY.Maximum = 100D;
+			chartArea3.AxisY.Minimum = 0D;
+			chartArea3.BackColor = System.Drawing.SystemColors.ControlDarkDark;
+			chartArea3.BorderDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Solid;
+			chartArea3.CursorX.AutoScroll = false;
+			chartArea3.Name = "areaMain";
+			chartArea3.Position.Auto = false;
+			chartArea3.Position.Height = 100F;
+			chartArea3.Position.Width = 100F;
+			this.chartVibeStrength.ChartAreas.Add(chartArea3);
 			this.chartVibeStrength.Cursor = System.Windows.Forms.Cursors.Default;
-			legend1.Enabled = false;
-			legend1.Name = "Legend1";
-			this.chartVibeStrength.Legends.Add(legend1);
+			legend3.Enabled = false;
+			legend3.Name = "Legend1";
+			this.chartVibeStrength.Legends.Add(legend3);
 			this.chartVibeStrength.Location = new System.Drawing.Point(4, 309);
 			this.chartVibeStrength.Margin = new System.Windows.Forms.Padding(0);
 			this.chartVibeStrength.MinimumSize = new System.Drawing.Size(590, 252);
 			this.chartVibeStrength.Name = "chartVibeStrength";
-			series1.BackImageTransparentColor = System.Drawing.Color.DarkCyan;
-			series1.BackSecondaryColor = System.Drawing.Color.DarkCyan;
-			series1.BorderColor = System.Drawing.Color.DarkCyan;
-			series1.BorderWidth = 3;
-			series1.ChartArea = "areaMain";
-			series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
-			series1.Color = System.Drawing.Color.Cyan;
-			series1.LabelForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-			series1.Legend = "Legend1";
-			series1.MarkerBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
-			series1.MarkerBorderWidth = 1100;
-			series1.MarkerSize = 10;
-			series1.Name = "seriesMain";
-			this.chartVibeStrength.Series.Add(series1);
+			series3.BackImageTransparentColor = System.Drawing.Color.DarkCyan;
+			series3.BackSecondaryColor = System.Drawing.Color.DarkCyan;
+			series3.BorderColor = System.Drawing.Color.DarkCyan;
+			series3.BorderWidth = 3;
+			series3.ChartArea = "areaMain";
+			series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+			series3.Color = System.Drawing.Color.Cyan;
+			series3.LabelForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+			series3.Legend = "Legend1";
+			series3.MarkerBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
+			series3.MarkerBorderWidth = 1100;
+			series3.MarkerSize = 10;
+			series3.Name = "seriesMain";
+			this.chartVibeStrength.Series.Add(series3);
 			this.chartVibeStrength.Size = new System.Drawing.Size(986, 300);
 			this.chartVibeStrength.TabIndex = 13;
 			this.chartVibeStrength.Click += new System.EventHandler(this.chartVibeStrength_Click);
@@ -301,6 +306,7 @@ namespace Plug_Parser_Plugin
 			// checkboxChartQuality
 			// 
 			this.checkboxChartQuality.AutoSize = true;
+			this.checkboxChartQuality.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
 			this.checkboxChartQuality.Checked = true;
 			this.checkboxChartQuality.CheckState = System.Windows.Forms.CheckState.Checked;
 			this.checkboxChartQuality.Location = new System.Drawing.Point(100, 288);
@@ -391,15 +397,17 @@ namespace Plug_Parser_Plugin
 			this.tabTriggerSettings.TabIndex = 0;
 			this.tabTriggerSettings.Text = "Custom Triggers";
 			// 
-			// tabVibeSettings
+			// labelRegex
 			// 
-			this.tabVibeSettings.BackColor = System.Drawing.SystemColors.ControlDarkDark;
-			this.tabVibeSettings.Location = new System.Drawing.Point(4, 22);
-			this.tabVibeSettings.Name = "tabVibeSettings";
-			this.tabVibeSettings.Padding = new System.Windows.Forms.Padding(3);
-			this.tabVibeSettings.Size = new System.Drawing.Size(366, 226);
-			this.tabVibeSettings.TabIndex = 1;
-			this.tabVibeSettings.Text = "Vibe Settings";
+			this.labelRegex.AutoSize = true;
+			this.labelRegex.BackColor = System.Drawing.Color.Transparent;
+			this.labelRegex.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.labelRegex.ForeColor = System.Drawing.SystemColors.Control;
+			this.labelRegex.Location = new System.Drawing.Point(6, 9);
+			this.labelRegex.Name = "labelRegex";
+			this.labelRegex.Size = new System.Drawing.Size(46, 15);
+			this.labelRegex.TabIndex = 25;
+			this.labelRegex.Text = "Regex:";
 			// 
 			// checkedListBoxTriggerReactions
 			// 
@@ -427,17 +435,15 @@ namespace Plug_Parser_Plugin
 			this.checkedListBoxTriggerReactions.Size = new System.Drawing.Size(180, 109);
 			this.checkedListBoxTriggerReactions.TabIndex = 24;
 			// 
-			// labelRegex
+			// tabVibeSettings
 			// 
-			this.labelRegex.AutoSize = true;
-			this.labelRegex.BackColor = System.Drawing.Color.Transparent;
-			this.labelRegex.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.labelRegex.ForeColor = System.Drawing.SystemColors.Control;
-			this.labelRegex.Location = new System.Drawing.Point(6, 9);
-			this.labelRegex.Name = "labelRegex";
-			this.labelRegex.Size = new System.Drawing.Size(46, 15);
-			this.labelRegex.TabIndex = 25;
-			this.labelRegex.Text = "Regex:";
+			this.tabVibeSettings.BackColor = System.Drawing.SystemColors.ControlDarkDark;
+			this.tabVibeSettings.Location = new System.Drawing.Point(4, 22);
+			this.tabVibeSettings.Name = "tabVibeSettings";
+			this.tabVibeSettings.Padding = new System.Windows.Forms.Padding(3);
+			this.tabVibeSettings.Size = new System.Drawing.Size(366, 226);
+			this.tabVibeSettings.TabIndex = 1;
+			this.tabVibeSettings.Text = "Vibe Settings";
 			// 
 			// tabPlayerInfo
 			// 
@@ -448,11 +454,45 @@ namespace Plug_Parser_Plugin
 			this.tabPlayerInfo.TabIndex = 2;
 			this.tabPlayerInfo.Text = "Player Info.";
 			// 
+			// numericupdownUpdatesPerSecond
+			// 
+			this.numericupdownUpdatesPerSecond.Location = new System.Drawing.Point(298, 286);
+			this.numericupdownUpdatesPerSecond.Maximum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
+			this.numericupdownUpdatesPerSecond.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+			this.numericupdownUpdatesPerSecond.Name = "numericupdownUpdatesPerSecond";
+			this.numericupdownUpdatesPerSecond.Size = new System.Drawing.Size(44, 20);
+			this.numericupdownUpdatesPerSecond.TabIndex = 25;
+			this.numericupdownUpdatesPerSecond.Value = new decimal(new int[] {
+            144,
+            0,
+            0,
+            0});
+			this.numericupdownUpdatesPerSecond.ValueChanged += new System.EventHandler(this.numericupdownUpdatesPerSecond_ValueChanged);
+			// 
+			// labelUpdatesPerSecond
+			// 
+			this.labelUpdatesPerSecond.AutoSize = true;
+			this.labelUpdatesPerSecond.Location = new System.Drawing.Point(188, 289);
+			this.labelUpdatesPerSecond.Name = "labelUpdatesPerSecond";
+			this.labelUpdatesPerSecond.Size = new System.Drawing.Size(109, 13);
+			this.labelUpdatesPerSecond.TabIndex = 26;
+			this.labelUpdatesPerSecond.Text = "Updates Per Second:";
+			// 
 			// Plug_Parser
 			// 
 			this.AccessibleDescription = "";
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+			this.Controls.Add(this.labelUpdatesPerSecond);
+			this.Controls.Add(this.numericupdownUpdatesPerSecond);
 			this.Controls.Add(this.tabControls);
 			this.Controls.Add(this.checkLogCombatEvents);
 			this.Controls.Add(this.checkEmbeddedServer);
@@ -478,6 +518,7 @@ namespace Plug_Parser_Plugin
 			this.tabControls.ResumeLayout(false);
 			this.tabTriggerSettings.ResumeLayout(false);
 			this.tabTriggerSettings.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)(this.numericupdownUpdatesPerSecond)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -527,7 +568,7 @@ namespace Plug_Parser_Plugin
 			EVENT_LOG_LABEL.SendToBack();
 
 #pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
-			initDirector();
+			initPP();
 #pragma warning restore CS4014
 		}
 
@@ -606,10 +647,10 @@ namespace Plug_Parser_Plugin
 				updateChartHelper(stopwatch);
 				switch (chartQuality) {
 					case 0:
-						await Task.Delay(chartUpdateDelayHigh);
+						await Task.Delay(chartUpdateDelay);
 						break;
 					default:
-						await Task.Delay(chartUpdateDelayLow);
+						await Task.Delay(chartUpdateDelay);
 						break;
 				}
 			}
@@ -640,7 +681,6 @@ namespace Plug_Parser_Plugin
 					default:
 						break;
 				}
-
 
 				// Update Chart
 				var series = chartVibeStrength.Series["seriesMain"];
@@ -680,7 +720,7 @@ namespace Plug_Parser_Plugin
 
 		}
 
-		private async Task initDirector()
+		private async Task initPP()
 		{
 			try
 			{
@@ -819,6 +859,12 @@ namespace Plug_Parser_Plugin
 		private void textNewTrigger_TextChanged(object sender, EventArgs e)
 		{
 
+		}
+
+		private void numericupdownUpdatesPerSecond_ValueChanged(object sender, EventArgs e)
+		{
+			chartUpdatesPerSecond = (int) numericupdownUpdatesPerSecond.Value;
+			chartUpdateDelay = 1000 / chartUpdatesPerSecond;
 		}
 	}
 	#endregion

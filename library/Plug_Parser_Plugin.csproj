@@ -83,6 +83,8 @@
     <Compile Include="C_Actions.cs" />
     <Compile Include="Connection_Manager.cs" />
     <Compile Include="C_Messages.cs" />
+    <Compile Include="PP_Actions.cs" />
+    <Compile Include="PP_Settings.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="Client_Manager.cs" />
     <Compile Include="Director.cs" />
