@@ -19,11 +19,6 @@ namespace Plug_Parser_Plugin
 		private long thisTime;
 		private long deltaTime;
 
-		private long lastSpikeDecayTime;
-
-		private bool decaySpikeToggle = true;
-		private bool decayWasPositive = false;
-
 		// Stores last sent vibration strength for interpolation
 		//	and low-quality chart updates.
 		private double previousStrength = 0;
@@ -142,9 +137,10 @@ namespace Plug_Parser_Plugin
 			return previousStrength / 100;
 		}
 
+		// TODO
 		private double interpolate(double target)
 		{
-			return target; // TODO
+			return target;
 
 			if (System.Math.Abs(target - previousStrength) < 0.05)
 			{

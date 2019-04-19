@@ -55,6 +55,18 @@ namespace Plug_Parser_Plugin
 		private TabPage tabPlayerInfo;
 		private NumericUpDown numericupdownUpdatesPerSecond;
 		private Label labelUpdatesPerSecond;
+		private Label label7;
+		private Label label6;
+		private NumericUpDown numericupdownKillstreakThreshold;
+		private Label label5;
+		private Label label4;
+		private NumericUpDown numericupdownAmplitudeOnKill;
+		private Label label3;
+		private NumericUpDown numericupdownFrequencyOnKillstreak;
+		private Label label2;
+		private NumericUpDown numericupdownOnHealHit;
+		private Button buttonSafeword;
+		private Button buttonGreenLight;
 
 		#region Designer Created Code (Avoid editing)
 		/// <summary> 
@@ -77,11 +89,13 @@ namespace Plug_Parser_Plugin
 
 		#region Component Designer generated code
 
-		/// <summary> 
-		/// Required method for Designer support - do not modify 
-		/// the contents of this method with the code editor.
-		/// </summary>
+#pragma warning disable IDE1006 // Naming Styles
+							   /// <summary> 
+							   /// Required method for Designer support - do not modify 
+							   /// the contents of this method with the code editor.
+							   /// </summary>
 		private void InitializeComponent()
+#pragma warning restore IDE1006 // Naming Styles
 		{
 			System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
 			System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
@@ -105,17 +119,34 @@ namespace Plug_Parser_Plugin
 			this.textNewTrigger = new System.Windows.Forms.TextBox();
 			this.buttonAddTrigger = new System.Windows.Forms.Button();
 			this.tabControls = new System.Windows.Forms.TabControl();
+			this.tabVibeSettings = new System.Windows.Forms.TabPage();
+			this.label7 = new System.Windows.Forms.Label();
+			this.label6 = new System.Windows.Forms.Label();
+			this.numericupdownKillstreakThreshold = new System.Windows.Forms.NumericUpDown();
+			this.label5 = new System.Windows.Forms.Label();
+			this.label4 = new System.Windows.Forms.Label();
+			this.numericupdownAmplitudeOnKill = new System.Windows.Forms.NumericUpDown();
+			this.label3 = new System.Windows.Forms.Label();
+			this.numericupdownFrequencyOnKillstreak = new System.Windows.Forms.NumericUpDown();
+			this.label2 = new System.Windows.Forms.Label();
+			this.numericupdownOnHealHit = new System.Windows.Forms.NumericUpDown();
+			this.tabPlayerInfo = new System.Windows.Forms.TabPage();
 			this.tabTriggerSettings = new System.Windows.Forms.TabPage();
 			this.labelRegex = new System.Windows.Forms.Label();
 			this.checkedListBoxTriggerReactions = new System.Windows.Forms.CheckedListBox();
-			this.tabVibeSettings = new System.Windows.Forms.TabPage();
-			this.tabPlayerInfo = new System.Windows.Forms.TabPage();
 			this.numericupdownUpdatesPerSecond = new System.Windows.Forms.NumericUpDown();
 			this.labelUpdatesPerSecond = new System.Windows.Forms.Label();
+			this.buttonSafeword = new System.Windows.Forms.Button();
+			this.buttonGreenLight = new System.Windows.Forms.Button();
 			((System.ComponentModel.ISupportInitialize)(this.numericupdownOverrideValue)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.sliderVibeOverride)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.chartVibeStrength)).BeginInit();
 			this.tabControls.SuspendLayout();
+			this.tabVibeSettings.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.numericupdownKillstreakThreshold)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.numericupdownAmplitudeOnKill)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.numericupdownFrequencyOnKillstreak)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.numericupdownOnHealHit)).BeginInit();
 			this.tabTriggerSettings.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.numericupdownUpdatesPerSecond)).BeginInit();
 			this.SuspendLayout();
@@ -372,15 +403,153 @@ namespace Plug_Parser_Plugin
 			// 
 			this.tabControls.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.tabControls.Controls.Add(this.tabTriggerSettings);
 			this.tabControls.Controls.Add(this.tabVibeSettings);
 			this.tabControls.Controls.Add(this.tabPlayerInfo);
+			this.tabControls.Controls.Add(this.tabTriggerSettings);
 			this.tabControls.Location = new System.Drawing.Point(656, 20);
 			this.tabControls.MinimumSize = new System.Drawing.Size(360, 252);
 			this.tabControls.Name = "tabControls";
 			this.tabControls.SelectedIndex = 0;
 			this.tabControls.Size = new System.Drawing.Size(374, 252);
 			this.tabControls.TabIndex = 24;
+			// 
+			// tabVibeSettings
+			// 
+			this.tabVibeSettings.BackColor = System.Drawing.SystemColors.ControlDarkDark;
+			this.tabVibeSettings.Controls.Add(this.label7);
+			this.tabVibeSettings.Controls.Add(this.label6);
+			this.tabVibeSettings.Controls.Add(this.numericupdownKillstreakThreshold);
+			this.tabVibeSettings.Controls.Add(this.label5);
+			this.tabVibeSettings.Controls.Add(this.label4);
+			this.tabVibeSettings.Controls.Add(this.numericupdownAmplitudeOnKill);
+			this.tabVibeSettings.Controls.Add(this.label3);
+			this.tabVibeSettings.Controls.Add(this.numericupdownFrequencyOnKillstreak);
+			this.tabVibeSettings.Controls.Add(this.label2);
+			this.tabVibeSettings.Controls.Add(this.numericupdownOnHealHit);
+			this.tabVibeSettings.Location = new System.Drawing.Point(4, 22);
+			this.tabVibeSettings.Name = "tabVibeSettings";
+			this.tabVibeSettings.Padding = new System.Windows.Forms.Padding(3);
+			this.tabVibeSettings.Size = new System.Drawing.Size(366, 226);
+			this.tabVibeSettings.TabIndex = 1;
+			this.tabVibeSettings.Text = "Vibe Settings";
+			// 
+			// label7
+			// 
+			this.label7.AutoSize = true;
+			this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label7.ForeColor = System.Drawing.SystemColors.ControlLight;
+			this.label7.Location = new System.Drawing.Point(75, 160);
+			this.label7.Name = "label7";
+			this.label7.Size = new System.Drawing.Size(28, 15);
+			this.label7.TabIndex = 31;
+			this.label7.Text = "kills";
+			// 
+			// label6
+			// 
+			this.label6.AutoSize = true;
+			this.label6.ForeColor = System.Drawing.SystemColors.Control;
+			this.label6.Location = new System.Drawing.Point(6, 144);
+			this.label6.Name = "label6";
+			this.label6.Size = new System.Drawing.Size(99, 13);
+			this.label6.TabIndex = 30;
+			this.label6.Text = "Killstreak Threshold";
+			// 
+			// numericupdownKillstreakThreshold
+			// 
+			this.numericupdownKillstreakThreshold.Location = new System.Drawing.Point(29, 160);
+			this.numericupdownKillstreakThreshold.Name = "numericupdownKillstreakThreshold";
+			this.numericupdownKillstreakThreshold.Size = new System.Drawing.Size(40, 20);
+			this.numericupdownKillstreakThreshold.TabIndex = 29;
+			this.numericupdownKillstreakThreshold.ValueChanged += new System.EventHandler(this.numericupdownKillstreakThreshold_ValueChanged);
+			// 
+			// label5
+			// 
+			this.label5.AutoSize = true;
+			this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label5.ForeColor = System.Drawing.SystemColors.ControlLight;
+			this.label5.Location = new System.Drawing.Point(69, 114);
+			this.label5.Name = "label5";
+			this.label5.Size = new System.Drawing.Size(21, 17);
+			this.label5.TabIndex = 6;
+			this.label5.Text = "%";
+			// 
+			// label4
+			// 
+			this.label4.AutoSize = true;
+			this.label4.ForeColor = System.Drawing.SystemColors.Control;
+			this.label4.Location = new System.Drawing.Point(6, 52);
+			this.label4.Name = "label4";
+			this.label4.Size = new System.Drawing.Size(134, 13);
+			this.label4.TabIndex = 5;
+			this.label4.Text = "Increased Amplitude on Kill";
+			// 
+			// numericupdownAmplitudeOnKill
+			// 
+			this.numericupdownAmplitudeOnKill.Location = new System.Drawing.Point(29, 68);
+			this.numericupdownAmplitudeOnKill.Maximum = new decimal(new int[] {
+            50,
+            0,
+            0,
+            0});
+			this.numericupdownAmplitudeOnKill.Name = "numericupdownAmplitudeOnKill";
+			this.numericupdownAmplitudeOnKill.Size = new System.Drawing.Size(40, 20);
+			this.numericupdownAmplitudeOnKill.TabIndex = 4;
+			this.numericupdownAmplitudeOnKill.ValueChanged += new System.EventHandler(this.numericupdownAmplitudeOnKill_ValueChanged);
+			// 
+			// label3
+			// 
+			this.label3.AutoSize = true;
+			this.label3.ForeColor = System.Drawing.SystemColors.Control;
+			this.label3.Location = new System.Drawing.Point(6, 98);
+			this.label3.Name = "label3";
+			this.label3.Size = new System.Drawing.Size(167, 13);
+			this.label3.TabIndex = 3;
+			this.label3.Text = "Increased Frequency on Killstreak";
+			// 
+			// numericupdownFrequencyOnKillstreak
+			// 
+			this.numericupdownFrequencyOnKillstreak.Location = new System.Drawing.Point(29, 114);
+			this.numericupdownFrequencyOnKillstreak.Maximum = new decimal(new int[] {
+            400,
+            0,
+            0,
+            0});
+			this.numericupdownFrequencyOnKillstreak.Name = "numericupdownFrequencyOnKillstreak";
+			this.numericupdownFrequencyOnKillstreak.Size = new System.Drawing.Size(40, 20);
+			this.numericupdownFrequencyOnKillstreak.TabIndex = 2;
+			this.numericupdownFrequencyOnKillstreak.ValueChanged += new System.EventHandler(this.numericupdownFrequencyOnKillstreak_ValueChanged);
+			// 
+			// label2
+			// 
+			this.label2.AutoSize = true;
+			this.label2.ForeColor = System.Drawing.SystemColors.Control;
+			this.label2.Location = new System.Drawing.Point(6, 5);
+			this.label2.Name = "label2";
+			this.label2.Size = new System.Drawing.Size(131, 13);
+			this.label2.TabIndex = 1;
+			this.label2.Text = "Buzz Strength on Hit/Heal";
+			// 
+			// numericupdownOnHealHit
+			// 
+			this.numericupdownOnHealHit.Location = new System.Drawing.Point(29, 21);
+			this.numericupdownOnHealHit.Maximum = new decimal(new int[] {
+            50,
+            0,
+            0,
+            0});
+			this.numericupdownOnHealHit.Name = "numericupdownOnHealHit";
+			this.numericupdownOnHealHit.Size = new System.Drawing.Size(40, 20);
+			this.numericupdownOnHealHit.TabIndex = 0;
+			this.numericupdownOnHealHit.ValueChanged += new System.EventHandler(this.numericupdownOnHealHit_ValueChanged);
+			// 
+			// tabPlayerInfo
+			// 
+			this.tabPlayerInfo.BackColor = System.Drawing.SystemColors.ControlDarkDark;
+			this.tabPlayerInfo.Location = new System.Drawing.Point(4, 22);
+			this.tabPlayerInfo.Name = "tabPlayerInfo";
+			this.tabPlayerInfo.Size = new System.Drawing.Size(366, 226);
+			this.tabPlayerInfo.TabIndex = 2;
+			this.tabPlayerInfo.Text = "Player Info.";
 			// 
 			// tabTriggerSettings
 			// 
@@ -435,25 +604,6 @@ namespace Plug_Parser_Plugin
 			this.checkedListBoxTriggerReactions.Size = new System.Drawing.Size(180, 109);
 			this.checkedListBoxTriggerReactions.TabIndex = 24;
 			// 
-			// tabVibeSettings
-			// 
-			this.tabVibeSettings.BackColor = System.Drawing.SystemColors.ControlDarkDark;
-			this.tabVibeSettings.Location = new System.Drawing.Point(4, 22);
-			this.tabVibeSettings.Name = "tabVibeSettings";
-			this.tabVibeSettings.Padding = new System.Windows.Forms.Padding(3);
-			this.tabVibeSettings.Size = new System.Drawing.Size(366, 226);
-			this.tabVibeSettings.TabIndex = 1;
-			this.tabVibeSettings.Text = "Vibe Settings";
-			// 
-			// tabPlayerInfo
-			// 
-			this.tabPlayerInfo.BackColor = System.Drawing.SystemColors.ControlDarkDark;
-			this.tabPlayerInfo.Location = new System.Drawing.Point(4, 22);
-			this.tabPlayerInfo.Name = "tabPlayerInfo";
-			this.tabPlayerInfo.Size = new System.Drawing.Size(366, 226);
-			this.tabPlayerInfo.TabIndex = 2;
-			this.tabPlayerInfo.Text = "Player Info.";
-			// 
 			// numericupdownUpdatesPerSecond
 			// 
 			this.numericupdownUpdatesPerSecond.Location = new System.Drawing.Point(298, 286);
@@ -486,11 +636,37 @@ namespace Plug_Parser_Plugin
 			this.labelUpdatesPerSecond.TabIndex = 26;
 			this.labelUpdatesPerSecond.Text = "Updates Per Second:";
 			// 
+			// buttonSafeword
+			// 
+			this.buttonSafeword.FlatAppearance.BorderColor = System.Drawing.Color.Firebrick;
+			this.buttonSafeword.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+			this.buttonSafeword.Location = new System.Drawing.Point(517, 156);
+			this.buttonSafeword.Name = "buttonSafeword";
+			this.buttonSafeword.Size = new System.Drawing.Size(114, 32);
+			this.buttonSafeword.TabIndex = 27;
+			this.buttonSafeword.Text = "Red Light";
+			this.buttonSafeword.UseVisualStyleBackColor = true;
+			this.buttonSafeword.Click += new System.EventHandler(this.buttonSafeword_Click);
+			// 
+			// buttonGreenLight
+			// 
+			this.buttonGreenLight.FlatAppearance.BorderColor = System.Drawing.Color.Green;
+			this.buttonGreenLight.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+			this.buttonGreenLight.Location = new System.Drawing.Point(517, 194);
+			this.buttonGreenLight.Name = "buttonGreenLight";
+			this.buttonGreenLight.Size = new System.Drawing.Size(114, 32);
+			this.buttonGreenLight.TabIndex = 28;
+			this.buttonGreenLight.Text = "Green Light";
+			this.buttonGreenLight.UseVisualStyleBackColor = true;
+			this.buttonGreenLight.Click += new System.EventHandler(this.buttonGreenLight_Click);
+			// 
 			// Plug_Parser
 			// 
 			this.AccessibleDescription = "";
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+			this.Controls.Add(this.buttonGreenLight);
+			this.Controls.Add(this.buttonSafeword);
 			this.Controls.Add(this.labelUpdatesPerSecond);
 			this.Controls.Add(this.numericupdownUpdatesPerSecond);
 			this.Controls.Add(this.tabControls);
@@ -516,6 +692,12 @@ namespace Plug_Parser_Plugin
 			((System.ComponentModel.ISupportInitialize)(this.sliderVibeOverride)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.chartVibeStrength)).EndInit();
 			this.tabControls.ResumeLayout(false);
+			this.tabVibeSettings.ResumeLayout(false);
+			this.tabVibeSettings.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)(this.numericupdownKillstreakThreshold)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.numericupdownAmplitudeOnKill)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.numericupdownFrequencyOnKillstreak)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.numericupdownOnHealHit)).EndInit();
 			this.tabTriggerSettings.ResumeLayout(false);
 			this.tabTriggerSettings.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.numericupdownUpdatesPerSecond)).EndInit();
@@ -865,6 +1047,36 @@ namespace Plug_Parser_Plugin
 		{
 			chartUpdatesPerSecond = (int) numericupdownUpdatesPerSecond.Value;
 			chartUpdateDelay = 1000 / chartUpdatesPerSecond;
+		}
+
+		private void numericupdownOnHealHit_ValueChanged(object sender, EventArgs e)
+		{
+
+		}
+
+		private void numericupdownAmplitudeOnKill_ValueChanged(object sender, EventArgs e)
+		{
+
+		}
+
+		private void numericupdownFrequencyOnKillstreak_ValueChanged(object sender, EventArgs e)
+		{
+
+		}
+
+		private void numericupdownKillstreakThreshold_ValueChanged(object sender, EventArgs e)
+		{
+
+		}
+
+		private void buttonSafeword_Click(object sender, EventArgs e)
+		{
+			director.safeword();
+		}
+
+		private void buttonGreenLight_Click(object sender, EventArgs e)
+		{
+			director.greenLight();
 		}
 	}
 	#endregion

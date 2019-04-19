@@ -157,5 +157,15 @@ namespace Plug_Parser_Plugin
 		{
 			manTrigger.check();
 		}
+
+		public void safeword()
+		{
+			manClient.safeword();
+		}
+
+		public void greenLight()
+		{
+			manClient.greenLight();
+		}
 	}
 }

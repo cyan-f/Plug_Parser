@@ -16,22 +16,6 @@ namespace Plug_Parser_Plugin
 		public static double getStrength(Remote_Settings terms)
 		{
 			double val = getWaveValue(terms);
-
-			if (terms.spikeTimeLeft > 0)
-			{
-				val = applySpike(terms, val);
-			}
-
-			return val;
-		}
-
-		private static double applySpike(Remote_Settings terms, double val)
-		{
-			if (val >= terms.baseStrength)
-			{
-				val *= terms.spikeAmount;
-			}
-
 			return val;
 		}
 
