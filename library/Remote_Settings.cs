@@ -36,8 +36,6 @@ namespace Plug_Parser_Plugin
 			this.period = Settings.Defaults.Generic.PERIOD;
 			this.frequency = Settings.Defaults.Generic.FREQUENCY;
 			this.phaseShift = Settings.Defaults.Generic.PHASE_SHIFT;
-			this.spikeAmount = Settings.Defaults.Generic.SPIKE_AMOUNT;
-			this.spikeTimeLeft = Settings.Defaults.Generic.SPIKE_DURATION;
 		}
 
 		// Complete ctor
@@ -58,6 +56,41 @@ namespace Plug_Parser_Plugin
 			this.phaseShift = phaseShift;
 			this.spikeAmount = spikeAmount;
 			this.spikeTimeLeft = spikeTimeLeft;
+		}
+
+		public void addAmplitude(double add)
+		{
+			variance += add;
+
+			if (variance > 50)
+			{
+				variance = 50;
+			}
+
+			if (variance < 0)
+			{
+				variance = 0;
+			}
+		}
+
+		public void addBuzz(double add)
+		{
+			buzzStrength += add;
+
+			if (buzzStrength > 50)
+			{
+				buzzStrength = 50;
+			}
+
+			if (buzzStrength < 0)
+			{
+				buzzStrength = 0;
+			}
+		}
+
+		public void addFrequency(double add)
+		{
+			frequency += add;
 		}
 	}
 }
