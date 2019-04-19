@@ -65,6 +65,8 @@ namespace Plug_Parser_Plugin
 		private NumericUpDown numericupdownFrequencyOnKillstreak;
 		private Label label2;
 		private NumericUpDown numericupdownOnHealHit;
+		private Button buttonSafeword;
+		private Button buttonGreenLight;
 
 		#region Designer Created Code (Avoid editing)
 		/// <summary> 
@@ -95,9 +97,9 @@ namespace Plug_Parser_Plugin
 		private void InitializeComponent()
 #pragma warning restore IDE1006 // Naming Styles
 		{
-			System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-			System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-			System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+			System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+			System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+			System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
 			this.EVENT_LOG_LABEL = new System.Windows.Forms.Label();
 			this.buttonRescan = new System.Windows.Forms.Button();
 			this.buttonStopScanning = new System.Windows.Forms.Button();
@@ -134,6 +136,8 @@ namespace Plug_Parser_Plugin
 			this.checkedListBoxTriggerReactions = new System.Windows.Forms.CheckedListBox();
 			this.numericupdownUpdatesPerSecond = new System.Windows.Forms.NumericUpDown();
 			this.labelUpdatesPerSecond = new System.Windows.Forms.Label();
+			this.buttonSafeword = new System.Windows.Forms.Button();
+			this.buttonGreenLight = new System.Windows.Forms.Button();
 			((System.ComponentModel.ISupportInitialize)(this.numericupdownOverrideValue)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.sliderVibeOverride)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.chartVibeStrength)).BeginInit();
@@ -244,45 +248,45 @@ namespace Plug_Parser_Plugin
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.chartVibeStrength.BackColor = System.Drawing.Color.Transparent;
 			this.chartVibeStrength.BorderlineColor = System.Drawing.Color.Transparent;
-			chartArea2.AxisX.LabelStyle.Enabled = false;
-			chartArea2.AxisX.MajorGrid.Enabled = false;
-			chartArea2.AxisX.MajorTickMark.Enabled = false;
-			chartArea2.AxisX.ScrollBar.BackColor = System.Drawing.Color.Black;
-			chartArea2.AxisY.LabelStyle.Enabled = false;
-			chartArea2.AxisY.MajorGrid.Enabled = false;
-			chartArea2.AxisY.MajorTickMark.Enabled = false;
-			chartArea2.AxisY.Maximum = 100D;
-			chartArea2.AxisY.Minimum = 0D;
-			chartArea2.BackColor = System.Drawing.SystemColors.ControlDarkDark;
-			chartArea2.BorderDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Solid;
-			chartArea2.CursorX.AutoScroll = false;
-			chartArea2.Name = "areaMain";
-			chartArea2.Position.Auto = false;
-			chartArea2.Position.Height = 100F;
-			chartArea2.Position.Width = 100F;
-			this.chartVibeStrength.ChartAreas.Add(chartArea2);
+			chartArea3.AxisX.LabelStyle.Enabled = false;
+			chartArea3.AxisX.MajorGrid.Enabled = false;
+			chartArea3.AxisX.MajorTickMark.Enabled = false;
+			chartArea3.AxisX.ScrollBar.BackColor = System.Drawing.Color.Black;
+			chartArea3.AxisY.LabelStyle.Enabled = false;
+			chartArea3.AxisY.MajorGrid.Enabled = false;
+			chartArea3.AxisY.MajorTickMark.Enabled = false;
+			chartArea3.AxisY.Maximum = 100D;
+			chartArea3.AxisY.Minimum = 0D;
+			chartArea3.BackColor = System.Drawing.SystemColors.ControlDarkDark;
+			chartArea3.BorderDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Solid;
+			chartArea3.CursorX.AutoScroll = false;
+			chartArea3.Name = "areaMain";
+			chartArea3.Position.Auto = false;
+			chartArea3.Position.Height = 100F;
+			chartArea3.Position.Width = 100F;
+			this.chartVibeStrength.ChartAreas.Add(chartArea3);
 			this.chartVibeStrength.Cursor = System.Windows.Forms.Cursors.Default;
-			legend2.Enabled = false;
-			legend2.Name = "Legend1";
-			this.chartVibeStrength.Legends.Add(legend2);
+			legend3.Enabled = false;
+			legend3.Name = "Legend1";
+			this.chartVibeStrength.Legends.Add(legend3);
 			this.chartVibeStrength.Location = new System.Drawing.Point(4, 309);
 			this.chartVibeStrength.Margin = new System.Windows.Forms.Padding(0);
 			this.chartVibeStrength.MinimumSize = new System.Drawing.Size(590, 252);
 			this.chartVibeStrength.Name = "chartVibeStrength";
-			series2.BackImageTransparentColor = System.Drawing.Color.DarkCyan;
-			series2.BackSecondaryColor = System.Drawing.Color.DarkCyan;
-			series2.BorderColor = System.Drawing.Color.DarkCyan;
-			series2.BorderWidth = 3;
-			series2.ChartArea = "areaMain";
-			series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
-			series2.Color = System.Drawing.Color.Cyan;
-			series2.LabelForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-			series2.Legend = "Legend1";
-			series2.MarkerBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
-			series2.MarkerBorderWidth = 1100;
-			series2.MarkerSize = 10;
-			series2.Name = "seriesMain";
-			this.chartVibeStrength.Series.Add(series2);
+			series3.BackImageTransparentColor = System.Drawing.Color.DarkCyan;
+			series3.BackSecondaryColor = System.Drawing.Color.DarkCyan;
+			series3.BorderColor = System.Drawing.Color.DarkCyan;
+			series3.BorderWidth = 3;
+			series3.ChartArea = "areaMain";
+			series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+			series3.Color = System.Drawing.Color.Cyan;
+			series3.LabelForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+			series3.Legend = "Legend1";
+			series3.MarkerBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
+			series3.MarkerBorderWidth = 1100;
+			series3.MarkerSize = 10;
+			series3.Name = "seriesMain";
+			this.chartVibeStrength.Series.Add(series3);
 			this.chartVibeStrength.Size = new System.Drawing.Size(986, 300);
 			this.chartVibeStrength.TabIndex = 13;
 			this.chartVibeStrength.Click += new System.EventHandler(this.chartVibeStrength_Click);
@@ -432,11 +436,11 @@ namespace Plug_Parser_Plugin
 			// label7
 			// 
 			this.label7.AutoSize = true;
-			this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.label7.ForeColor = System.Drawing.SystemColors.ControlLight;
-			this.label7.Location = new System.Drawing.Point(248, 134);
+			this.label7.Location = new System.Drawing.Point(75, 160);
 			this.label7.Name = "label7";
-			this.label7.Size = new System.Drawing.Size(31, 17);
+			this.label7.Size = new System.Drawing.Size(28, 15);
 			this.label7.TabIndex = 31;
 			this.label7.Text = "kills";
 			// 
@@ -444,7 +448,7 @@ namespace Plug_Parser_Plugin
 			// 
 			this.label6.AutoSize = true;
 			this.label6.ForeColor = System.Drawing.SystemColors.Control;
-			this.label6.Location = new System.Drawing.Point(185, 118);
+			this.label6.Location = new System.Drawing.Point(6, 144);
 			this.label6.Name = "label6";
 			this.label6.Size = new System.Drawing.Size(99, 13);
 			this.label6.TabIndex = 30;
@@ -452,7 +456,7 @@ namespace Plug_Parser_Plugin
 			// 
 			// numericupdownKillstreakThreshold
 			// 
-			this.numericupdownKillstreakThreshold.Location = new System.Drawing.Point(208, 134);
+			this.numericupdownKillstreakThreshold.Location = new System.Drawing.Point(29, 160);
 			this.numericupdownKillstreakThreshold.Name = "numericupdownKillstreakThreshold";
 			this.numericupdownKillstreakThreshold.Size = new System.Drawing.Size(40, 20);
 			this.numericupdownKillstreakThreshold.TabIndex = 29;
@@ -463,7 +467,7 @@ namespace Plug_Parser_Plugin
 			this.label5.AutoSize = true;
 			this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.label5.ForeColor = System.Drawing.SystemColors.ControlLight;
-			this.label5.Location = new System.Drawing.Point(69, 134);
+			this.label5.Location = new System.Drawing.Point(69, 114);
 			this.label5.Name = "label5";
 			this.label5.Size = new System.Drawing.Size(21, 17);
 			this.label5.TabIndex = 6;
@@ -473,7 +477,7 @@ namespace Plug_Parser_Plugin
 			// 
 			this.label4.AutoSize = true;
 			this.label4.ForeColor = System.Drawing.SystemColors.Control;
-			this.label4.Location = new System.Drawing.Point(6, 72);
+			this.label4.Location = new System.Drawing.Point(6, 52);
 			this.label4.Name = "label4";
 			this.label4.Size = new System.Drawing.Size(134, 13);
 			this.label4.TabIndex = 5;
@@ -481,7 +485,7 @@ namespace Plug_Parser_Plugin
 			// 
 			// numericupdownAmplitudeOnKill
 			// 
-			this.numericupdownAmplitudeOnKill.Location = new System.Drawing.Point(29, 88);
+			this.numericupdownAmplitudeOnKill.Location = new System.Drawing.Point(29, 68);
 			this.numericupdownAmplitudeOnKill.Maximum = new decimal(new int[] {
             50,
             0,
@@ -496,7 +500,7 @@ namespace Plug_Parser_Plugin
 			// 
 			this.label3.AutoSize = true;
 			this.label3.ForeColor = System.Drawing.SystemColors.Control;
-			this.label3.Location = new System.Drawing.Point(6, 118);
+			this.label3.Location = new System.Drawing.Point(6, 98);
 			this.label3.Name = "label3";
 			this.label3.Size = new System.Drawing.Size(167, 13);
 			this.label3.TabIndex = 3;
@@ -504,7 +508,7 @@ namespace Plug_Parser_Plugin
 			// 
 			// numericupdownFrequencyOnKillstreak
 			// 
-			this.numericupdownFrequencyOnKillstreak.Location = new System.Drawing.Point(29, 134);
+			this.numericupdownFrequencyOnKillstreak.Location = new System.Drawing.Point(29, 114);
 			this.numericupdownFrequencyOnKillstreak.Maximum = new decimal(new int[] {
             400,
             0,
@@ -519,7 +523,7 @@ namespace Plug_Parser_Plugin
 			// 
 			this.label2.AutoSize = true;
 			this.label2.ForeColor = System.Drawing.SystemColors.Control;
-			this.label2.Location = new System.Drawing.Point(6, 25);
+			this.label2.Location = new System.Drawing.Point(6, 5);
 			this.label2.Name = "label2";
 			this.label2.Size = new System.Drawing.Size(131, 13);
 			this.label2.TabIndex = 1;
@@ -527,7 +531,7 @@ namespace Plug_Parser_Plugin
 			// 
 			// numericupdownOnHealHit
 			// 
-			this.numericupdownOnHealHit.Location = new System.Drawing.Point(29, 41);
+			this.numericupdownOnHealHit.Location = new System.Drawing.Point(29, 21);
 			this.numericupdownOnHealHit.Maximum = new decimal(new int[] {
             50,
             0,
@@ -632,11 +636,37 @@ namespace Plug_Parser_Plugin
 			this.labelUpdatesPerSecond.TabIndex = 26;
 			this.labelUpdatesPerSecond.Text = "Updates Per Second:";
 			// 
+			// buttonSafeword
+			// 
+			this.buttonSafeword.FlatAppearance.BorderColor = System.Drawing.Color.Firebrick;
+			this.buttonSafeword.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+			this.buttonSafeword.Location = new System.Drawing.Point(517, 156);
+			this.buttonSafeword.Name = "buttonSafeword";
+			this.buttonSafeword.Size = new System.Drawing.Size(114, 32);
+			this.buttonSafeword.TabIndex = 27;
+			this.buttonSafeword.Text = "Red Light";
+			this.buttonSafeword.UseVisualStyleBackColor = true;
+			this.buttonSafeword.Click += new System.EventHandler(this.buttonSafeword_Click);
+			// 
+			// buttonGreenLight
+			// 
+			this.buttonGreenLight.FlatAppearance.BorderColor = System.Drawing.Color.Green;
+			this.buttonGreenLight.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+			this.buttonGreenLight.Location = new System.Drawing.Point(517, 194);
+			this.buttonGreenLight.Name = "buttonGreenLight";
+			this.buttonGreenLight.Size = new System.Drawing.Size(114, 32);
+			this.buttonGreenLight.TabIndex = 28;
+			this.buttonGreenLight.Text = "Green Light";
+			this.buttonGreenLight.UseVisualStyleBackColor = true;
+			this.buttonGreenLight.Click += new System.EventHandler(this.buttonGreenLight_Click);
+			// 
 			// Plug_Parser
 			// 
 			this.AccessibleDescription = "";
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+			this.Controls.Add(this.buttonGreenLight);
+			this.Controls.Add(this.buttonSafeword);
 			this.Controls.Add(this.labelUpdatesPerSecond);
 			this.Controls.Add(this.numericupdownUpdatesPerSecond);
 			this.Controls.Add(this.tabControls);
@@ -1037,6 +1067,16 @@ namespace Plug_Parser_Plugin
 		private void numericupdownKillstreakThreshold_ValueChanged(object sender, EventArgs e)
 		{
 
+		}
+
+		private void buttonSafeword_Click(object sender, EventArgs e)
+		{
+			director.safeword();
+		}
+
+		private void buttonGreenLight_Click(object sender, EventArgs e)
+		{
+			director.greenLight();
 		}
 	}
 	#endregion

@@ -268,5 +268,15 @@ namespace Plug_Parser_Plugin
 			Log_Manager.write("Disconnected.");
 		}
 
+		public void safeword()
+		{
+			remote.safeWord();
+		}
+
+		public void greenLight()
+		{
+			remote.greenLight();
+		}
+
 	}
 }
