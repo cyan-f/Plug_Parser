@@ -14,9 +14,9 @@ namespace Plug_Parser_Plugin
 
 		private static RichTextBox eventLog;
 
-		public static void setLogTarget(RichTextBox l)
+		public static void setLogTarget(RichTextBox log)
 		{
-			eventLog = l;
+			eventLog = log;
 		}
 
 		public static void write(string s)

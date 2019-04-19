@@ -45,25 +45,27 @@ namespace Plug_Parser_Plugin
 		}
 
 		// Controls
-		public void queueAction(string action)
+		public void queueAction(string action, double val = -1)
 		{
 			switch (action)
 			{
 				case C_Actions.YOU_HIT:
-					remote.buzz(40);
+					remote.buzz(PP_Settings.strengthOnHitOrHeal);
 					break;
 
 				case C_Actions.YOU_HEALED:
+					remote.buzz(PP_Settings.strengthOnHitOrHeal);
 					break;
 
 				case C_Actions.YOU_KILLED:
-					remote.buzz(90);
+					remote.buzz(PP_Settings.strengthOnKill);
+					remote.setFrequency(val);
 					break;
 				case C_Actions.YOU_KILLED_ENOUGH:
-					remote.buzz(100);
+					remote.increaseAmplitude(PP_Settings.amplitudeOnKillstreak);
 					break;
 				default:
-					remote.buzz(70);
+					remote.buzz(50);
 					break;
 			}
 		}

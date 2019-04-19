@@ -12,6 +12,7 @@ namespace Plug_Parser_Plugin
 		public double maximumStrength;
 
 		public double buzzStrength;
+		public double buzzRemaining;
 		public double baseStrength;
 
 		public double erraticness;
@@ -30,6 +31,7 @@ namespace Plug_Parser_Plugin
 			this.minimumStrength = Settings.Defaults.Generic.MINIMUM_STRENGTH;
 			this.maximumStrength = Settings.Defaults.Generic.MAXIMUM_STRENGTH;
 			this.buzzStrength = Settings.Defaults.Generic.BUZZ_STRENGTH;
+			this.buzzRemaining = 0;
 			this.baseStrength = Settings.Defaults.Generic.BASE_STRENGTH;
 			this.erraticness = Settings.Defaults.Generic.ERRATICNESS;
 			this.variance = Settings.Defaults.Generic.VARIANCE;
@@ -40,26 +42,33 @@ namespace Plug_Parser_Plugin
 
 		// Complete ctor
 		public Remote_Settings(double minimumStrength, double maximumStrength,
-			double buzzStrength, double baseStrength,
+			double buzzStrength, double buzzRemaining,
+			double baseStrength,
 			double erraticness, double variance,
-			double frequency, double period, double phaseShift,
-			double spikeAmount, double spikeTimeLeft)
+			double frequency, double period, double phaseShift)
 		{
 			this.minimumStrength = minimumStrength;
 			this.maximumStrength = maximumStrength;
 			this.buzzStrength = buzzStrength;
+			this.buzzRemaining = buzzRemaining;
 			this.baseStrength = baseStrength;
 			this.erraticness = erraticness;
 			this.variance = variance;
 			this.period = period;
 			this.frequency = frequency;
 			this.phaseShift = phaseShift;
-			this.spikeAmount = spikeAmount;
-			this.spikeTimeLeft = spikeTimeLeft;
 		}
 
+		// TODO separate into amplitude and base methods.
 		public void addAmplitude(double add)
 		{
+			baseStrength += add;
+			if (baseStrength <= 5)
+			{
+				variance = 0;
+				return;
+			}
+
 			variance += add;
 
 			if (variance > 50)
@@ -73,7 +82,7 @@ namespace Plug_Parser_Plugin
 			}
 		}
 
-		public void addBuzz(double add)
+		public void addBuzz(double add, double timeMillis)
 		{
 			buzzStrength += add;
 
@@ -86,11 +95,14 @@ namespace Plug_Parser_Plugin
 			{
 				buzzStrength = 0;
 			}
+
+			buzzRemaining += timeMillis;
 		}
 
 		public void addFrequency(double add)
 		{
 			frequency += add;
+			period = 1000 * (1 / frequency);
 		}
 	}
 }

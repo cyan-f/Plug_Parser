@@ -110,21 +110,12 @@ namespace Plug_Parser_Plugin
 						manClient.queueAction(C_Actions.YOU_KILLED_ENOUGH);
 						killCount = 0;
 					}
-					else
-					{
-						manClient.queueAction(C_Actions.YOU_KILLED);
-					}
 				}
 				else
 				{
 					manClient.queueAction(C_Actions.YOU_HIT);
 				}
 			}
-			else if (attackType == "Killing")
-			{
-				manClient.queueAction(C_Actions.YOU_KILLED);
-			}
-
 		}
 
 		public void queueVibeOverride(bool isOverriding, double strength)
@@ -150,6 +141,16 @@ namespace Plug_Parser_Plugin
 		public void checkTrigger()
 		{
 			manTrigger.check();
+		}
+
+		public void parseLogLine(string line){
+
+			double freq = manTrigger.parseLogLine(line);
+
+			if (freq != -1)
+			{
+				manClient.queueAction(C_Actions.YOU_KILLED, freq);
+			}
 		}
 
 		public void safeword()

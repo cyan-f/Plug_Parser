@@ -61,6 +61,16 @@ namespace Plug_Parser_Plugin
 					unsetOverride();
 				}
 			}
+			else if (settings.buzzRemaining > 0)
+			{
+				settings.buzzRemaining -= deltaTime;
+				if (settings.buzzRemaining < 0)
+				{
+					settings.buzzRemaining = 0;
+				}
+
+				val = settings.buzzStrength;
+			}
 			else if (isInterpolated)
 			{
 				val = interpolate(Power_Calculator.getStrength(settings));
@@ -82,7 +92,17 @@ namespace Plug_Parser_Plugin
 		#region Controls
 		public void buzz(double strength)
 		{
-			
+			settings.addBuzz(strength, 500);
+		}
+
+		public void increaseAmplitude(double amp)
+		{
+			settings.addAmplitude(amp);
+		}
+
+		public void accelerateByPercents(double amountInPercents)
+		{
+			settings.addFrequency(amountInPercents / 100);
 		}
 
 		public void safeWord()
@@ -125,7 +145,14 @@ namespace Plug_Parser_Plugin
 
 		private void decay()
 		{
-
+			if (settings.frequency >= 3)
+			{
+				settings.addFrequency(-0.2);
+			}
+			else if (settings.frequency >= 2)
+			{
+				settings.addFrequency(-0.1);
+			}
 
 			lastDecayTime = DateTimeOffset.Now.ToUnixTimeMilliseconds();
 		}
@@ -149,7 +176,7 @@ namespace Plug_Parser_Plugin
 			}
 		}
 
-		private void setFrequency(double freq)
+		public void setFrequency(double freq)
 		{
 			settings.frequency = freq;
 			settings.period = 1000 * (1 / freq);
