@@ -45,7 +45,7 @@ namespace Plug_Parser_Plugin
 		}
 
 		// Controls
-		public void queueAction(string action, double val = -1)
+		public void queueAction(string action, double val = 1.2)
 		{
 			switch (action)
 			{
@@ -59,7 +59,7 @@ namespace Plug_Parser_Plugin
 
 				case C_Actions.YOU_KILLED:
 					remote.buzz(PP_Settings.strengthOnKill);
-					//remote.setFrequency(val);
+					remote.setFrequency(val);
 					break;
 				case C_Actions.YOU_KILLED_ENOUGH:
 					remote.increaseAmplitude(PP_Settings.amplitudeOnKillstreak);

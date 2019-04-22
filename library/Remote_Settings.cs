@@ -68,6 +68,10 @@ namespace Plug_Parser_Plugin
 				variance = 0;
 				return;
 			}
+			if (baseStrength > 50)
+			{
+				baseStrength = 50;
+			}
 
 			variance += add;
 

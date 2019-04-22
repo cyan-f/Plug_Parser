@@ -143,9 +143,14 @@ namespace Plug_Parser_Plugin
 			manTrigger.check();
 		}
 
-		public void parseLogLine(string line){
+		public void parseLogLine(string line)
+		{
 
-			double freq = manTrigger.parseLogLine(line);
+			double freq = -1;
+			if (PP_Settings.basingFrequencyOnBonusXP)
+			{
+				freq = manTrigger.parseLogLine(line);
+			}
 
 			if (freq != -1)
 			{

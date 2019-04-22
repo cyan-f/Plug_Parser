@@ -69,6 +69,7 @@ namespace Plug_Parser_Plugin
 		private Button buttonResetVibeState;
 		private Label label5;
 		private NumericUpDown numericupdownBuzzDuration;
+		private CheckBox checkboxBasingFrequencyOnBonusXP;
 
 		#region Designer Created Code (Avoid editing)
 		/// <summary> 
@@ -99,9 +100,9 @@ namespace Plug_Parser_Plugin
 		private void InitializeComponent()
 #pragma warning restore IDE1006 // Naming Styles
 		{
-			System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-			System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-			System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+			System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+			System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+			System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
 			this.EVENT_LOG_LABEL = new System.Windows.Forms.Label();
 			this.buttonRescan = new System.Windows.Forms.Button();
 			this.buttonStopScanning = new System.Windows.Forms.Button();
@@ -142,6 +143,7 @@ namespace Plug_Parser_Plugin
 			this.buttonResetVibeState = new System.Windows.Forms.Button();
 			this.label5 = new System.Windows.Forms.Label();
 			this.numericupdownBuzzDuration = new System.Windows.Forms.NumericUpDown();
+			this.checkboxBasingFrequencyOnBonusXP = new System.Windows.Forms.CheckBox();
 			((System.ComponentModel.ISupportInitialize)(this.numericupdownOverrideValue)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.sliderVibeOverride)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.chartVibeStrength)).BeginInit();
@@ -253,45 +255,45 @@ namespace Plug_Parser_Plugin
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.chartVibeStrength.BackColor = System.Drawing.Color.Transparent;
 			this.chartVibeStrength.BorderlineColor = System.Drawing.Color.Transparent;
-			chartArea1.AxisX.LabelStyle.Enabled = false;
-			chartArea1.AxisX.MajorGrid.Enabled = false;
-			chartArea1.AxisX.MajorTickMark.Enabled = false;
-			chartArea1.AxisX.ScrollBar.BackColor = System.Drawing.Color.Black;
-			chartArea1.AxisY.LabelStyle.Enabled = false;
-			chartArea1.AxisY.MajorGrid.Enabled = false;
-			chartArea1.AxisY.MajorTickMark.Enabled = false;
-			chartArea1.AxisY.Maximum = 100D;
-			chartArea1.AxisY.Minimum = 0D;
-			chartArea1.BackColor = System.Drawing.SystemColors.ControlDarkDark;
-			chartArea1.BorderDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Solid;
-			chartArea1.CursorX.AutoScroll = false;
-			chartArea1.Name = "areaMain";
-			chartArea1.Position.Auto = false;
-			chartArea1.Position.Height = 100F;
-			chartArea1.Position.Width = 100F;
-			this.chartVibeStrength.ChartAreas.Add(chartArea1);
+			chartArea2.AxisX.LabelStyle.Enabled = false;
+			chartArea2.AxisX.MajorGrid.Enabled = false;
+			chartArea2.AxisX.MajorTickMark.Enabled = false;
+			chartArea2.AxisX.ScrollBar.BackColor = System.Drawing.Color.Black;
+			chartArea2.AxisY.LabelStyle.Enabled = false;
+			chartArea2.AxisY.MajorGrid.Enabled = false;
+			chartArea2.AxisY.MajorTickMark.Enabled = false;
+			chartArea2.AxisY.Maximum = 100D;
+			chartArea2.AxisY.Minimum = 0D;
+			chartArea2.BackColor = System.Drawing.SystemColors.ControlDarkDark;
+			chartArea2.BorderDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Solid;
+			chartArea2.CursorX.AutoScroll = false;
+			chartArea2.Name = "areaMain";
+			chartArea2.Position.Auto = false;
+			chartArea2.Position.Height = 100F;
+			chartArea2.Position.Width = 100F;
+			this.chartVibeStrength.ChartAreas.Add(chartArea2);
 			this.chartVibeStrength.Cursor = System.Windows.Forms.Cursors.Default;
-			legend1.Enabled = false;
-			legend1.Name = "Legend1";
-			this.chartVibeStrength.Legends.Add(legend1);
+			legend2.Enabled = false;
+			legend2.Name = "Legend1";
+			this.chartVibeStrength.Legends.Add(legend2);
 			this.chartVibeStrength.Location = new System.Drawing.Point(4, 309);
 			this.chartVibeStrength.Margin = new System.Windows.Forms.Padding(0);
 			this.chartVibeStrength.MinimumSize = new System.Drawing.Size(590, 252);
 			this.chartVibeStrength.Name = "chartVibeStrength";
-			series1.BackImageTransparentColor = System.Drawing.Color.DarkCyan;
-			series1.BackSecondaryColor = System.Drawing.Color.DarkCyan;
-			series1.BorderColor = System.Drawing.Color.DarkCyan;
-			series1.BorderWidth = 3;
-			series1.ChartArea = "areaMain";
-			series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
-			series1.Color = System.Drawing.Color.Cyan;
-			series1.LabelForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-			series1.Legend = "Legend1";
-			series1.MarkerBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
-			series1.MarkerBorderWidth = 1100;
-			series1.MarkerSize = 10;
-			series1.Name = "seriesMain";
-			this.chartVibeStrength.Series.Add(series1);
+			series2.BackImageTransparentColor = System.Drawing.Color.DarkCyan;
+			series2.BackSecondaryColor = System.Drawing.Color.DarkCyan;
+			series2.BorderColor = System.Drawing.Color.DarkCyan;
+			series2.BorderWidth = 3;
+			series2.ChartArea = "areaMain";
+			series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+			series2.Color = System.Drawing.Color.Cyan;
+			series2.LabelForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+			series2.Legend = "Legend1";
+			series2.MarkerBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
+			series2.MarkerBorderWidth = 1100;
+			series2.MarkerSize = 10;
+			series2.Name = "seriesMain";
+			this.chartVibeStrength.Series.Add(series2);
 			this.chartVibeStrength.Size = new System.Drawing.Size(986, 300);
 			this.chartVibeStrength.TabIndex = 13;
 			this.chartVibeStrength.Click += new System.EventHandler(this.chartVibeStrength_Click);
@@ -421,6 +423,7 @@ namespace Plug_Parser_Plugin
 			// tabVibeSettings
 			// 
 			this.tabVibeSettings.BackColor = System.Drawing.SystemColors.ControlDarkDark;
+			this.tabVibeSettings.Controls.Add(this.checkboxBasingFrequencyOnBonusXP);
 			this.tabVibeSettings.Controls.Add(this.label5);
 			this.tabVibeSettings.Controls.Add(this.numericupdownBuzzDuration);
 			this.tabVibeSettings.Controls.Add(this.label7);
@@ -717,6 +720,18 @@ namespace Plug_Parser_Plugin
             0});
 			this.numericupdownBuzzDuration.ValueChanged += new System.EventHandler(this.numericupdownBuzzDuration_ValueChanged);
 			// 
+			// checkboxBasingFrequencyOnBonusXP
+			// 
+			this.checkboxBasingFrequencyOnBonusXP.AutoSize = true;
+			this.checkboxBasingFrequencyOnBonusXP.ForeColor = System.Drawing.SystemColors.Control;
+			this.checkboxBasingFrequencyOnBonusXP.Location = new System.Drawing.Point(161, 54);
+			this.checkboxBasingFrequencyOnBonusXP.Name = "checkboxBasingFrequencyOnBonusXP";
+			this.checkboxBasingFrequencyOnBonusXP.Size = new System.Drawing.Size(184, 17);
+			this.checkboxBasingFrequencyOnBonusXP.TabIndex = 34;
+			this.checkboxBasingFrequencyOnBonusXP.Text = "Basing Frequency on Bonus XP%";
+			this.checkboxBasingFrequencyOnBonusXP.UseVisualStyleBackColor = true;
+			this.checkboxBasingFrequencyOnBonusXP.CheckedChanged += new System.EventHandler(this.checkboxBasingFrequencyOnBonusXP_CheckedChanged);
+			// 
 			// Plug_Parser
 			// 
 			this.AccessibleDescription = "";
@@ -964,9 +979,12 @@ namespace Plug_Parser_Plugin
 
 			PP_Settings.buzzStrengthOnHitOrHeal = (double)numericupdownStrengthOnHealHit.Value;
 			PP_Settings.buzzDuration = (double)numericupdownBuzzDuration.Value;
+
 			PP_Settings.amplitudeOnKillstreak = (double)numericupdownAmplitudeOnKillstreak.Value;
 			PP_Settings.strengthOnKill = (double)numericupdownStrengthOnKill.Value;
 			PP_Settings.lengthOfKillstreak = (double)numericupdownLengthOfKillstreak.Value;
+
+			PP_Settings.basingFrequencyOnBonusXP = checkboxBasingFrequencyOnBonusXP.Checked;
 
 			try
 			{
@@ -1152,6 +1170,11 @@ namespace Plug_Parser_Plugin
 		private void numericupdownBuzzDuration_ValueChanged(object sender, EventArgs e)
 		{
 			PP_Settings.buzzDuration = (double)numericupdownBuzzDuration.Value;
+		}
+
+		private void checkboxBasingFrequencyOnBonusXP_CheckedChanged(object sender, EventArgs e)
+		{
+			PP_Settings.basingFrequencyOnBonusXP = checkboxBasingFrequencyOnBonusXP.Checked;
 		}
 	}
 	#endregion

@@ -106,7 +106,7 @@ namespace Plug_Parser_Plugin
 				int value = Int32.Parse(Regex.Match(match.Value, RX_INTEGER).Value);
 				Log_Manager.write("You received " + value + "% bonus experience.");
 
-				if (value > 100)
+				if (value < 100)
 				{
 					return (double)value / 100;
 				}

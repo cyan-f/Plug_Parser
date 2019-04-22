@@ -16,6 +16,7 @@ namespace Plug_Parser_Plugin
 		public static double amplitudeOnKillstreak;
 		public static double strengthOnKill;
 		public static double lengthOfKillstreak;
-		
+
+		public static bool basingFrequencyOnBonusXP;
 	}
 }
