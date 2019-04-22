@@ -16,15 +16,6 @@ If this happens, restart ACT.
 # Installation
 
  * [Optional] Download, install, and run the Buttplug.io server, make sure SSL/TLS is un-ticked, and set it running with everything as default.
- * Download Buttplug.io C# 0.4.3 from [here](https://www.nuget.org/packages/Buttplug/0.4.3.453-dev-d7cd385)
- * Copy the contents of the zip file to `C:\Program Files (x86)\Advanced Combat Tracker` or your equivalent install location.
-    + At minimum:
-        - `Buttplug.dll`
-        - `deniszykov.WebSocketListener.dll`
-        - `Newtonsoft.Json.dll`
-        - `NJsonSchema.dll`
-        - `System.Threading.Tasks.Dataflow.dll`
-    + If it turns out these aren't enough, copy the zip file's entire contents.
  * Download and latest release from this repository.
  * Add all DLLs provided to the same ACT folder.
  * Launch ACT, and add `Hush_14_Plugin.dll` as a new plugin.
