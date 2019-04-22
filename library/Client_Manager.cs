@@ -50,16 +50,16 @@ namespace Plug_Parser_Plugin
 			switch (action)
 			{
 				case C_Actions.YOU_HIT:
-					remote.buzz(PP_Settings.strengthOnHitOrHeal);
+					remote.buzz(PP_Settings.buzzStrengthOnHitOrHeal);
 					break;
 
 				case C_Actions.YOU_HEALED:
-					remote.buzz(PP_Settings.strengthOnHitOrHeal);
+					remote.buzz(PP_Settings.buzzStrengthOnHitOrHeal);
 					break;
 
 				case C_Actions.YOU_KILLED:
 					remote.buzz(PP_Settings.strengthOnKill);
-					remote.setFrequency(val);
+					//remote.setFrequency(val);
 					break;
 				case C_Actions.YOU_KILLED_ENOUGH:
 					remote.increaseAmplitude(PP_Settings.amplitudeOnKillstreak);

@@ -67,6 +67,8 @@ namespace Plug_Parser_Plugin
 		private Button buttonSafeword;
 		private Button buttonGreenLight;
 		private Button buttonResetVibeState;
+		private Label label5;
+		private NumericUpDown numericupdownBuzzDuration;
 
 		#region Designer Created Code (Avoid editing)
 		/// <summary> 
@@ -138,6 +140,8 @@ namespace Plug_Parser_Plugin
 			this.buttonSafeword = new System.Windows.Forms.Button();
 			this.buttonGreenLight = new System.Windows.Forms.Button();
 			this.buttonResetVibeState = new System.Windows.Forms.Button();
+			this.label5 = new System.Windows.Forms.Label();
+			this.numericupdownBuzzDuration = new System.Windows.Forms.NumericUpDown();
 			((System.ComponentModel.ISupportInitialize)(this.numericupdownOverrideValue)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.sliderVibeOverride)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.chartVibeStrength)).BeginInit();
@@ -149,6 +153,7 @@ namespace Plug_Parser_Plugin
 			((System.ComponentModel.ISupportInitialize)(this.numericupdownStrengthOnHealHit)).BeginInit();
 			this.tabTriggerSettings.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.numericupdownUpdatesPerSecond)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.numericupdownBuzzDuration)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// EVENT_LOG_LABEL
@@ -416,6 +421,8 @@ namespace Plug_Parser_Plugin
 			// tabVibeSettings
 			// 
 			this.tabVibeSettings.BackColor = System.Drawing.SystemColors.ControlDarkDark;
+			this.tabVibeSettings.Controls.Add(this.label5);
+			this.tabVibeSettings.Controls.Add(this.numericupdownBuzzDuration);
 			this.tabVibeSettings.Controls.Add(this.label7);
 			this.tabVibeSettings.Controls.Add(this.label6);
 			this.tabVibeSettings.Controls.Add(this.numericupdownLengthOfKillstreak);
@@ -460,7 +467,7 @@ namespace Plug_Parser_Plugin
 			this.numericupdownLengthOfKillstreak.Size = new System.Drawing.Size(40, 20);
 			this.numericupdownLengthOfKillstreak.TabIndex = 29;
 			this.numericupdownLengthOfKillstreak.Value = new decimal(new int[] {
-            4,
+            3,
             0,
             0,
             0});
@@ -677,6 +684,39 @@ namespace Plug_Parser_Plugin
 			this.buttonResetVibeState.Text = "Reset Vibe State";
 			this.buttonResetVibeState.UseVisualStyleBackColor = true;
 			// 
+			// label5
+			// 
+			this.label5.AutoSize = true;
+			this.label5.ForeColor = System.Drawing.SystemColors.Control;
+			this.label5.Location = new System.Drawing.Point(193, 5);
+			this.label5.Name = "label5";
+			this.label5.Size = new System.Drawing.Size(103, 13);
+			this.label5.TabIndex = 33;
+			this.label5.Text = "Buzz Duration (millis)";
+			// 
+			// numericupdownBuzzDuration
+			// 
+			this.numericupdownBuzzDuration.Location = new System.Drawing.Point(216, 21);
+			this.numericupdownBuzzDuration.Maximum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
+			this.numericupdownBuzzDuration.Minimum = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
+			this.numericupdownBuzzDuration.Name = "numericupdownBuzzDuration";
+			this.numericupdownBuzzDuration.Size = new System.Drawing.Size(40, 20);
+			this.numericupdownBuzzDuration.TabIndex = 32;
+			this.numericupdownBuzzDuration.Value = new decimal(new int[] {
+            250,
+            0,
+            0,
+            0});
+			this.numericupdownBuzzDuration.ValueChanged += new System.EventHandler(this.numericupdownBuzzDuration_ValueChanged);
+			// 
 			// Plug_Parser
 			// 
 			this.AccessibleDescription = "";
@@ -719,6 +759,7 @@ namespace Plug_Parser_Plugin
 			this.tabTriggerSettings.ResumeLayout(false);
 			this.tabTriggerSettings.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.numericupdownUpdatesPerSecond)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.numericupdownBuzzDuration)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -921,7 +962,8 @@ namespace Plug_Parser_Plugin
 			tabControls.TabPages.Remove(tabPlayerInfo);
 			tabControls.TabPages.Remove(tabTriggerSettings);
 
-			PP_Settings.strengthOnHitOrHeal = (double)numericupdownStrengthOnHealHit.Value;
+			PP_Settings.buzzStrengthOnHitOrHeal = (double)numericupdownStrengthOnHealHit.Value;
+			PP_Settings.buzzDuration = (double)numericupdownBuzzDuration.Value;
 			PP_Settings.amplitudeOnKillstreak = (double)numericupdownAmplitudeOnKillstreak.Value;
 			PP_Settings.strengthOnKill = (double)numericupdownStrengthOnKill.Value;
 			PP_Settings.lengthOfKillstreak = (double)numericupdownLengthOfKillstreak.Value;
@@ -1079,7 +1121,7 @@ namespace Plug_Parser_Plugin
 
 		private void numericupdownOnHealHit_ValueChanged(object sender, EventArgs e)
 		{
-			PP_Settings.strengthOnHitOrHeal = (double)numericupdownStrengthOnHealHit.Value;
+			PP_Settings.buzzStrengthOnHitOrHeal = (double)numericupdownStrengthOnHealHit.Value;
 		}
 
 		private void numericupdownStrengthOnKill_ValueChanged(object sender, EventArgs e)
@@ -1105,6 +1147,11 @@ namespace Plug_Parser_Plugin
 		private void buttonGreenLight_Click(object sender, EventArgs e)
 		{
 			director.greenLight();
+		}
+
+		private void numericupdownBuzzDuration_ValueChanged(object sender, EventArgs e)
+		{
+			PP_Settings.buzzDuration = (double)numericupdownBuzzDuration.Value;
 		}
 	}
 	#endregion

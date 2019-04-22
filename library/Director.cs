@@ -105,7 +105,7 @@ namespace Plug_Parser_Plugin
 				if (attackType == "Killing")
 				{
 					killCount++;
-					if (killCount >= 4)
+					if (killCount >= PP_Settings.lengthOfKillstreak)
 					{
 						manClient.queueAction(C_Actions.YOU_KILLED_ENOUGH);
 						killCount = 0;

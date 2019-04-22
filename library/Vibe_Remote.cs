@@ -92,7 +92,7 @@ namespace Plug_Parser_Plugin
 		#region Controls
 		public void buzz(double strength)
 		{
-			settings.addBuzz(strength, 500);
+			settings.addBuzz(strength, PP_Settings.buzzDuration);
 		}
 
 		public void increaseAmplitude(double amp)
@@ -145,6 +145,8 @@ namespace Plug_Parser_Plugin
 
 		private void decay()
 		{
+			return;
+
 			if (settings.frequency >= 3)
 			{
 				settings.addFrequency(-0.2);
