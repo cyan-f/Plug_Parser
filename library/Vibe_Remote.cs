@@ -66,7 +66,7 @@ namespace Plug_Parser_Plugin
 				settings.buzzRemaining -= deltaTime;
 				if (settings.buzzRemaining < 0)
 				{
-					settings.buzzRemaining = 0;
+					settings.resetBuzz();
 				}
 
 				val = settings.buzzStrength;

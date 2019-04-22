@@ -99,6 +99,12 @@ namespace Plug_Parser_Plugin
 			buzzRemaining += timeMillis;
 		}
 
+		public void resetBuzz()
+		{
+			buzzStrength = 0;
+			buzzRemaining = 0;
+		}
+
 		public void addFrequency(double add)
 		{
 			frequency += add;
