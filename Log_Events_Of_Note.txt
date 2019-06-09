@@ -1,0 +1,12 @@
+
+# Botany
+
+* spiritbond
+* [name] obtains a
+* 11:00:51 PM - 00:0843:Cyan F. obtains a �Ubranch of pixie plums .
+    + Last \[?\] unicode character indicates high quality get.
+    + Binary: 1110000000111100
+    + Hex: E03C
+* [name] attains level [lvl]!
+* You begin harvesting.
+* You finish harvesting.
